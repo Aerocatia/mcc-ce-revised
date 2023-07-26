@@ -1,0 +1,13 @@
+*.7z
+*.bat
+*.cfg
+*.dll
+*.exe
+*.lnk
+*.py
+*.sh
+*.txt
+*.zip
+
+data/**/*.tif
+data/**/*.sh
