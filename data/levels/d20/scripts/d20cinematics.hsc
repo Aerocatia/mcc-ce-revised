@@ -134,7 +134,7 @@
 ;- Section 1 Dialogue Hooks ----------------------------------------------------
 
 (script static void D20_10_Cortana ;
-	(if cinematics_debug (print "Cortana: I can read the Captain's CNI transponder. He's in the Control Room….but I'm not detecting any human life signs."))
+	(if cinematics_debug (print "Cortana: I can read the Captain's CNI transponder. He's in the Control Room....but I'm not detecting any human life signs."))
 	(sound_impulse_start sound\dialog\d20\D20_010_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_010_Cortana) 30)))
 )
@@ -146,7 +146,7 @@
 )
 
 (script static void D20_30_Cortana ;
-	(if cinematics_debug (print "Cortana: Analyzing damage. [Pause] This hole was caused by some kind of explosive…very powerful, if it tore through the ship's hull. All I detect down there are pools of coolant. We should continue our search somewhere else."))
+	(if cinematics_debug (print "Cortana: Analyzing damage. [Pause] This hole was caused by some kind of explosive...very powerful, if it tore through the ship's hull. All I detect down there are pools of coolant. We should continue our search somewhere else."))
 	(sound_impulse_start sound\dialog\d20\D20_030_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_030_Cortana) 30)))
 )
@@ -165,7 +165,7 @@
 )
 
 (script static void D20_70_Cortana ;
-	(if cinematics_debug (print "Cortana: Warning! Threat level increasing. [Pause] That jump into the coolant is looking better all the time, Chief. Trust me…its deep enough to cushion our fall."))
+	(if cinematics_debug (print "Cortana: Warning! Threat level increasing. [Pause] That jump into the coolant is looking better all the time, Chief. Trust me...its deep enough to cushion our fall."))
 	(sound_impulse_start sound\dialog\d20\D20_070_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_070_Cortana) 30)))
 )
@@ -184,7 +184,7 @@
 )
 
 (script static void D20_73_Cortana ;
-	(if cinematics_debug (print "Cortana: Trust me…its deep enough to cushion our fall."))
+	(if cinematics_debug (print "Cortana: Trust me...its deep enough to cushion our fall."))
 	(sound_impulse_start sound\dialog\d20\D20_073_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_073_Cortana) 30)))
 )
@@ -233,7 +233,7 @@
 )
 
 (script static void D20_160_Cortana ;
-	(if cinematics_debug (print "Cortana: Power source detected…there's the gravity lift. [Pause] It's still operational…that's our way back in."))
+	(if cinematics_debug (print "Cortana: Power source detected...there's the gravity lift. [Pause] It's still operational...that's our way back in."))
 	(sound_impulse_start sound\dialog\d20\D20_160_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_160_Cortana) 30)))
 )
@@ -248,7 +248,7 @@
 )
 
 (script static void D20_190_Cortana ;
-	(if cinematics_debug (print "Cortana: Wait a moment. We went through the doors on the right the last time we were here. This is a different route. [Pause] The Covenant battle net is a mess…I can't access the ship's schematics. My records indicate that a shuttle bay should be here. "))
+	(if cinematics_debug (print "Cortana: Wait a moment. We went through the doors on the right the last time we were here. This is a different route. [Pause] The Covenant battle net is a mess...I can't access the ship's schematics. My records indicate that a shuttle bay should be here. "))
 	(sound_impulse_start sound\dialog\d20\D20_190_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_190_Cortana) 30)))
 	(activate_team_nav_point_flag "default_red" player waypoint3 0)
@@ -256,7 +256,7 @@
 )
 
 (script static void D20_200_Cortana ;
-	(if cinematics_debug (print "Cortana: Look, in the corners… the Flood are gathering bodies here."))
+	(if cinematics_debug (print "Cortana: Look, in the corners... the Flood are gathering bodies here."))
 	(sound_impulse_start sound\dialog\d20\D20_200_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_200_Cortana) 30)))
 )
