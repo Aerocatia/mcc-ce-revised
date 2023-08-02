@@ -1,6 +1,7 @@
 *.7z
 *.bat
 *.cfg
+*.config
 *.dll
 *.exe
 *.lnk
