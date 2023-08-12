@@ -10,5 +10,13 @@
 *.txt
 *.zip
 
-data/**/*.tif
+data/**/*.blend
+data/**/*.jma
+data/**/*.jmo
+data/**/*.jms
+data/**/*.jxl
+data/**/*.png
+data/**/*.psd
 data/**/*.sh
+data/**/*.tif
+data/**/*.tiff
