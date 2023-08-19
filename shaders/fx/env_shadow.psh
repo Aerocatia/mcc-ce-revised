@@ -1,0 +1,46 @@
+#include "_alpha_test.h"
+
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+SamplerState TexS1 : register(s1);
+Texture2D Texture1 : register(t1);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+   float4 T1 : TEXCOORD1;
+};
+
+cbuffer _cb0 {
+   float4 c0;
+}
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+	// INPUTS
+	half4 v0 = i.D0;
+	half2 Tex0 = i.T0;
+	half2 Tex1 = i.T1;
+
+	half4 r0, r1;
+
+	// c0 = 1-local_shadow_color
+	half4 c1 = half4(1.0,1.0,1.0,0.0);
+	half4 c2 = half4(1.0,0.0,-1.0,0.0);
+	
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy);// shadow
+	half4 t1 = Texture1.Sample(TexS1, Tex1.xy);// fade
+	
+	r0.rgb = saturate((1-t1.rgb) * v0.a);
+	r1.rgb = saturate(t0.rgb * c0.rgb);
+	r0.rgb = saturate((r0.rgb) * (1-r1.rgb) + 1-r0);
+	r1.rgb = saturate(dot(1-r0.rgb, c1.rgb));
+	r0.rgb = c1.rgb - r0.rgb;
+	r0.a = r1.b;
+
+	return AlphaTest_Greater00(r0);
+};
+

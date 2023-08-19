@@ -1,0 +1,19 @@
+SamplerState TexSampler0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+};
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+   // INPUTS
+   half2 Tex0 = i.T0;
+
+   half4 color = Texture0.Sample(TexSampler0, Tex0.xy);
+   return color.aaaa;
+}
+

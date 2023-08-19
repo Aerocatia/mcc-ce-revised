@@ -1,0 +1,30 @@
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+};
+
+cbuffer _cb0 {
+   float4 c[6] : packoffset(c0);
+}
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+   // INPUTS
+   half4 Diff = i.D0;
+   half2 Tex0 = i.T0;
+
+   half4 tex = Texture0.Sample(TexS0, Tex0.xy);
+   clip(tex.a - c[0].a);
+
+   half4 res;
+   res.rgb = c[0].rgb * c[1].x;
+   res.a   = tex.g * c[1].y;
+   
+   return res;
+};
+

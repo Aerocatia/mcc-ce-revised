@@ -1,0 +1,54 @@
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+};
+
+cbuffer _cb0 {
+   float4 c0 : packoffset(c0);
+   float4 c1 : packoffset(c1);
+   float4 c2 : packoffset(c2);
+   float4 c3 : packoffset(c3);
+   float4 c4 : packoffset(c4);
+   float4 c5 : packoffset(c5);
+}
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+	// INPUTS
+	half2 Tex0 = i.T0;
+
+	half4 r0, r1;
+
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy);
+
+	// c0 - meter_flash_color
+	// c1 - meter_gradient_max_color
+	// c2 - meter_gradient_min_color
+	// c3 - meter_background_color
+	// c4 - meter_tint_color
+	// c5 - meter_flash_color_variable
+
+	r1.rgb = c2.a;
+	r1.a = (c1.a) * (t0.b);
+
+	r0.rgb = (c0.rgb - t0.rgb) * 4;
+	r0.a = saturate((r1.a + r1.a) * 4);
+
+	r0.rgb = c2.rgb + (r0.a) * (c1.rgb - c2.rgb);
+	r0.a = 2 * (-r0.b + 0.5);
+
+	r0.rgb = r0.a * c5.rgb + r0.rgb;
+	r0.a = t0.b - c2.a + 0.5;
+
+	r0.rgb = lerp(r0.rgb,c3.rgb, step(0.5,r0.a));
+	r0.a = lerp(c4.a,c3.a, step(0.5,r0.a));
+
+	r0.rgb = (r0.rgb) * (t0.a);
+	return r0;
+};
+

@@ -1,0 +1,51 @@
+#include "_alpha_test.h"
+
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+};
+
+float4 branch_control : register(c0);
+float alpha_ref : register(c1);
+
+half4 main(PS_INPUT input) : COLOR0
+{
+   half4 tex = Texture0.Sample(TexS0, input.T0.xy);
+   half4 col = input.D0;
+   half4 res = 0;
+
+   res.rgb = half3(1.0,0,0);
+   res.a   = 1.0;
+   
+   if (branch_control.x > 0.f) { // add/revsub/max
+      res.rgb = tex.rgb * col.rgb * (1.0-col.a);
+      res.a   = tex.a;
+   } 
+   if (branch_control.y > 0.f) { // mul/min
+      res.a   = tex.a;   
+      res.rgb = (1 - tex.rgb) * (1 - col.rgb) + tex.rgb;
+      res.rgb = (1 - col.a) * res.rgb + col.aaa;
+      res.a   = (1 - col.a) * res.a + col.a;
+   } 
+   if (branch_control.z > 0.f) { // double_multiply
+      res.rgb = (0.5 - max(0, tex.rgb)) * (1 - col.rgb) + tex.rgb;
+      res.a = (1 - col.a) * tex.a + col.a * 0.5;
+      res.rgb = (1 - col.a) * res.rgb + col.a * 0.5;
+   } 
+   if (branch_control.w > 0.f) { // alpha_blend
+      res.rgb = tex.rgb * col.rgb;
+      res.a   = tex.a   * (1 - col.a);  
+   }
+   if (dot(branch_control, 1) <= 0.f) { // alpha_multiply_add
+      res.rgb = tex.rgb * col.rgb;
+      res.a = (1 - col.a) * tex.a;
+      res.rgb = (1 - col.a) * res.rgb;
+   }
+   
+   return AlphaTest_GreaterREF(res, alpha_ref);
+}

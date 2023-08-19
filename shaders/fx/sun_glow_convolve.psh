@@ -1,0 +1,65 @@
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+SamplerState TexS1 : register(s1);
+Texture2D Texture1 : register(t1);
+
+SamplerState TexS2 : register(s2);
+Texture2D Texture2 : register(t2);
+
+SamplerState TexS3 : register(s3);
+Texture2D Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+   float4 T1 : TEXCOORD1;
+   float4 T2 : TEXCOORD2;
+   float4 T3 : TEXCOORD3;
+};
+
+cbuffer _cb0 {
+   float4 c0;
+}
+
+half4 main_T0_P0(PS_INPUT i) : SV_TARGET
+{
+	// INPUTS
+	half2 Tex0 = i.T0;
+	half2 Tex1 = i.T1;
+
+	half4 r0;
+
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy); // texture0: primary target
+	half4 t1 = Texture1.Sample(TexS1, Tex1.xy); // texture1: glow
+
+	r0.rgb = t0.a;
+	r0.a = t1.a * 192.0/255.0 * 2;
+
+	return r0;
+};
+
+half4 main_T0_P1(PS_INPUT i) : SV_TARGET
+{
+	// INPUTS
+	half2 Tex0 = i.T0;
+	half2 Tex1 = i.T1;
+	half2 Tex2 = i.T2;
+	half2 Tex3 = i.T3;
+
+	half4 r0;
+
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy);
+	half4 t1 = Texture1.Sample(TexS1, Tex1.xy);
+	half4 t2 = Texture2.Sample(TexS2, Tex2.xy);
+	half4 t3 = Texture3.Sample(TexS3, Tex3.xy);
+	
+	r0.a = (t0.b+t1.b)*0.5;
+	r0.rgb=(t2+t3) * 0.5;
+	r0.rgb=(r0.a + r0.rgb) * c0.a;
+	
+	return r0;
+};
+

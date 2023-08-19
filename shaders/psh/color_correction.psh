@@ -1,0 +1,118 @@
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+};
+
+cbuffer _cb0 {
+   float4 c : packoffset(c0);
+}
+
+float sRGBGammaLin (float Clinear, float v)
+{
+   return (Clinear<=0.0031308) ? (12.92 * Clinear) : v;
+}
+
+float d3dPWLDeGamma (float C)
+{
+   float Clin;
+
+   C *= 255.f;
+   if (C < 64) {
+      Clin = C;
+   } else if (C < 96) {
+      Clin = 64 + (C-64)*2;
+   } else if (C < 192) {
+      Clin = 128 + (C-96)*4;
+   } else {
+      Clin = 513 + (C-192)*8;
+   }
+   return Clin / 1023;
+}
+
+float3 d3dSRGBGamma(float3 c_srgb_lin)
+{
+	float3 c_srgb = 1.055 * pow(saturate(c_srgb_lin),1.0/2.4) - 0.055;
+	c_srgb_lin.r = sRGBGammaLin(c_srgb_lin.r, c_srgb.r);
+	c_srgb_lin.g = sRGBGammaLin(c_srgb_lin.g, c_srgb.g);
+	c_srgb_lin.b = sRGBGammaLin(c_srgb_lin.b, c_srgb.b);
+	
+	return c_srgb_lin;
+}
+
+
+float3 ntsc_to_rgb_lin(float3 tex)
+{
+	// convert to linear space
+	float3 c_lin = pow(tex, 2.2);
+	
+	float3 c_xyz;
+	// RGB (NTSC, D50) -> XYZ
+	c_xyz.r = dot(c_lin, float3(0.6343706, 0.1852204, 0.1446290));
+	c_xyz.g = dot(c_lin, float3(0.3109496,  0.5915984,  0.0974520));
+	c_xyz.b = dot(c_lin, float3(-0.0011817,  0.0555518,  0.7708399));
+	
+	// XYZ -> RGB (sRGB, D50)
+	float3 rgb_lin;
+	rgb_lin.r = dot(c_xyz, float3(3.1338561, -1.6168667, -0.4906146));
+	rgb_lin.g = dot(c_xyz, float3(-0.9787684,  1.9161415,  0.0334540));
+	rgb_lin.b = dot(c_xyz, float3(0.0719453, -0.2289914,  1.4052427));
+	
+	return rgb_lin;
+}
+
+float3 cu50(float3 tex)
+{
+	tex.r = d3dPWLDeGamma(tex.r);
+	tex.g = d3dPWLDeGamma(tex.g);
+	tex.b = d3dPWLDeGamma(tex.b);
+	
+	return d3dSRGBGamma(tex);
+}
+
+float3 no_corr(float3 tex)
+{
+	return tex;
+}
+
+float3 corr_srgb(float3 tex)
+{
+	return d3dSRGBGamma(ntsc_to_rgb_lin(tex));
+}
+
+float3 corr_22(float3 tex)
+{
+	return pow(ntsc_to_rgb_lin(tex), 1.0/2.2);
+}
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+	half4 tex = Texture0.Sample(TexS0, i.T0.xy);
+	half4 res;
+	
+	if (c.x > 2.5) // 3
+	{
+		res.rgb = cu50(tex.rgb);
+	}
+	else if (c.x > 1.5) // 2
+	{
+		res.rgb = corr_srgb(tex.rgb);
+	}
+	else if (c.x > 0.5) // 1
+	{
+		res.rgb = corr_22(tex.rgb);
+	}
+	else
+	{
+		res.rgb = no_corr(tex.rgb);
+	}
+	
+	res.a = tex.a;
+
+	return res;
+};
+

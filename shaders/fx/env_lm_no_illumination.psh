@@ -1,0 +1,78 @@
+#include "_alpha_test.h"
+
+SamplerState TexSampler0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+SamplerState TexSampler2 : register(s2);
+Texture2D Texture2 : register(t2);
+
+SamplerState TexSampler3 : register(s3);
+TextureCube Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+	// texture0: bump map
+   float4 T0 : TEXCOORD0;
+	// texture1: self-illumination map
+   float4 T1 : TEXCOORD1;
+	// texture2: lightmap
+   float4 T2 : TEXCOORD2;
+	// texture3: vector normalization (incident radiosity)
+   float4 T3 : TEXCOORD3;
+};
+
+cbuffer _cb0 {
+   half4 c_material_color;
+   float c_alpha_ref;
+   float c_bump_attenuation_blending_v2;
+	float c_lightmap_incident_radiosity_enabled; // set from rasterizer_lightmaps_incident_radiosity
+	float unused1_3;
+	half4 c_debug_lightmap_ambient;
+}
+
+half4 main(PS_INPUT i) : SV_TARGET
+{
+	// INPUTS
+	half4 Diff = i.D0;
+	half2 Tex0 = i.T0;
+	half2 Tex2 = i.T2;
+	half3 Tex3 = i.T3;
+
+	half4 bump_color = Texture0.Sample(TexSampler0, Tex0.xy);
+	float3 lightmap_color = c_debug_lightmap_ambient.rgb;
+	if (c_debug_lightmap_ambient.a != 1.0f) // Set to 1 when rasterizer_lightmap_mode is non-zero
+	{
+		lightmap_color = Texture2.Sample(TexSampler2, Tex2.xy);
+	}
+	half4 normal_color = Texture3.Sample(TexSampler3, Tex3.xyz);
+
+	////////////////////////////////////////////////////////////
+	// calculate bump attenuation
+	////////////////////////////////////////////////////////////
+	half bump_attenuation = dot((2*bump_color.rgb)-1, (2*normal_color.rgb)-1);
+	if (c_bump_attenuation_blending_v2 == 0.f)
+	{
+		bump_attenuation = (bump_attenuation * Diff.a) + 1-Diff.a;
+	}
+	else
+	{
+		half baked_attenuation = dot(normalize(2*normal_color.rgb-1), half3(0.0f,0.0f,1.0f));
+		bump_attenuation = lerp(1, 1 + bump_attenuation - baked_attenuation, Diff.a);
+	}
+	if (c_lightmap_incident_radiosity_enabled==0.0f)
+	{
+		bump_attenuation = 1.0f;
+	}
+
+	////////////////////////////////////////////////////////////
+	// combine output
+	////////////////////////////////////////////////////////////
+	half3 final_color = lightmap_color;
+	final_color *= c_material_color;
+	final_color *= bump_attenuation;
+
+	return AlphaTest_GreaterREF( half4( final_color, bump_color.a), c_alpha_ref );
+};
+

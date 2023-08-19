@@ -1,0 +1,4 @@
+#define NONLINEAR_TINT 1
+#define HAS_SECOND_COLOR_MAP
+#define _shader_framebuffer_blend_function_double_multiply 1
+#include "eff_common.h"

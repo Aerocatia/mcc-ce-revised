@@ -1,0 +1,107 @@
+#include "_alpha_test.h"
+
+SamplerState TexSampler0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+SamplerState TexSampler1 : register(s1);
+Texture2D Texture1 : register(t1);
+
+SamplerState TexSampler2 : register(s2);
+Texture2D Texture2 : register(t2);
+
+SamplerState TexSampler3 : register(s3);
+TextureCube Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+	// texture0: bump map
+   float4 T0 : TEXCOORD0;
+	// texture1: self-illumination map
+   float4 T1 : TEXCOORD1;
+	// texture2: lightmap
+   float4 T2 : TEXCOORD2;
+	// texture3: vector normalization (incident radiosity)
+   float4 T3 : TEXCOORD3;
+};
+
+cbuffer _cb0 {
+   half4 c_material_color;
+   half4 c_plasma_animation;
+   half4 c_primary_color;
+   half4 c_secondary_color;
+   half4 c_plasma_on_color;
+   half4 c_plasma_off_color;
+   float c_alpha_ref;
+   float c_bump_attenuation_blending_v2;
+	float c_lightmap_incident_radiosity_enabled; // set from rasterizer_lightmaps_incident_radiosity
+	float unused6_3;
+	half4 c_debug_lightmap_ambient;
+}
+
+// LightmapNormal
+half4 main(PS_INPUT i) : SV_TARGET
+{
+   // INPUTS
+   half4 Diff = i.D0;
+   half2 Tex0 = i.T0;
+   half2 Tex1 = i.T1;
+   half2 Tex2 = i.T2;
+   half3 Tex3 = i.T3;
+
+   float4 bump_color = Texture0.Sample(TexSampler0, Tex0.xy);
+	// self_illumination_color
+	// r primary_mask
+	// g secondary_mask
+	// b plasma_mask
+   float4 self_illumination_color = Texture1.Sample(TexSampler1, Tex1.xy);
+	float3 lightmap_color = c_debug_lightmap_ambient.rgb;
+	if (c_debug_lightmap_ambient.a != 1.0f) // Set to 1 when rasterizer_lightmap_mode is non-zero
+	{
+		lightmap_color = Texture2.Sample(TexSampler2, Tex2.xy);
+	}
+   float4 normal_color = Texture3.Sample(TexSampler3, Tex3.xyz);
+
+	////////////////////////////////////////////////////////////
+	// calculate plasma
+	////////////////////////////////////////////////////////////
+   float plasma_intermed_1 = c_plasma_animation + 0.5 - max(0, self_illumination_color.a);
+   float plasma_intermed_2 = self_illumination_color.a + 0.5 - max(0, c_plasma_animation);
+
+   float plasma = (plasma_intermed_1 < 0.5f) ? plasma_intermed_1 : plasma_intermed_2;
+   plasma = saturate(plasma * plasma * 4);                           // (plasma ^ 2) * 4
+   plasma = plasma * plasma;                                         // 16 * plasma ^ 4
+   plasma = plasma < 0.5f ? 0 : pow(2 * plasma - 1, 2);   // plasma ^ 8
+
+	////////////////////////////////////////////////////////////
+	// calculate bump attenuation
+	////////////////////////////////////////////////////////////
+   float bump_attenuation = dot(normalize(2*bump_color.rgb-1), normalize(2*normal_color.rgb-1));
+   if (c_bump_attenuation_blending_v2 == 0.f)
+   {
+		bump_attenuation = saturate(bump_attenuation);
+   }
+   else
+   {
+		float baked_attenuation = dot(normalize(2*normal_color.rgb-1), float3(0.0f,0.0f,1.0f));
+		bump_attenuation = 1 + bump_attenuation - baked_attenuation;
+   }
+   float bump_attenuation_with_accuracy = lerp(1, bump_attenuation, Diff.a);
+	if (c_lightmap_incident_radiosity_enabled==0.0f)
+	{
+		bump_attenuation_with_accuracy = bump_attenuation = 1.0f;
+	}
+
+	////////////////////////////////////////////////////////////
+	// calculate primary and secondary glow
+	////////////////////////////////////////////////////////////
+   float3 primary_and_secondary_glow = saturate(c_primary_color.rgb * self_illumination_color.r + c_secondary_color.rgb * self_illumination_color.g);
+
+   float3 plasma_color = saturate(c_plasma_on_color * plasma + c_plasma_off_color);
+
+   float3 plasma_primary_and_secondary = saturate(plasma_color * self_illumination_color.b + primary_and_secondary_glow);
+
+   half4 final_color = half4(bump_attenuation_with_accuracy * c_material_color.rgb * lightmap_color + plasma_primary_and_secondary, bump_color.a);
+   return AlphaTest_GreaterREF( final_color, c_alpha_ref );
+}

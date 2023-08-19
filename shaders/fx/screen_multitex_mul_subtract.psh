@@ -1,0 +1,3 @@
+#define map0_to_1_blend_function _screen_multitexture_blend_func_multiply
+#define map1_to_2_blend_function _screen_multitexture_blend_func_subtract
+#include "screen_multitex_common.h"

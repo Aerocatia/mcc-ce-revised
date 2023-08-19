@@ -1,0 +1,444 @@
+SamplerState TexS0 : register(s0);
+#ifndef FIRST_MAP_IS_CUBE
+Texture2D Texture0 : register(t0);
+#else
+TextureCube Texture0 : register(t0);
+#endif
+
+SamplerState TexS1 : register(s1);
+Texture2D Texture1 : register(t1);
+SamplerState TexS2 : register(s2);
+Texture2D Texture2 : register(t2);
+SamplerState TexS3 : register(s3);
+Texture2D Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+   float4 T1 : TEXCOORD1;
+   float4 T2 : TEXCOORD2;
+   float4 T3 : TEXCOORD3;
+};
+
+float4 stage_color0[8] : register(c0);
+float4 stage_color1[8] : register(c8);
+float2 fog_config : register(c16);
+
+#define color_input_zero									0
+#define color_input_one										1
+#define color_input_one_half								2
+#define color_input_negative_one							3
+#define color_input_negative_one_half						4
+#define color_input_texture0								5
+#define color_input_texture1								6
+#define color_input_texture2								7
+#define color_input_texture3								8
+#define color_input_vertex_color0							9
+#define color_input_vertex_color1							10
+#define color_input_scratch0								11
+#define color_input_scratch1								12
+#define color_input_constant0								13
+#define color_input_constant1								14
+#define color_input_texture0_alpha							15
+#define color_input_texture1_alpha							16
+#define color_input_texture2_alpha							17
+#define color_input_texture3_alpha							18
+#define color_input_vertex_color0_alpha						19
+#define color_input_vertex_color1_alpha						20
+#define color_input_scratch0_alpha							21
+#define color_input_scratch1_alpha							22
+#define color_input_constant0_alpha							23
+#define color_input_constant1_alpha							24
+
+#define SELECT_COLOR_INPUT(v, i, m)							\
+	if(i == color_input_zero)								\
+		v = 0;												\
+	if(i == color_input_one)								\
+		v = 1;												\
+	if(i == color_input_one_half)							\
+		v = 0.5;											\
+	if(i == color_input_negative_one)						\
+		v = -1;												\
+	if(i == color_input_negative_one_half)					\
+		v = -0.5;											\
+	if(i == color_input_texture0)							\
+		v = t0.rgb;											\
+	if(i == color_input_texture1)							\
+		v = t1.rgb;											\
+	if(i == color_input_texture2)							\
+		v = t2.rgb;											\
+	if(i == color_input_texture3)							\
+		v = t3.rgb;											\
+	if(i == color_input_vertex_color0)						\
+		v = v0.rgb;											\
+	if(i == color_input_vertex_color1)						\
+		v = v1.rgb;											\
+	if(i == color_input_scratch0)							\
+		v = r0.rgb;											\
+	if(i == color_input_scratch1)							\
+		v = r1.rgb;											\
+	if(i == color_input_constant0)							\
+		v = c0.rgb;											\
+	if(i == color_input_constant1)							\
+		v = c1.rgb;											\
+	if(i == color_input_texture0_alpha)						\
+		v = t0.aaa;											\
+	if(i == color_input_texture1_alpha)						\
+		v = t1.aaa;											\
+	if(i == color_input_texture2_alpha)						\
+		v = t2.aaa;											\
+	if(i == color_input_texture3_alpha)						\
+		v = t3.aaa;											\
+	if(i == color_input_vertex_color0_alpha)				\
+		v = v0.aaa;											\
+	if(i == color_input_vertex_color1_alpha)				\
+		v = v1.aaa;											\
+	if(i == color_input_scratch0_alpha)						\
+		v = r0.aaa;											\
+	if(i == color_input_scratch1_alpha)						\
+		v = r1.aaa;											\
+	if(i == color_input_constant0_alpha)					\
+		v = c0.aaa;											\
+	if(i == color_input_constant1_alpha)					\
+		v = c1.aaa;											\
+	APPLY_MAPPING(v, m)
+
+
+#define alpha_input_zero									0
+#define alpha_input_one										1
+#define alpha_input_one_half								2
+#define alpha_input_negative_one							3
+#define alpha_input_negative_one_half						4
+#define alpha_input_texture0_alpha							5
+#define alpha_input_texture1_alpha							6
+#define alpha_input_texture2_alpha							7
+#define alpha_input_texture3_alpha							8
+#define alpha_input_vertex_color0_alpha						9
+#define alpha_input_vertex_color1_alpha						10
+#define alpha_input_scratch0_alpha							11
+#define alpha_input_scratch1_alpha							12
+#define alpha_input_constant0_alpha							13
+#define alpha_input_constant1_alpha							14
+#define alpha_input_texture0_blue							15
+#define alpha_input_texture1_blue							16
+#define alpha_input_texture2_blue							17
+#define alpha_input_texture3_blue							18
+#define alpha_input_vertex_color0_blue						19
+#define alpha_input_vertex_color1_blue						20
+#define alpha_input_scratch0_blue							21
+#define alpha_input_scratch1_blue							22
+#define alpha_input_constant0_blue							23
+#define alpha_input_constant1_blue							24
+
+#define SELECT_ALPHA_INPUT(v, i, m)							\
+	if(i == alpha_input_zero)								\
+		v = 0;												\
+	if(i == alpha_input_one)								\
+		v = 1;												\
+	if(i == alpha_input_one_half)							\
+		v = 0.5;											\
+	if(i == alpha_input_negative_one)						\
+		v = -1;												\
+	if(i == alpha_input_negative_one_half)					\
+		v = -0.5;											\
+	if(i == alpha_input_texture0_alpha)						\
+		v = t0.a;											\
+	if(i == alpha_input_texture1_alpha)						\
+		v = t1.a;											\
+	if(i == alpha_input_texture2_alpha)						\
+		v = t2.a;											\
+	if(i == alpha_input_texture3_alpha)						\
+		v = t3.a;											\
+	if(i == alpha_input_vertex_color0_alpha)				\
+		v = v0.a;											\
+	if(i == alpha_input_vertex_color1_alpha)				\
+		v = v1.a;											\
+	if(i == alpha_input_scratch0_alpha)						\
+		v = r0.a;											\
+	if(i == alpha_input_scratch1_alpha)						\
+		v = r1.a;											\
+	if(i == alpha_input_constant0_alpha)					\
+		v = c0.a;											\
+	if(i == alpha_input_constant1_alpha)					\
+		v = c1.a;											\
+	if(i == alpha_input_texture0_blue)						\
+		v = t0.b;											\
+	if(i == alpha_input_texture1_blue)						\
+		v = t1.b;											\
+	if(i == alpha_input_texture2_blue)						\
+		v = t2.b;											\
+	if(i == alpha_input_texture3_blue)						\
+		v = t3.b;											\
+	if(i == alpha_input_vertex_color0_blue)					\
+		v = v0.b;											\
+	if(i == alpha_input_vertex_color1_blue)					\
+		v = v1.b;											\
+	if(i == alpha_input_scratch0_blue)						\
+		v = r0.b;											\
+	if(i == alpha_input_scratch1_blue)						\
+		v = r1.b;											\
+	if(i == alpha_input_constant0_blue)						\
+		v = c0.b;											\
+	if(i == alpha_input_constant1_blue)						\
+		v = c1.b;											\
+	APPLY_MAPPING(v, m)
+
+
+#define input_mapping_unsigned_identity						0
+#define input_mapping_unsigned_invert						1
+#define input_mapping_expand_normal							2
+#define input_mapping_expand_negate							3
+#define input_mapping_halfbias_normal						4
+#define input_mapping_halfbias_negate						5
+#define input_mapping_signed_identity						6
+#define input_mapping_signed_negate							7
+
+#define APPLY_MAPPING(v, m)									\
+	if(input_mapping_unsigned_identity == m)				\
+		v = max(v, 0.0);									\
+	if(input_mapping_unsigned_invert == m)					\
+		v = 1.0 - clamp(v, 0.0, 1.0);						\
+	if(input_mapping_expand_normal == m)					\
+		v = 2.0 * max(v, 0.0) - 1.0;						\
+	if(input_mapping_expand_negate == m)					\
+		v = -2.0 * max(v, 0.0) + 1.0;						\
+	if(input_mapping_halfbias_normal == m)					\
+		v = max(v, 0.0) - 0.5;								\
+	if(input_mapping_halfbias_negate == m)					\
+		v = -max(v, 0.0) + 0.5;								\
+	if(input_mapping_signed_identity == m)					\
+		v = v;												\
+	if(input_mapping_signed_negate == m)					\
+		v = -v;
+
+
+#define stage_output_discard								0
+#define stage_output_scratch0								1
+#define stage_output_scratch1								2
+#define stage_output_vertex_color0							3
+#define stage_output_vertex_color1							4
+#define stage_output_texture0								5
+#define stage_output_texture1								6
+#define stage_output_texture2								7
+#define stage_output_texture3								8
+
+#define STAGE_COLOR_OUTPUT(v, o)							\
+	if(stage_output_scratch0 == o)							\
+		r0.rgb = v;											\
+	if(stage_output_scratch1 == o)							\
+		r1.rgb = v;											\
+	if(stage_output_vertex_color0 == o)						\
+		v0.rgb = v;											\
+	if(stage_output_vertex_color1 == o)						\
+		v1.rgb = v;											\
+	if(stage_output_texture0 == o)							\
+		t0.rgb = v;											\
+	if(stage_output_texture1 == o)							\
+		t1.rgb = v;											\
+	if(stage_output_texture2 == o)							\
+		t2.rgb = v;											\
+	if(stage_output_texture3 == o)							\
+		t3.rgb = v;
+
+#define STAGE_ALPHA_OUTPUT(v, o)							\
+	if(stage_output_scratch0 == o)							\
+		r0.a = v;											\
+	if(stage_output_scratch1 == o)							\
+		r1.a = v;											\
+	if(stage_output_vertex_color0 == o)						\
+		v0.a = v;											\
+	if(stage_output_vertex_color1 == o)						\
+		v1.a = v;											\
+	if(stage_output_texture0 == o)							\
+		t0.a = v;											\
+	if(stage_output_texture1 == o)							\
+		t1.a = v;											\
+	if(stage_output_texture2 == o)							\
+		t2.a = v;											\
+	if(stage_output_texture3 == o)							\
+		t3.a = v;
+
+
+#define output_function_multiply							0
+#define output_function_dot_product							1
+
+#define OUTPUT_FUNCTION(v, x, y, f)							\
+	if(output_function_multiply == f)						\
+		v = clamp(x * y, -1.0, 1.0);						\
+	if(output_function_dot_product == f)					\
+		v = dot(x, y);
+
+
+#define output_mapping_identity								0
+#define output_mapping_scale_by_one_half					1
+#define output_mapping_scale_by_two							2
+#define output_mapping_scale_by_four						3
+#define output_mapping_bias									4
+#define output_mapping_bias_and_scale_by_two				5
+
+#define OUTPUT_MAPPING(v, m)								\
+	if(output_mapping_identity == m)						\
+		v = v;												\
+	if(output_mapping_scale_by_one_half == m)				\
+		v = v / 2.0;										\
+	if(output_mapping_scale_by_two == m)					\
+		v = v * 2.0;										\
+	if(output_mapping_scale_by_four == m)					\
+		v = v * 4.0;										\
+	if(output_mapping_bias == m)							\
+		v = v - 0.5;										\
+	if(output_mapping_bias_and_scale_by_two == m)			\
+		v = (v - 0.5) * 2.0;
+
+
+#define MUX(ab, cd) r0.a >= 0.5 ? cd : ab
+
+#define STAGE(i,																					\
+		input_a, input_a_mapping,																	\
+		input_b, input_b_mapping,																	\
+		input_c, input_c_mapping,																	\
+		input_d, input_d_mapping,																	\
+																									\
+		ab_cd_mux,																					\
+		ab_output, ab_function,																		\
+		cd_output, cd_function,																		\
+		ab_cd_output,																				\
+		color_output_mapping,																		\
+																									\
+		input_a_a, input_a_a_mapping,																\
+		input_b_a, input_b_a_mapping,																\
+		input_c_a, input_c_a_mapping,																\
+		input_d_a, input_d_a_mapping,																\
+																									\
+		ab_cd_a_mux,																				\
+		ab_a_output,																				\
+		cd_a_output,																				\
+		ab_cd_a_output,																				\
+		alpha_output_mapping,																		\
+																									\
+		is_fog_stage)																				\
+	{																								\
+		c0 = stage_color0[i];																		\
+		c1 = stage_color1[i];																		\
+																									\
+		if(!is_fog_stage ||																			\
+			(is_fog_stage && fog_config.x > 0.5 && fog_config.y < 0.5))								\
+		{																							\
+			SELECT_COLOR_INPUT(a, input_a, input_a_mapping)											\
+			SELECT_COLOR_INPUT(b, input_b, input_b_mapping)											\
+			SELECT_COLOR_INPUT(c, input_c, input_c_mapping)											\
+			SELECT_COLOR_INPUT(d, input_d, input_d_mapping)											\
+																									\
+			OUTPUT_FUNCTION(ab, a, b, ab_function)													\
+			OUTPUT_FUNCTION(cd, c, d, cd_function)													\
+			ab_cd = ab_cd_mux ? MUX(ab, cd) : ab + cd;												\
+			ab_cd = clamp(ab_cd, -1.0, 1.0);														\
+																									\
+			OUTPUT_MAPPING(ab, color_output_mapping)												\
+			OUTPUT_MAPPING(cd, color_output_mapping)												\
+			OUTPUT_MAPPING(ab_cd, color_output_mapping)												\
+																									\
+																									\
+			SELECT_ALPHA_INPUT(a_a, input_a_a, input_a_a_mapping)									\
+			SELECT_ALPHA_INPUT(b_a, input_b_a, input_b_a_mapping)									\
+			SELECT_ALPHA_INPUT(c_a, input_c_a, input_c_a_mapping)									\
+			SELECT_ALPHA_INPUT(d_a, input_d_a, input_d_a_mapping)									\
+																									\
+			OUTPUT_FUNCTION(ab_a, a_a, b_a, output_function_multiply)								\
+			OUTPUT_FUNCTION(cd_a, c_a, d_a, output_function_multiply)								\
+			ab_cd_a = ab_cd_a_mux ? MUX(ab_a, cd_a) : ab_a + cd_a;									\
+			ab_cd_a = clamp(ab_cd_a, -1.0, 1.0);													\
+																									\
+			OUTPUT_MAPPING(ab_a, alpha_output_mapping)												\
+			OUTPUT_MAPPING(cd_a, alpha_output_mapping)												\
+			OUTPUT_MAPPING(ab_cd_a, alpha_output_mapping)											\
+																									\
+																									\
+			STAGE_COLOR_OUTPUT(ab, ab_output)														\
+			STAGE_COLOR_OUTPUT(cd, cd_output)														\
+			STAGE_COLOR_OUTPUT(ab_cd, ab_cd_output)													\
+			STAGE_ALPHA_OUTPUT(ab_a, ab_a_output)													\
+			STAGE_ALPHA_OUTPUT(cd_a, cd_a_output)													\
+			STAGE_ALPHA_OUTPUT(ab_cd_a, ab_cd_a_output)												\
+		}																							\
+		else if(is_fog_stage && fog_config.x > 0.5 && fog_config.y > 0.5)							\
+		{																							\
+			SELECT_COLOR_INPUT(a, color_input_constant0_alpha,	input_mapping_unsigned_invert)		\
+			SELECT_COLOR_INPUT(b, color_input_scratch0,			input_mapping_unsigned_identity)	\
+			SELECT_COLOR_INPUT(c, color_input_constant0_alpha,	input_mapping_unsigned_identity)	\
+			SELECT_COLOR_INPUT(d, color_input_constant0,		input_mapping_unsigned_identity)	\
+																									\
+			ab_cd = (a * b) + (c * d);																\
+			ab_cd = clamp(ab_cd, -1.0, 1.0);														\
+																									\
+			STAGE_COLOR_OUTPUT(ab_cd, stage_output_scratch0)										\
+		}																							\
+	}
+
+half4 main(PS_INPUT input) : COLOR
+{
+	#ifndef FIRST_MAP_IS_CUBE
+	float4 t0 = Texture0.Sample(TexS0, input.T0.xy / input.T0.w);
+	#else
+	float4 t0 = Texture0.Sample(TexS0, input.T0.xyz);
+	#endif
+
+	float4 t1 = Texture1.Sample(TexS1, input.T1.xy);
+	float4 t2 = Texture2.Sample(TexS2, input.T2.xy);
+	float4 t3 = Texture3.Sample(TexS3, input.T3.xy);
+	float4 c0 = 0;
+	float4 c1 = 0;
+	// On the Xbox, the alpha portion of the R0 register is initialized to the alpha component of texture 0.
+	float4 r0 = float4(0, 0, 0, t0.a);
+	float4 r1 = 0;
+	float4 v0 = input.D0;
+	float4 v1 = input.D1;
+
+	float3	a, b, c, d, ab, cd, ab_cd;
+	float	a_a, b_a, c_a, d_a, ab_a, cd_a, ab_cd_a;
+
+	// Stage 0 ////////////////////////////////////////////////////////////////
+	#ifdef S0_CONFIGURATION
+	STAGE(S0_CONFIGURATION)
+	#endif
+
+	// Stage 1 ////////////////////////////////////////////////////////////////
+	#ifdef S1_CONFIGURATION
+	STAGE(S1_CONFIGURATION)
+	#endif
+
+	// Stage 2 ////////////////////////////////////////////////////////////////
+	#ifdef S2_CONFIGURATION
+	STAGE(S2_CONFIGURATION)
+	#endif
+
+	// Stage 3 ////////////////////////////////////////////////////////////////
+	#ifdef S3_CONFIGURATION
+	STAGE(S3_CONFIGURATION)
+	#endif
+
+	// Stage 4 ////////////////////////////////////////////////////////////////
+	#ifdef S4_CONFIGURATION
+	STAGE(S4_CONFIGURATION)
+	#endif
+
+	// Stage 5 ////////////////////////////////////////////////////////////////
+	#ifdef S5_CONFIGURATION
+	STAGE(S5_CONFIGURATION)
+	#endif
+
+	// Stage 6 ////////////////////////////////////////////////////////////////
+	#ifdef S6_CONFIGURATION
+	STAGE(S6_CONFIGURATION)
+	#endif
+
+	// Stage 6 ////////////////////////////////////////////////////////////////
+	#ifdef S7_CONFIGURATION
+	STAGE(S7_CONFIGURATION)
+	#endif
+
+	
+	return r0;
+};

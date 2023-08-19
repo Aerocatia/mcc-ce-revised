@@ -1,0 +1,243 @@
+SamplerState TexS0 : register(s0);
+Texture2D Texture0 : register(t0);
+
+SamplerState TexS1 : register(s1);
+Texture2D Texture1 : register(t1);
+
+SamplerState TexS2 : register(s2);
+Texture2D Texture2 : register(t2);
+
+SamplerState TexS3 : register(s3);
+Texture2D Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+   float4 T1 : TEXCOORD1;
+   float4 T2 : TEXCOORD2;
+   float4 T3 : TEXCOORD3;
+};
+
+cbuffer _cb0 {
+   half4 c_desaturation_tint;
+   half4 c_light_enhancement;
+}
+
+half4 MaskedConvolution(PS_INPUT i)
+{
+	half4 t0 = Texture0.Sample(TexS0, i.T0.xy);
+	half4 t1 = Texture1.Sample(TexS1, i.T1.xy);
+	half4 t2 = Texture2.Sample(TexS2, i.T2.xy);
+	half4 t3 = Texture3.Sample(TexS3, i.T3.xy);
+	
+	half4 color;
+	color.rgb = lerp( t1, (t1 + t2 + t3)/3, t0.a );
+	color.a = t0.b;
+
+	return color;
+}
+
+half4 UnmaskedConvolution(PS_INPUT i)
+{
+	half4 t0 = Texture0.Sample(TexS0, i.T0.xy);
+	half4 t1 = Texture1.Sample(TexS1, i.T1.xy);
+	half4 t2 = Texture2.Sample(TexS2, i.T2.xy);
+	half4 t3 = Texture3.Sample(TexS3, i.T3.xy);
+	
+	half4 color;
+	color.rgb = (t0 + t1 + t2 + t3) * 0.25;
+	color.a = 0;
+	return color;
+}
+
+half4 VideoOffPostFilter(half T0b, half3 R0, uniform bool bLight, uniform bool bDesaturation)
+{
+	// set filter intensities
+	half R0a	= c_light_enhancement.a;
+	// c_light_enhancement.x == 1 -> filter_light_enhancement_uses_convolution_mask
+	R0a *= lerp(1, 1 - 2*T0b, c_light_enhancement.x);
+
+	half R1a	= c_desaturation_tint.a;
+	// c_light_enhancement.y == 1 -> filter_desaturation_uses_convolution_mask
+	R1a *= lerp(1, 1 - 2*T0b, c_light_enhancement.y);
+
+	half4 r;
+	
+	// tack on light-enhancement shader
+	if (bLight)
+	{
+		half3 R1	= pow(1-R0,4);
+		R0 = (1-R0a)*R0 + R0a*(1-R1);
+		r.rgb = R0;
+	}
+	
+	// tack on desaturation shader
+	if (bDesaturation)
+	{
+		half3 R1 = dot( R0, 1.0/3.0 );
+		
+		half3 additive = R0 + R1a*c_desaturation_tint*R1;
+		half3 normal = (1-R1a)*R0 + R1a*c_desaturation_tint*R1;
+		
+		// c_light_enhancement.z == 1 -> filter_desaturation_is_additive
+		r.rgb = lerp(normal, additive, c_light_enhancement.z);
+	}
+	
+	r.a = T0b;
+
+	return r;
+}
+
+half4 VideoOffFilter(PS_INPUT i, uniform bool bUseConvolutionMask, uniform bool bLight, uniform bool bDesaturation)
+{
+	half4 r;
+	
+	if (bUseConvolutionMask)
+	{
+		r = MaskedConvolution(i);
+	}
+	else
+	{
+		r = UnmaskedConvolution(i);
+	}
+	
+	return VideoOffPostFilter(r.a, r.rgb, bLight, bDesaturation);
+}
+
+// VideoOffConvolvedMaskFilterLightAndDesaturation
+half4 main_T0_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, true, true, true);
+}
+
+// VideoOffConvolvedMaskFilterLight
+half4 main_T1_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, true, true, false);
+}
+
+// VideoOffConvolvedMaskFilterDesaturation
+half4 main_T2_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, true, false, true);
+}
+
+// VideoOffConvolvedFilterLightAndDesaturation
+half4 main_T3_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, false, true, true);
+}
+
+// VideoOffConvolvedFilterLight
+half4 main_T4_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, false, true, false);
+}
+
+// VideoOffConvolvedFilterDesaturation
+half4 main_T5_P0(PS_INPUT i) : SV_TARGET
+{
+   return VideoOffFilter(i, false, false, true);
+}
+
+// VideoOn, Pass P0
+half4 main_T6_P0(PS_INPUT i) : SV_TARGET
+{
+	return Texture0.Sample(TexS0, i.T0.xy);
+};
+
+// VideoOn, Pass P1
+half4 main_T6_P1(PS_INPUT i) : SV_TARGET
+{
+	half2 Tex0 = i.T0;
+	half2 Tex1 = i.T1;
+	half2 Tex2 = i.T2;
+
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy);// screen
+	half4 t1 = Texture1.Sample(TexS1, Tex1.xy);// scanline
+	half4 t2 = Texture2.Sample(TexS2, Tex2.xy);// noise
+
+	half4 attenuated_noise = 1 - c_desaturation_tint.a + c_desaturation_tint.a * t2;
+	
+	half4 attenuated_tint = attenuated_noise * t1;
+
+	half4 r0;
+	r0.rgb = (1 - attenuated_tint) * pow(t0, 4) + attenuated_tint * t0;
+	r0.rgb *= c_desaturation_tint.rgb;
+	r0.a = attenuated_tint.a;
+
+	return r0;
+};
+
+// VideoOffNonConvolved, Pass P0
+half4 main_T7_P0(PS_INPUT i) : SV_TARGET
+{
+	// passes==1
+	half4 t0 = Texture0.Sample(TexS0, i.T0.xy);
+
+	half4 r0;
+	r0.rgb = t0;
+	r0.a = t0.b;
+	
+	return VideoOffPostFilter(r0.a, r0.rgb, true, true);
+};
+
+// VideoOffNonConvolved, Pass P1
+half4 main_T7_P1(PS_INPUT i) : SV_TARGET
+{
+	// passes==2, pass==0
+	half4 r0;
+
+	half4 t0 = Texture0.Sample(TexS0, i.T0.xy);
+
+	r0.rgb = t0;
+	r0.a = 0;
+	return r0;
+};
+
+// VideoOffNonConvolved, Pass P2
+half4 main_T7_P2(PS_INPUT i) : SV_TARGET
+{
+	// passes==2, pass==1 and convolution_mask
+
+	// INPUTS
+	half2 Tex0 = i.T0;
+	half2 Tex1 = i.T1;
+
+	half4 r0;
+
+	half4 t0 = Texture0.Sample(TexS0, Tex0.xy);
+	half4 t1 = Texture1.Sample(TexS1, Tex1.xy);
+
+	r0.rgb = t1;
+	r0.a = t0.b;
+	
+	return VideoOffPostFilter(r0.a, r0.rgb, true, true);
+};
+
+// VideoOffNonConvolved
+half4 main_T8_P0(PS_INPUT i) : SV_TARGET
+{
+	// passes==2, pass==1 and !convolution_mask
+	half4 r0;
+
+	half4 t0 = Texture0.Sample(TexS0, i.T0.xy);
+
+	r0.rgb = t0;
+	r0.a = 0;
+	return VideoOffPostFilter(r0.a, r0.rgb, true, true);
+};
+
+// VideoOffConvolvedMask
+half4 main_T9_P0(PS_INPUT i) : SV_TARGET
+{
+	return MaskedConvolution(i);
+};
+
+// VideoOffConvolved
+half4 main_T10_P0(PS_INPUT i) : SV_TARGET
+{
+	return UnmaskedConvolution(i);
+};

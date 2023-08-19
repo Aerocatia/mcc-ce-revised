@@ -1,0 +1,2 @@
+#define _shader_framebuffer_blend_function_alpha_blend 1
+#include "eff_common.h"

@@ -1,0 +1,170 @@
+SamplerState TexS0 : register(s0);
+#if USE_CUBE != 1
+Texture2D Texture0 : register(t0);
+#else
+TextureCube Texture0 : register(t0);
+#endif // USE_CUBE
+
+SamplerState TexS1 : register(s1);
+Texture2D Texture1 : register(t1);
+SamplerState TexS2 : register(s2);
+Texture2D Texture2 : register(t2);
+SamplerState TexS3 : register(s3);
+Texture2D Texture3 : register(t3);
+
+struct PS_INPUT {
+   float4 Pos : SV_POSITION;
+   float4 D0 : COLOR0;
+   float4 D1 : COLOR1;
+   float4 T0 : TEXCOORD0;
+   float4 T1 : TEXCOORD1;
+   float4 T2 : TEXCOORD2;
+   float4 T3 : TEXCOORD3;
+};
+
+// planar_color, planar_eye_density
+float4 const_color : register(c0);
+
+
+bool4 bool_const[3] : register(c19);
+
+// 12 bool for color func, 12 bool for alpha func
+#define STAGE1_ALPHA_REPLICATE bool_const[0].x
+#define STAGE2_ALPHA_REPLICATE bool_const[0].y
+#define STAGE3_ALPHA_REPLICATE bool_const[0].z
+#define CUSTOM_EDITION_BLEND bool_const[0].w
+
+#define _shader_framebuffer_fade_mode_none                                    bool_const[1].x
+#define _shader_framebuffer_fade_mode_fade_when_perpendicular                 bool_const[1].y
+#define _shader_framebuffer_fade_mode_fade_when_parallel                      bool_const[1].z
+
+#define _shader_framebuffer_blend_function_alpha_blend                        bool_const[2].x
+#define _shader_framebuffer_blend_function_multiply                           bool_const[2].y
+#define _shader_framebuffer_blend_function_double_multiply                    bool_const[2].z
+#define _shader_framebuffer_blend_function_add                                bool_const[2].w
+
+float4 func_configs[18] : register(c1);
+
+#define ALPHA_AorB_A(p)    func_configs[6*(p)-3 + 0].x
+#define ALPHA_AorB_B(p)    func_configs[6*(p)-3 + 0].y
+#define ALPHA_Use1_B(p)    func_configs[6*(p)-3 + 0].z
+#define ALPHA_AorB_C(p)    func_configs[6*(p)-3 + 0].w
+
+#define ALPHA_Use1_C(p)    func_configs[6*(p)-3 + 1].x
+#define ALPHA_AorB_D(p)    func_configs[6*(p)-3 + 1].y
+#define ALPHA_Dscale(p)    func_configs[6*(p)-3 + 1].z
+#define ALPHA_Use1_D(p)    func_configs[6*(p)-3 + 1].w
+
+#define ALPHA_ABscale(p)   func_configs[6*(p)-3 + 2].x
+#define ALPHA_CDscale(p)   func_configs[6*(p)-3 + 2].y
+
+#define COLOR_AorB_A(p)       func_configs[6*(p)-6 + 0].x
+#define COLOR_AorB_B(p)       func_configs[6*(p)-6 + 0].y
+#define COLOR_rgbOrAlpha_B(p) func_configs[6*(p)-6 + 0].z
+#define COLOR_Use1_B(p)       func_configs[6*(p)-6 + 0].w
+
+#define COLOR_AorB_C(p)       func_configs[6*(p)-6 + 1].x
+#define COLOR_Use1_C(p)       func_configs[6*(p)-6 + 1].y
+#define COLOR_AorB_D(p)       func_configs[6*(p)-6 + 1].z
+#define COLOR_rgbOrAlpha_D(p) func_configs[6*(p)-6 + 1].w
+
+#define COLOR_Dscale(p)       func_configs[6*(p)-6 + 2].x
+#define COLOR_Use1_D(p)       func_configs[6*(p)-6 + 2].y
+#define COLOR_ABscale(p)      func_configs[6*(p)-6 + 2].z
+#define COLOR_CDscale(p)      func_configs[6*(p)-6 + 2].w
+
+half3 get_color_arg0(half4 c1, const bool alpha_replicate)
+{
+   if (alpha_replicate) {
+      return c1.aaa;
+   } else {
+      return c1.rgb;
+   }
+}
+
+half3 calc_stage_color(half4 A, half4 B, const int stage, const bool alpha_replicate)
+{
+   half4 inputA = lerp(A, B, COLOR_AorB_A(stage));
+   inputA = half4(get_color_arg0(inputA, alpha_replicate), 1);
+   half4 inputB = lerp(A, B, COLOR_AorB_B(stage));
+   inputB = lerp(inputB, inputB.aaaa, COLOR_rgbOrAlpha_B(stage)) * (1 - COLOR_Use1_B(stage)) + COLOR_Use1_B(stage);
+
+   half4 inputC = lerp(A, B, COLOR_AorB_C(stage)) * (1 - COLOR_Use1_C(stage)) + COLOR_Use1_C(stage);
+   half4 inputD = lerp(A, B, COLOR_AorB_D(stage));
+   inputD = 1 - COLOR_Dscale(stage) * lerp(inputD, inputD.aaaa, COLOR_rgbOrAlpha_D(stage));
+   inputD = inputD * (1 - COLOR_Use1_D(stage)) + COLOR_Use1_D(stage);
+
+   half4 finalColor = COLOR_ABscale(stage) * inputA * inputB + COLOR_CDscale(stage) * inputC * inputD;
+   return finalColor.rgb;
+}
+
+half4 calc_stage_alpha(half A, half B, const int stage)
+{
+   half inputA = lerp(A, B, ALPHA_AorB_A(stage));
+   half inputB = lerp(A, B, ALPHA_AorB_B(stage)) * (1 - ALPHA_Use1_B(stage)) + ALPHA_Use1_B(stage);
+
+   half inputC = lerp(A, B, ALPHA_AorB_C(stage)) * (1 - ALPHA_Use1_C(stage)) + ALPHA_Use1_C(stage);
+   half inputD = 1 - ALPHA_Dscale(stage) * lerp(A, B, ALPHA_AorB_D(stage));
+   inputD = inputD * (1 - ALPHA_Use1_D(stage)) + ALPHA_Use1_D(stage);
+
+   half finalAlpha = ALPHA_ABscale(stage) * inputA * inputB + ALPHA_CDscale(stage) * inputC * inputD;
+   return finalAlpha.xxxx;
+}
+
+half4 main(PS_INPUT input) : COLOR0
+{
+
+#if USE_CUBE != 1
+   half4 c0 = Texture0.Sample(TexS0, input.T0.xy / input.T0.w);
+#else
+   half4 c0 = Texture0.Sample(TexS0, input.T0.xyz);
+#endif   
+
+   half4 t1, t2, t3;
+   t1 = Texture1.Sample(TexS1, input.T1.xy);
+   t2 = Texture2.Sample(TexS2, input.T2.xy);
+   t3 = Texture3.Sample(TexS3, input.T3.xy);
+   
+   half4 c1, c2, c3;
+   c1.rgb = calc_stage_color(c0, t1, 1, STAGE1_ALPHA_REPLICATE);
+   c1.a   = calc_stage_alpha(c0.a, t1.a, 1);
+
+   c2.rgb = calc_stage_color(c1, t2, 2, STAGE2_ALPHA_REPLICATE);
+   c2.a   = calc_stage_alpha(c1.a, t2.a, 2);
+   
+   c3.rgb = calc_stage_color(c2, t3, 3, STAGE3_ALPHA_REPLICATE);
+   c3.a   = calc_stage_alpha(c2.a, t3.a, 3);
+   
+   half4 fog;
+   if (_shader_framebuffer_fade_mode_none)
+      fog = input.D0.aaaa;
+   else if (_shader_framebuffer_fade_mode_fade_when_perpendicular)
+      fog = input.D1.aaaa;
+   else  if (_shader_framebuffer_fade_mode_fade_when_parallel)
+      fog = input.D1;
+   else
+   {
+      // _rasterizer_geometry_sky_bit && framebuffer_blend_function==_shader_framebuffer_blend_function_alpha_blend
+      c3.rgb = lerp(c3.rgb, const_color.rgb, const_color.a);
+      return c3;
+   }
+   
+   half4 c4;
+   
+   if (_shader_framebuffer_blend_function_alpha_blend) {
+      c4.rgb = c3.rgb;
+      c4.a   = c3.a * fog.a;
+   } else if (_shader_framebuffer_blend_function_multiply) {
+      c4.rgb = CUSTOM_EDITION_BLEND ? (fog + c3 * (1 - fog)) : (c3 * fog + (1 - fog));
+      c4.a   = c3.a;
+   } else if (_shader_framebuffer_blend_function_double_multiply) {
+      c4.rgb = CUSTOM_EDITION_BLEND ? (0.5 * (fog + c3)) : (c3 * fog + (1 - fog) * 0.5);
+      c4.a   = c3.a;
+   } else if (_shader_framebuffer_blend_function_add) {
+      c4.rgb = fog * c3;
+      c4.a   = c3.a;
+   } else
+      c4 = fog * c3;
+   
+   return c4;
+}

@@ -1,0 +1,3 @@
+#define NONLINEAR_TINT 1
+#define _shader_framebuffer_blend_function_alpha_multiply_add 1
+#include "eff_common.h"

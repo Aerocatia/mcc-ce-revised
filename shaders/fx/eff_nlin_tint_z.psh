@@ -1,0 +1,3 @@
+#define ZSPRITE 1
+#define NONLINEAR_TINT 1
+#include "eff_common.h"

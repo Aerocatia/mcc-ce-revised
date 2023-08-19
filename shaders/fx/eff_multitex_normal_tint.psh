@@ -1,0 +1,2 @@
+#define HAS_SECOND_COLOR_MAP
+#include "eff_common.h"
