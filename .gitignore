@@ -20,3 +20,5 @@ data/**/*.psd
 data/**/*.sh
 data/**/*.tif
 data/**/*.tiff
+
+shaders/*.bin
