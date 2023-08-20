@@ -76,7 +76,7 @@
 				)
 			 1 (* 30 5 1))
 			(breadcrumbs_activate_team_nav_point_position "default" player -48.93 0 0.65 "pipe_jump" 0.2)
-			
+
 			(sleep_until
 				(or
 					(volume_test_objects moving_jump_success (players))
@@ -102,7 +102,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 7))
 		)
 	)
-	
+
 	; Door to soldier that needs to be followed
 	(if (= g_breadcrumb_nav_index 8)
 		(begin
@@ -157,7 +157,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 13))
 		)
 	)
-	
+
 	; Medical kit towards airlock
 	(if (= g_breadcrumb_nav_index 14)
 		(begin
@@ -208,7 +208,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 16))
 		)
 	)
-	
+
 	; Doorway to airlock 2
 	(if (= g_breadcrumb_nav_index 17)
 		(begin
@@ -223,7 +223,7 @@
 			(set g_breadcrumb_nav_index 18)
 		)
 	)
-	
+
 	; Airlock 2 entrance
 	(if (= g_breadcrumb_nav_index 18)
 		(begin
@@ -238,7 +238,7 @@
 			(set g_breadcrumb_nav_index 19)
 		)
 	)
-	
+
 	; Crouching section
 	(if (= g_breadcrumb_nav_index 19)
 		(begin
@@ -268,7 +268,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 20))
 		)
 	)
-	
+
 	; Upstairs landing area
 	(if (= g_breadcrumb_nav_index 21)
 		(begin
@@ -329,7 +329,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 24))
 		)
 	)
-	
+
 	; Halfway after combat before end
 	(if (= g_breadcrumb_nav_index 25)
 		(begin
@@ -344,7 +344,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 25))
 		)
 	)
-	
+
 	; End of level
 	(if (= g_breadcrumb_nav_index 26)
 		(begin
@@ -414,7 +414,7 @@
 	(sleep_until (< .8 (device_get_position cryo_explosion_door_3)) 1)
 	(sleep_until (volume_test_objects cryo_explosion_trigger_1 (players)) 1)
 	(sleep_until (objects_can_see_object (players) (list_get (ai_actors cryo_tech/tech) 0) 15) 1 delay_wait)
-	
+
 	(sound_impulse_start sound\dialog\a10\A10_460_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\a10\A10_460_CryoTech) 30)))
 	(ai_command_list_advance cryo_tech/tech)
@@ -523,7 +523,7 @@
 	(effect_new "effects\explosions\medium explosion" blam_scare_flag_3)
 	(sleep 5)
 	(object_create blam_steam_flame_1)
-	
+
 	(sleep_until (volume_test_objects moving_crouch (players)) 1)
 	)
 
@@ -556,7 +556,7 @@
 		(object_cannot_take_damage (ai_actors containment_1/forward_security))
 		(units_set_current_vitality (ai_actors containment_1/forward_security) 1 0)
 		(unit_doesnt_drop_items (ai_actors containment_1/forward_security))
-	
+
 	(ai_place containment_1_anti/rear_elite)
 		(objects_predict (ai_actors containment_1_anti))
 		(ai_berserk containment_1_anti/rear_elite 0)
@@ -729,7 +729,7 @@
 	(sleep_until (or (objects_can_see_object (players) (list_get (ai_actors fetch/fetch) 0) 15)
 				  mark_bridge_cutscene_start) 1)
 	(if (not mark_bridge_cutscene_start) (sound_impulse_start sound\dialog\a10\A10_620_Aussie (list_get (ai_actors fetch/fetch) 0) 1));They are waiting for you on the Bridge, sir.
-	
+
 	(set g_breadcrumb_nav_index 10)
 
 	(sleep_until mark_bridge_cutscene_start)
@@ -834,7 +834,7 @@
 
 	(player_enable_input 0)
 	(player_camera_control 0)
-	
+
 	(object_create_anew keyesa10)
 ;	(object_create_anew pipea10)
 	(object_create_anew pistola10)
@@ -843,26 +843,26 @@
 	(vehicle_load_magic pilot_1 "" (ai_actors bridge/pilot_crewman_1))
 
 	(object_teleport keyesa10 keyes_pistol_basea10)
-	
+
 ;	(objects_attach keyesa10 mouth01 pipea10 "")
 	(objects_attach keyesa10 "right hand" pistola10 "keyes grip")
-	
+
 	(sleep 30)
-	
+
 ;	(sound_impulse_start cinematics\sound\x20\cor11 cortana 1)
 ;	(print "cortana: For a hard-wired warrior, your brain is a mess.")
 ;	(sleep (sound_impulse_time cinematics\sound\x20\cor11))
-	
+
 ;	(print "chief: Maybe it needs a woman's touch?")
 ;	(sleep (sound_impulse_time cinematics\sound\x20\cor11))
 
 	(fade_in 1 1 1 30)
 	(sleep 30)
-	
+
 	(sound_impulse_start "sound\dialog\a10\A10_flavor_290_CaptKeyes" keyesa10 1)
 ;	(print "keyes: Good luck, you two. And Chief...take this.")
 ;	(sleep (sound_impulse_time cinematics\sound\x20\cor11))
-	
+
 	(custom_animation keyesa10 cinematics\animations\captain\x20\x20 "give_weapon" true)
 
 	(sleep 30)
@@ -871,7 +871,7 @@
 	(sleep_until (< (unit_get_custom_animation_time keyesa10) 57))
 	(ai_attach_free keyesa10 characters\captain\captain)
 	(sleep (sound_impulse_time "sound\dialog\a10\A10_flavor_290_CaptKeyes"))
-	
+
 	(player_enable_input 1)
 	(player_camera_control 1)
 	)
@@ -923,8 +923,8 @@
 	(sleep_until (or (volume_test_objects bridge_trigger_3 (players))
 				  (not (volume_test_objects bridge_all (players)))) 1)
 
-   (if (mcc_mission_segment "cine3_bridge_talk") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine3_bridge_talk") (sleep 1))
+
 	(set mark_bridge_cutscene_start true)
 	(set g_breadcrumb_nav_index 12)
 	(cinematic_x20)
@@ -997,7 +997,7 @@
 	(object_can_take_damage (ai_actors cafeteria_anti/init_elite))
 	(set play_music_a10_03 false)
 	(ai_conversation marine_1)
-	
+
 	(sleep_until (or (> 3 (ai_living_count cafeteria_anti/init))
 				  (volume_test_objects cafeteria_trigger_3 (players))) 1)
 	(ai_place cafeteria/rein_marine)
@@ -1006,7 +1006,7 @@
 
 	(sleep_until (or (= 0 (ai_living_count cafeteria_anti/init))
 				  (volume_test_objects cafeteria_trigger_3 (players))) 1)
-	
+
 	(ai_retreat cafeteria/init)
 	(ai_place cafeteria_anti/flank)
 	(ai_place cafeteria_anti/retreat_grunt)
@@ -1025,7 +1025,7 @@
 	(device_set_power cafeteria_door_1 0)
 	(set g_breadcrumb_nav_index 14)
 	)
-	
+
 (script dormant mission_airlock_1
 	(sleep_until (volume_test_objects bsp1,2 (players)) 1)
 	(game_save_no_timeout)
@@ -1073,31 +1073,31 @@
 	(ai_migrate airlock_1/airlock_marine airlock_1/airlock)
 	(ai_magically_see_encounter airlock_1_anti airlock_1)
 	(ai_magically_see_encounter airlock_1 airlock_1_anti)
-	
+
 	(sleep_until (> .75 (ai_strength airlock_1_anti/boarding)) 1)
 	(ai_defend airlock_1_anti/boarding)
 	(ai_magically_see_encounter airlock_1_anti airlock_1)
-	
+
 	(sleep_until (or (> .5 (ai_strength airlock_1_anti/boarding))
 				  (volume_test_objects airlock_1_trigger_4 (players))) 1)
 	(ai_migrate airlock_1_anti/boarding airlock_1_anti/advance)
 	(sleep 45)
 	(sleep_until (volume_test_objects airlock_1_trigger_4 (players)) 1)
 	(ai_migrate airlock_1/main airlock_1/advance)
-	
+
 	(sleep_until (or (> .25 (ai_strength airlock_1_anti/boarding))
 				  (volume_test_objects airlock_1_trigger_5 (players))) 1)
 	(ai_migrate airlock_1_anti/boarding airlock_1_anti/end)
 	(sleep 45)
 	(sleep_until (volume_test_objects airlock_1_trigger_5 (players)) 1)
 	(ai_migrate airlock_1/main airlock_1/end)
-	
+
 	(sleep_until (= 0 (ai_living_count airlock_1_anti)) 1)
 	(sleep 45)
 	(ai_conversation airlock_1_2)
 	(set g_breadcrumb_nav_index 17)
 	)
-	
+
 (script dormant mission_flank
 	(sleep_until (volume_test_objects flank_trigger_1 (players)) 1)
 	(game_save_no_timeout)
@@ -1109,7 +1109,7 @@
 	(ai_playfight flank_anti 1)
 	(ai_magically_see_encounter flank flank_anti)
 	(ai_magically_see_encounter flank_anti flank)
-	
+
 	(sleep_until (or (volume_test_objects flank_trigger_1 (players))
 				  (volume_test_objects flank_trigger_2 (players))) 1)
 	(ai_playfight flank 0)
@@ -1160,7 +1160,7 @@
 	(ai_migrate loop airlock_2/airlock)
 	(set play_music_a10_05_alt false)
 	)
-	
+
 (script dormant mission_airlock_2
 	(sleep_until (volume_test_objects airlock_2_trigger_1 (players)) 1)
 	(game_save)
@@ -1181,7 +1181,7 @@
 	(set play_music_a10_05 false)
 	(game_save)
    (mcc_mission_segment "09_knot")
-	
+
 	(sleep_until (volume_test_objects knot_trigger_2 (players)) 1)
 	(ai_place knot)
 	(ai_place knot_anti)
@@ -1260,7 +1260,7 @@
 	(effect_new "effects\bursts\space beam" lifepod_1_flag_1e)
 	(set mark_lifepod_blasts false)
 	(sleep 120)
-	
+
 	(sleep_until test_lifepod_blasts 1)
 	(set mark_lifepod_blasts true)
 	(effect_new "effects\bursts\space beam" lifepod_1_flag_2a)
@@ -1402,7 +1402,7 @@
 	(device_set_position tunnel_door_3 0)
 	(object_create tunnel_door_3a)
 	(sleep 45)
-	(ai_conversation tunnel_1)		
+	(ai_conversation tunnel_1)
 	(sleep_until (> (device_get_position tunnel_door_3) .25) 1)
 	(sleep_until (game_all_quiet) 1 delay_dawdle)
 
@@ -1485,10 +1485,10 @@
 	(effect_new "effects\explosions\medium explosion" boom_flag_6)
 	(sleep 15)
 	(effect_new "effects\explosions\medium explosion" boom_flag_7)
-	
+
 	(sleep_until (< (ai_living_count boom_anti) 2) delay_late)
 	(sleep_until (game_all_quiet))
-	
+
 	(ai_conversation boom_1)
 	)
 
@@ -1502,7 +1502,7 @@
 	(ai_place containment_3)
 	(ai_playfight containment_3 1)
 	(ai_playfight containment_3_anti 1)
-	
+
 	(sleep_until (or (volume_test_objects final_trigger_1 (players))
 				  (volume_test_objects final_trigger_2 (players))
 				  (volume_test_objects final_trigger_3 (players))
@@ -1518,7 +1518,7 @@
 	(ai_place containment_3_anti/3)
 	(ai_place containment_3_anti/4)
 	(ai_place containment_3_anti/5)
-	
+
 	(sleep_until (or (volume_test_objects final_trigger_6 (players))
 				  (volume_test_objects final_trigger_11 (players))) 1)
 	(game_save)
@@ -1538,7 +1538,7 @@
 	(ai_playfight lifepod_2 0)
 	(ai_playfight lifepod_2_anti 0)
 	(ai_follow_target_players lifepod_2)
-	
+
 	(sleep_until (< (ai_living_count lifepod_2_anti) 3) 1 delay_lost)
 	(sleep_until (= 0 (ai_living_count lifepod_2_anti)) 1 delay_lost)
 	(ai_kill lifepod_2_anti)
@@ -1575,7 +1575,7 @@
 	(object_destroy field_x30)
 	(set global_rumble false)
 
-   (if (mcc_mission_segment "cine4_final") (sleep 1))              
+   (if (mcc_mission_segment "cine4_final") (sleep 1))
 
 	(set g_breadcrumb_nav_index 27)
 	(if (cinematic_skip_start) (x30))
@@ -1601,22 +1601,22 @@
 	(if (game_is_cooperative) (object_create cryotube_2_steam_2))
 	(cinematic_start)
 	(camera_control on)
-	
+
 	(object_beautify (player0) true)
 	(game_skip_ticks 7)
-	
+
 	(camera_set tutorial_action_2 0)
 	(camera_set tutorial_action_1 250)
 
 	(fade_in 1 1 1 15)
 	(sleep 15)
-	
+
 	(sound_looping_start sound\sinomatixx_foley\a10_cryoexit_foley none 1)
-	
+
 	(unit_open cryotube_1)
 	(sleep 30)
 	(if (game_is_cooperative) (unit_open cryotube_2))
-	
+
 	(sleep 15)
 	(unit_exit_vehicle (player0))
 	(sleep 30)
@@ -1632,7 +1632,7 @@
 
 	(fade_out 1 1 1 15)
 	(sleep 35)
-	
+
 	(object_beautify (player0) false)
 
 	(camera_control off)
@@ -1746,14 +1746,14 @@
 	(ai_allegiance player human)
 	(ai_grenades 0)
 	(ai_dialogue_triggers 0)
-   
+
    (if (mcc_mission_segment "cine1_intro_before") (sleep 1))
-   
-	(if (= "easy" (game_difficulty_get_real))       (if (mcc_mission_segment "cine1_intro_easy") (sleep 1)) )           
-	(if (= "normal" (game_difficulty_get_real))     (if (mcc_mission_segment "cine1_intro") (sleep 1)) )           
-	(if (= "hard" (game_difficulty_get_real))       (if (mcc_mission_segment "cine1_intro_hard") (sleep 1)) )           
-	(if (= "impossible" (game_difficulty_get_real)) (if (mcc_mission_segment "cine1_intro_legend") (sleep 1)) )           
-   
+
+	(if (= "easy" (game_difficulty_get_real))       (if (mcc_mission_segment "cine1_intro_easy") (sleep 1)) )
+	(if (= "normal" (game_difficulty_get_real))     (if (mcc_mission_segment "cine1_intro") (sleep 1)) )
+	(if (= "hard" (game_difficulty_get_real))       (if (mcc_mission_segment "cine1_intro_hard") (sleep 1)) )
+	(if (= "impossible" (game_difficulty_get_real)) (if (mcc_mission_segment "cine1_intro_legend") (sleep 1)) )
+
 	(if (cinematic_skip_start) (x10))
 	(cinematic_skip_stop)
    (mcc_mission_segment "01_tutorial")
@@ -1781,8 +1781,8 @@
 	(wake mission_containment_1)
 	(wake mission_crossfire)
 	(wake mission_bridge)
-	
-   (mcc_mission_segment "02_bridge")   
+
+   (mcc_mission_segment "02_bridge")
 	(hud_set_objective_text obj_bridge)
 	(show_hud_help_text 1)
 	(hud_set_help_text obj_bridge)
@@ -1790,7 +1790,7 @@
 	(show_hud_help_text 0)
 
 	(sleep_until mark_bridge_cutscene 1)
-   
+
    (mcc_mission_segment "03_escape")
 	(set g_breadcrumb_nav_index 13)
 	(hud_set_objective_text obj_escape)

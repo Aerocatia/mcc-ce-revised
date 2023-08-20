@@ -1,5 +1,5 @@
-;   Script:		Halo D20 Cinematics Script 
-; Synopsis:		
+;   Script:		Halo D20 Cinematics Script
+; Synopsis:
 
 ;- History ---------------------------------------------------------------------
 
@@ -18,7 +18,7 @@
 
 
 ;- Vehicles --------------------------------------------------------------------
-					
+
 ; Outro Banshee 1
 (script static void outro_banshee1
 	(object_teleport ending_banshee1 outro_banshee1)
@@ -67,11 +67,11 @@
 	(camera_set outro_1 0)
 	(sleep 15)
 	(fade_in 1 1 1 30)
-	
+
 	; Cram the players into the banshees
 	(vehicle_load_magic ending_banshee1 "B-driver" (player0))
 	(vehicle_load_magic ending_banshee2 "B-driver" (player1))
-	
+
 	; MOVE EVERY BANSHEE
 	(outro_banshees)
 	(sleep 100)
@@ -81,7 +81,7 @@
 
 	; MUZAK!
 	(sound_looping_stop "levels\d20\music\d20_06")
-	
+
 	(sleep 30)
 
 	; Fade to black
@@ -101,7 +101,7 @@
 ;- Lift Cinematic --------------------------------------------------------------
 
 ;*	Cinematic for when the player travels from the exterior of the ship into the
-	ship by route of the gravity lift. Also responsible for teleporting the 
+	ship by route of the gravity lift. Also responsible for teleporting the
 	player from the lift site to the appropriate part of the ship, and swapping
 	the BSP.
 *;
@@ -114,7 +114,7 @@
 ;- Drop Cinematic --------------------------------------------------------------
 
 ;*	Cinematic for when the player drops from the ship to the exterior
-	environment. Also responsible for switching the BSP and teleporting the 
+	environment. Also responsible for switching the BSP and teleporting the
 	player into the new BSP (as well as saving the game)
 *;
 (script stub void cutscene_fall (print "foo"))
@@ -305,7 +305,7 @@
 
 ;- Flava Dialogue Hooks --------------------------------------------------------
 
-(script static void D20_flavor_010_CaptKeyes 
+(script static void D20_flavor_010_CaptKeyes
 	(if cinematics_debug (print "D20_flavor_010_CaptKeyes"))
 	(sound_impulse_start sound\dialog\d20\D20_flavor_010_CaptKeyes "none" keyes_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_flavor_010_CaptKeyes) 15)))
@@ -317,7 +317,7 @@
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_flavor_020_Cortana) 15)))
 )
 
-(script static void D20_flavor_030_CaptKeyes 
+(script static void D20_flavor_030_CaptKeyes
 	(if cinematics_debug (print "D20_flavor_030_CaptKeyes"))
 	(sound_impulse_start sound\dialog\d20\D20_flavor_030_CaptKeyes "none" keyes_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_flavor_030_CaptKeyes) 15)))
@@ -329,7 +329,7 @@
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_flavor_040_Cortana) 15)))
 )
 
-(script static void D20_flavor_050_CaptKeyes 
+(script static void D20_flavor_050_CaptKeyes
 	(if cinematics_debug (print "D20_flavor_050_CaptKeyes"))
 	(sound_impulse_start sound\dialog\d20\D20_flavor_050_CaptKeyes "none" keyes_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d20\D20_flavor_050_CaptKeyes) 15)))
@@ -361,7 +361,7 @@
 (global boolean music_05_base false)
 (global boolean music_06_base false)
 
-(script static void music_01 
+(script static void music_01
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_01_base)
 	(if cinematics_debug (print "Start music_01"))
@@ -373,7 +373,7 @@
 	(sound_looping_stop "levels\d40\music\d40_01")
 )
 
-(script static void music_02 
+(script static void music_02
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_02_base)
 	(if cinematics_debug (print "Start music_02"))
@@ -385,7 +385,7 @@
 	(sound_looping_stop "levels\d40\music\d40_02")
 )
 
-(script static void music_03 
+(script static void music_03
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_03_base)
 	(if cinematics_debug (print "Start music_03"))
@@ -395,7 +395,7 @@
 	(sleep_until music_03_alt)
 	(if cinematics_debug (print "Alt music_03"))
 	(sound_looping_set_alternate "levels\d40\music\d40_03" true)
-	
+
 	; Stop?
 	(sleep_until (not music_03_base))
 	(set music_03_alt false)
@@ -415,7 +415,7 @@
 	(sound_looping_stop "levels\d40\music\d40_02")
 )
 
-(script static void music_05 
+(script static void music_05
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_05_base)
 	(if cinematics_debug (print "Start music_05"))
@@ -427,7 +427,7 @@
 	(sound_looping_stop "levels\d40\music\d40_02")
 )
 
-(script static void music_06 
+(script static void music_06
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_06_base)
 	(if cinematics_debug (print "Start music_06"))

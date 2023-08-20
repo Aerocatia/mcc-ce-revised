@@ -465,22 +465,22 @@
 (script dormant music_a30
 	(sleep_until play_music_a30_01 1)
 	(music_a30_01)
-	
+
 	(sleep_until play_music_a30_02 1)
 	(music_a30_02)
-	
+
 	(sleep_until play_music_a30_03 1)
 	(music_a30_03)
-	
+
 	(sleep_until play_music_a30_04 1)
 	(music_a30_04)
-	
+
 	(sleep_until play_music_a30_05 1)
 	(music_a30_05)
-	
+
 	(sleep_until play_music_a30_06 1)
 	(music_a30_06)
-	
+
 	(sleep_until play_music_a30_07 1)
 	(music_a30_07)
 	)

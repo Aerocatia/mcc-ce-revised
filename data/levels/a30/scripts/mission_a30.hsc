@@ -36,12 +36,12 @@
 	(camera_set cliff_extraction_1 0)
 	(object_teleport (player1) cliff_hide_flag)
 	(fade_in 0 0 0 15)
-	
+
 	(sound_looping_start sound\sinomatixx\a30_ext_cliff_foley none 1)
 	(sleep 2)
 	(sound_looping_start sound\sinomatixx\a30_ext_cliff_music none 1)
 	(sleep 13)
-	
+
 	(vehicle_hover foehammer_cliff 0)
 	(recording_play_and_delete foehammer_cliff foehammer_cliff_out)
 	(camera_set cliff_extraction_2 500)
@@ -186,7 +186,7 @@
 			(set g_breadcrumb_nav_index 9)
 		)
 	)
-	
+
 	; Rescue objectives
 	(if (= g_breadcrumb_nav_index 9)
 		(begin
@@ -242,7 +242,7 @@
 	(unit_set_enterable_by_player foehammer_cliff 1)
 	(sleep (sound_impulse_time "sound\dialog\a30\A30_1141_Cortana"))
 	(sound_impulse_start sound\dialog\a30\A30_extract_050_Pilot none 1)
-	
+
 	(set global_timer (+ (game_time) delay_lost))
 	(if (game_is_cooperative) (sleep_until (or (vehicle_test_seat_list foehammer_cliff "P-riderLF" (players))
 									   (vehicle_test_seat_list foehammer_cliff "P-riderRF" (players))
@@ -252,14 +252,14 @@
 									   (< global_timer (game_time))) 1 delay_lost))
 	(deactivate_team_nav_point_object player foehammer_cliff)
 	(breadcrumbs_deactivate_team_nav_point_object player foehammer_cliff)
-	(player_enable_input 0) 
+	(player_enable_input 0)
 	(fade_out 0 0 0 15)
 	(sleep 30)
 	(ai_erase_all)
 	(vehicle_load_magic foehammer_cliff "P-riderLF" (player0))
 	(vehicle_load_magic foehammer_cliff "P-riderRF" (player1))
 
-   (if (mcc_mission_segment "cine3_final1") (sleep 1))              
+   (if (mcc_mission_segment "cine3_final1") (sleep 1))
 
 	(if (cinematic_skip_start) (mission_extraction_cliff_skip))
 	(cinematic_skip_stop)
@@ -274,7 +274,7 @@
 	(camera_set rubble_extraction_1 0)
 	(object_teleport (player1) rubble_hide_flag)
 	(fade_in 0 0 0 15)
-	
+
 	(sound_looping_start sound\sinomatixx\a30_ext_rubble_foley none 1)
 	(sleep 8)
 	(sound_looping_start sound\sinomatixx\a30_ext_rubble_music none 1)
@@ -291,7 +291,7 @@
 	(fade_out 0 0 0 30)
 	(sleep 65)
 	)
-	
+
 ; 	Filthy cinematic "build" script...please don't delete
 (script static void rubble_build
 	(switch_bsp 1)
@@ -346,15 +346,15 @@
 									   (< global_timer (game_time))) 1 delay_lost))
 	(deactivate_team_nav_point_object player foehammer_rubble)
 	(breadcrumbs_deactivate_team_nav_point_object player foehammer_rubble)
-	(player_enable_input 0) 
+	(player_enable_input 0)
 	(fade_out 0 0 0 15)
 	(sleep 30)
 	(ai_erase_all)
 	(vehicle_load_magic foehammer_rubble "P-riderLF" (player0))
 	(vehicle_load_magic foehammer_rubble "P-riderRF" (player1))
 
-   (if (mcc_mission_segment "cine3_final2") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine3_final2") (sleep 1))
+
 	(if (cinematic_skip_start) (mission_extraction_rubble_skip))
 	(cinematic_skip_stop)
 	(game_won)
@@ -385,7 +385,7 @@
 	(fade_out 0 0 0 30)
 	(sleep 144)
 	)
-	
+
 ; 	Filthy cinematic "build" script...please don't delete
 (script static void river_build
 	(switch_bsp 1)
@@ -430,7 +430,7 @@
 	(unit_set_enterable_by_player foehammer_river 1)
 	(sleep (sound_impulse_time "sound\dialog\a30\A30_1141_Cortana"))
 	(sound_impulse_start sound\dialog\a30\A30_extract_050_Pilot none 1)
-	
+
 	(set global_timer (+ (game_time) delay_lost))
 	(if (game_is_cooperative) (sleep_until (or (vehicle_test_seat_list foehammer_river "P-riderLF" (players))
 									   (vehicle_test_seat_list foehammer_river "P-riderRF" (players))
@@ -440,15 +440,15 @@
 									   (< global_timer (game_time))) 1 delay_lost))
 	(deactivate_team_nav_point_object player foehammer_river)
 	(breadcrumbs_deactivate_team_nav_point_object player foehammer_river)
-	(player_enable_input 0) 
+	(player_enable_input 0)
 	(fade_out 0 0 0 15)
 	(sleep 30)
 	(ai_erase_all)
 	(vehicle_load_magic foehammer_river "P-riderLF" (player0))
 	(vehicle_load_magic foehammer_river "P-riderRF" (player1))
 
-   (if (mcc_mission_segment "cine3_final3") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine3_final3") (sleep 1))
+
 	(if (cinematic_skip_start) (mission_extraction_river_skip))
 	(cinematic_skip_stop)
 	(game_won)
@@ -538,7 +538,7 @@
 	(ai_command_list lz_banshee/pilot_2 lz_banshee_2)
 	(sleep 90)
 	(ai_magically_see_players lz_banshee)
-	
+
 	(sleep_until (or (< (ai_strength lz_banshee) .6)
 				  (volume_test_objects pass_mouth (players))) 1 delay_fail)
 	(sleep 90)
@@ -610,7 +610,7 @@
 	(sleep_until (or (< 4 (ai_conversation_status lz_prompt_1))
 				  (volume_test_objects lz_bridge (players))) 1)
 	(set mark_evade true)
-	
+
 	(set g_breadcrumb_nav_index 1)
 
 	(set play_music_a30_01 true)
@@ -663,7 +663,7 @@
 	(sleep_until (volume_test_objects_all first_defend (players)) 15)
 	(ai_retreat first_wave/wave_1_attack_toon)
 	(set global_first_wave_1_defend true)
-	
+
 	(sleep_until global_first_wave_2 5)
 	(sleep_until (volume_test_objects_all first_defend (players)) 15)
 	(ai_retreat first_wave/wave_2_attack_toon)
@@ -683,7 +683,7 @@
 	(sleep_until (volume_test_objects_all first_defend (players)) 15)
 	(ai_retreat first_wave/wave_5_attack_toon)
 	(set global_first_wave_5_defend true)
-	
+
 	(sleep_until global_first_wave_6 5)
 	(sleep_until (volume_test_objects_all first_defend (players)) 15)
 	(ai_retreat first_wave/wave_6_attack_toon)
@@ -694,7 +694,7 @@
 	(sleep_until global_first_wave_1_defend 5)
 	(sleep_until (volume_test_objects_all first_retreat (players)) 15)
 	(ai_retreat first_wave/wave_1_defend_toon)
-	
+
 	(sleep_until global_first_wave_2_defend 5)
 	(sleep_until (volume_test_objects_all first_retreat (players)) 15)
 	(ai_retreat first_wave/wave_2_defend_toon)
@@ -724,7 +724,7 @@
 				  (or (> .3 (ai_living_fraction first_marine/right_toon))
 				  	 (> .3 (ai_living_fraction first_marine/left_toon)))) 15)
 	(ai_defend first_marine)
-	
+
 	(sleep 90)
 	(wake mission_first_defend)
 
@@ -738,7 +738,7 @@
 	(ai_retreat first_marine)
 	(if global_first_end (sleep -1))
 	(ai_conversation first_retreat)
-	
+
 	(sleep 45)
 	(wake mission_first_retreat)
 
@@ -1084,7 +1084,7 @@
 (script dormant objective_cave
 	(activate_team_nav_point_object "default_red" player jeep .5)
 	(breadcrumbs_activate_team_nav_point_object "default" player jeep .5)
-	
+
 	(sleep_until (or (volume_test_objects cave_entrance (players))
 				  (vehicle_test_seat_list jeep W-driver (players))) 5 delay_lost)
 	(if (not (vehicle_test_seat_list jeep W-driver (players))) (ai_conversation cave_no_jeep))
@@ -1183,7 +1183,7 @@
 	(sleep_until global_first_wave_5 5)
 	(set play_music_a30_03 true)
 	(wake mission_first_wave_6)
-	
+
 	(sleep_until global_first_wave_6 5)
 
 	(sleep_until (> 6 (ai_living_count first_wave)) 15 delay_lost)
@@ -1227,7 +1227,7 @@
 	(object_create lifeboat_2)
 	(object_teleport lifeboat_2 lifeboat_2_flag)
 	(recording_play_and_delete lifeboat_2 lifeboat_2_in)
-	
+
 	(ai_conversation_stop first_evac_1)
 	(ai_conversation first_evac_2)
 
@@ -1278,27 +1278,27 @@
 	(ai off)
 	(player_enable_input 0)
 
-   (if (mcc_mission_segment "cine2_activating_lightbridge") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine2_activating_lightbridge") (sleep 1))
+
 	(fade_out 1 1 1 15)
 	(sleep 15)
-	
+
 	(object_teleport (player0) player0_bridge_base)
 	(object_teleport (player1) player1_bridge_base)
-	
+
 	(object_destroy chief)
 	(object_destroy rifle)
-	
+
 	(object_create chief)
 	(object_create rifle)
-	
+
 	(object_teleport chief chief_push_base)
 	(objects_attach chief "right hand" rifle "")
-	
+
 	(object_beautify chief true)
-	
+
 	(custom_animation chief cinematics\animations\chief\level_specific\b30\b30 "b30holomapshort" false)
-	
+
 	(camera_control on)
 	(cinematic_start)
 
@@ -1306,15 +1306,15 @@
 	(camera_set bridge_glory_2b 120)
 
 	(fade_in 1 1 1 15)
-	
+
 	(sleep 120)
-	
+
 	(sound_looping_start sound\sinomatixx\a30_bridge_music none 1)
-	
+
 	(camera_set bridge_glory_1a 0)
 
 	(device_set_position bridge 1)
-	
+
 	(camera_set bridge_glory_1b 300)
 	(sleep 150)
 	(camera_set bridge_glory_1c 300)
@@ -1323,16 +1323,16 @@
 	(sleep 90)
 	(camera_set bridge_glory_1e 200)
 	(sleep (- (camera_time) 15))
-	
+
 	(fade_out 1 1 1 15)
 	(sleep 15)
-	
+
 	(object_destroy chief)
 	(object_destroy rifle)
-	
+
 	(object_teleport (player0) player0_bridge_done)
 	(object_teleport (player1) player1_bridge_done)
-	
+
 	(camera_control off)
 	(cinematic_stop)
 	(fade_in 1 1 1 15)
@@ -1350,18 +1350,18 @@
 	(ai_place cave_floor)
 	(objects_predict (ai_actors cave_floor))
 	(wake obj_cave_prompt)
-	(set play_music_a30_05 true)	
+	(set play_music_a30_05 true)
 
 	(sleep_until (or (volume_test_objects cave_gap (players))
 				  (< 0 (device_group_get bridge_control_position))) 1)
 	(ai_timer_expire cave_floor/plank_elite)
-	(set play_music_a30_05_alt true)	
+	(set play_music_a30_05_alt true)
 
 	(sleep_until (< 0 (device_group_get bridge_control_position)) 1 delay_late)
 	(set play_music_a30_05_alt false)
 
 	(sleep_until (< 0 (device_group_get bridge_control_position)) 1)
-	
+
 	(set g_breadcrumb_nav_index 8)
 
 	(set play_music_a30_05 false)
@@ -1401,7 +1401,7 @@
 	(if (not (and global_river_end global_rubble_end)) (set global_cliff_end true))
 	(bcs_activate_rescue_navs)
 	)
-	
+
 
 (script dormant obj_cliff_arrival
 	(sleep_until (volume_test_objects cliff_arrival (players)) 15)
@@ -1444,14 +1444,14 @@
 	(sleep_until (game_safe_to_speak) 1)
 	(wake save_cliff_welcome)
 	(ai_conversation cliff_welcome)
-	
+
 	(sleep_until (< 4 (ai_conversation_status cliff_welcome)) 1)
 	(set global_cliff_welcome true)
 	)
 
 (script dormant mission_cliff
 	(wake obj_cliff_arrival)
-	
+
 	(sleep_until (or (volume_test_objects cliff_1 (players))
 				  (volume_test_objects cliff_2 (players))) 15)
 	(set global_cliff_start true)
@@ -1631,7 +1631,7 @@
 				  (!= (game_difficulty_get) normal)
 				  (> .5 (ai_living_fraction rubble_marine))) 15)
 	(ai_migrate rubble_marine rubble_marine/fight_marine)
-	
+
 	(sleep 90)
 	(wake mission_rubble_defend)
 
@@ -1643,7 +1643,7 @@
 	(sleep 90)
 	(ai_migrate rubble_marine rubble_marine/iron_marine)
 	(ai_conversation rubble_retreat)
-	
+
 	(sleep 45)
 	(wake mission_rubble_retreat)
 
@@ -1728,7 +1728,7 @@
 
 	(sleep (recording_time rubble_middle_cship))
 	(ai_conversation rubble_wave_3_alert)
-	
+
 	(sleep_until (< 4 (ai_conversation_status rubble_wave_3_alert)) 1 delay_dawdle)
 	(ai_disregard (ai_actors rubble_wave/wave_3_lz_toon) 0)
 	(ai_magically_see_encounter rubble_marine rubble_wave)
@@ -1923,13 +1923,13 @@
 	(deactivate_team_nav_point_flag player river_nav_flag)
 	(wake save_rubble_welcome)
 
-	(sleep_until (or (< .5 (ai_living_fraction rubble_wave)) 
+	(sleep_until (or (< .5 (ai_living_fraction rubble_wave))
 				   (volume_test_objects rubble_attack (players))) 15)
 	(ai_playfight rubble_wave 0)
 	(ai_playfight rubble_marine 0)
-	(sleep_until (or (< (ai_living_count rubble_wave) 3) 
+	(sleep_until (or (< (ai_living_count rubble_wave) 3)
 				  (volume_test_objects rubble_attack (players))) 15)
-	(sleep_until (and (< (ai_living_count rubble_wave) 3) 
+	(sleep_until (and (< (ai_living_count rubble_wave) 3)
 				  (volume_test_objects rubble_attack (players))) 15 delay_late)
 	(ai_conversation rubble_welcome)
 
@@ -2009,7 +2009,7 @@
 		)
 	(object_teleport foehammer_rubble foehammer_rubble_flag)
 	(recording_play_and_hover foehammer_rubble foehammer_rubble_in)
-	
+
 	(sleep 210)
 	(ai_migrate rubble_marine rubble_marine/waiting_marine)
 
@@ -2080,7 +2080,7 @@
 
 	(sleep 90)
 	(ai_retreat river_marine)
-	
+
 	(sleep 45)
 	(wake mission_river_retreat)
 
@@ -2133,11 +2133,11 @@
 	(ai_retreat river_wave/wave_3_lz_toon)
 	(ai_magically_see_players river_wave)
 	(ai_magically_see_encounter river_wave river_marine)
-	
+
 	(sleep delay_late)
 	(sleep_until (volume_test_objects_all river_retreat (players)) 15)
 	(ai_retreat river_wave/wave_3_attack_toon)
-	
+
 	(sleep delay_late)
 	(sleep_until (volume_test_objects_all river_retreat (players)) 15)
 	(ai_retreat river_wave/wave_3_defend_toon)
@@ -2191,11 +2191,11 @@
 	(ai_retreat river_wave/wave_2_lz_toon)
 	(ai_magically_see_players river_wave)
 	(ai_magically_see_encounter river_wave river_marine)
-	
+
 	(sleep delay_late)
 	(sleep_until (volume_test_objects_all river_retreat (players)) 15)
 	(ai_retreat river_wave/wave_2_attack_toon)
-	
+
 	(sleep delay_late)
 	(sleep_until (volume_test_objects_all river_retreat (players)) 15)
 	(ai_retreat river_wave/wave_2_defend_toon)
@@ -2233,7 +2233,7 @@
 	(deactivate_team_nav_point_flag player cliff_nav_flag)
 	(deactivate_team_nav_point_flag player rubble_nav_flag)
 	(deactivate_team_nav_point_flag player river_nav_flag)
-	
+
 	(sleep_until (< 4 (ai_conversation_status river_arrival)) 1 delay_dawdle)
 	(wake save_river_welcome)
 	(ai_conversation river_welcome)
@@ -2302,7 +2302,7 @@
 		)
 	(object_teleport foehammer_river foehammer_river_flag)
 	(recording_play_and_hover foehammer_river foehammer_river_in)
-	
+
 	(sleep 210)
 	(ai_migrate river_marine river_marine/waiting_marine)
 
@@ -2381,7 +2381,7 @@
 	(vehicle_hover midcliff_cship_2 1)
 	(objects_predict (ai_actors mid_cliff_2))
 	(objects_predict midcliff_cship_2)
-	
+
 	(sleep_until (or (volume_test_objects midcliff_2_trigger (players))
 				  (< (ai_strength mid_cliff_2) .9)
 				  (objects_can_see_object (players) midcliff_cship_2 5)) 1)
@@ -2396,7 +2396,7 @@
 	(vehicle_hover midrubble_cship_1 1)
 	(objects_predict (ai_actors mid_rubble_1))
 	(objects_predict midrubble_cship_1)
-	
+
 	(sleep_until (or (volume_test_objects midrubble_1_trigger (players))
 				  (< (ai_strength mid_rubble_1) .9)
 				  (objects_can_see_object (players) midrubble_cship_1 5)) 1)
@@ -2411,7 +2411,7 @@
 	(vehicle_hover midriver_cship_1 1)
 	(objects_predict (ai_actors mid_river_1))
 	(objects_predict midriver_cship_1)
-	
+
 	(sleep_until (or (volume_test_objects midriver_1_trigger (players))
 				  (< (ai_strength mid_river_1) .9)
 				  (objects_can_see_object (players) midriver_cship_1 5)) 1)
@@ -2466,7 +2466,7 @@
 				   ((not global_rubble_end) (activate_team_nav_point_flag "default_red" player rubble_nav_flag 0))
 				   ((not global_cliff_end) (activate_team_nav_point_flag "default_red" player cliff_nav_flag 0))
 			  	)))
-	
+
 	(sleep_until (or (and global_cliff_end
 				  	  global_rubble_end)
 				  (and global_cliff_end
@@ -2549,113 +2549,113 @@
 
 	(camera_set intro_2 210)
 	(fade_in 0 0 0 30)
-	
+
 	(sound_looping_start sound\sinomatixx\a30_insertion_foley none 1)
 	(sound_looping_start sound\sinomatixx\a30_insertion_music none 1)
-	
-	(sleep 90) 
+
+	(sleep 90)
 	(cinematic_set_title arrival)
 	(sleep 30)
 	(camera_set intro_3 150)
-	
+
 	(object_destroy intro_pod)
 	(object_destroy pilot_intro)
-	
+
 	(object_create pilot_intro)
 	(object_create intro_pod)
-	
-	(objects_attach intro_pod "driver" pilot_intro "") 	
+
+	(objects_attach intro_pod "driver" pilot_intro "")
 	(custom_animation pilot_intro cinematics\animations\pilot\x30\x30 idle false)
-	
+
 	(game_skip_ticks 5)
-	
+
 	(object_teleport intro_pod intro_pod_flag)
 	(recording_play intro_pod intro_pod_fly)
-	
+
 	(sleep 60)
-	
+
 	(sound_impulse_start sound\dialog\a30\a30_insert_010_cortana none 1)
-	
+
 	(sleep 30)
-	
+
 	(sleep (camera_time))
-	
+
 	(fade_out 1 1 1 10)
 ;	(camera_shake)
-	
+
 	(sleep 10)
 	(camera_set_relative intro_pod_follow 0 intro_pod)
-	
+
 	(sound_impulse_start sound\dialog\a30\a30_insert_020_lifeboatpilot none 1)
 	(print "pilot: damn! airbrake failure! we're losing them!")
-	
+
 	(player_effect_set_max_vibrate .3 .3)
 	(player_effect_start 1 1 )
-	
+
 	(fade_in 1 1 1 10)
-	
+
 	(sleep 30)
-	
+
 	(custom_animation intro_pod vehicles\lifepod_entry\lifepod_entry "vehicle airbrakes-off" true)
-	
+
 	(print "<airbrakes pop off>")
-	
+
 	(sleep 90)
-	
+
 	(fade_out 1 1 1 10)
-	
+
 	(sleep 10)
-	
+
 	(objects_detach intro_pod pilot_intro)
-	
+
 	(object_destroy intro_pod)
 	(object_destroy pilot_intro)
-	
+
 	(object_create_anew intro_pod_2)
 	(object_create_anew chief)
 	(object_create_anew pilot_intro)
-	
-	(objects_attach intro_pod_2 "driver" pilot_intro "") 	
+
+	(objects_attach intro_pod_2 "driver" pilot_intro "")
 	(custom_animation pilot_intro cinematics\animations\pilot\x30\x30 heads_up false)
-	
+
 	(game_skip_ticks 5)
-	
+
 	(unit_enter_vehicle chief intro_pod_2 "stand")
-	
-	(object_teleport intro_pod_2 intro_pod_2_base) 
-	
+
+	(object_teleport intro_pod_2 intro_pod_2_base)
+
 	(cinematic_set_near_clip_distance .01)
-	
+
 	(camera_set_first_person chief)
 	(recording_play chief chief_intro_cam)
 	(recording_play intro_pod_2 intro_pod_fly_2)
-	
+
 	(player_effect_set_max_rotation 0 .5 .5)
 	(player_effect_set_max_vibrate .5 .5)
-	
+
 	(fade_in 1 1 1 10)
-	
+
 	(sound_impulse_start sound\dialog\a30\a30_insert_030_lifeboatpilot none 1)
-	
+
 	(sleep 165)
-	
+
 	(sound_impulse_start sound\sfx\vehicles\lifeboat_crash none 1)
-	
-	(fade_out 1 1 1 0)	
+
+	(fade_out 1 1 1 0)
 	(camera_control off)
-	
+
 	(sleep 30)
-	
+
 	(player_effect_set_max_vibrate 1 1)
 	(player_effect_stop 4)
-	
+
 	(object_destroy intro_tree)
 	(object_destroy chief)
 	(object_destroy pilot_intro)
 	(object_destroy intro_pod_2)
 
 	(sleep 90)
-	
+
 	(cinematic_screen_effect_start 1)
 	(cinematic_screen_effect_set_convolution 1 1 3 0 7)
 	)
@@ -2694,8 +2694,8 @@
 	)
 
 (script startup mission_a30
-   (if (mcc_mission_segment "cine1_intro") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine1_intro") (sleep 1))
+
 	(hud_show_motion_sensor 0)
 	(fade_out 0 0 0 0)
 	(print "mission script is running")
@@ -2721,7 +2721,7 @@
 	(cinematic_stop)
 
    (mcc_mission_segment "01_start")
-   
+
 	(if (breadcrumbs_nav_points_active)
 		(wake breadcrumbs_nav_points_a30)
 	)
@@ -2734,7 +2734,7 @@
 	(wake mission_lz)
 	(wake mission_first)
 	(wake mission_cave)
-	
+
 	(sleep_until (volume_test_objects cave_exit (players)) 1)
 	(wake mission_cliff)
 	(wake mission_rubble)

@@ -2,7 +2,7 @@
 
 ;========== Global Variables ==========
 
-;========== Junk Scripts ==========
+;========== Crap Scripts ==========
 
 (script static void c10_cinematic_placeholder
 	(cinematic_start)
@@ -26,7 +26,7 @@
 	(print "Pilot: The last transmission from the Captain's dropship was tracked to this location.")
 	(print "Pilot: That was over 12 hours ago and since then no one's been able to raise Captain Keyes or his team.")
 	)
-	
+
 (script dormant dialog_pilot_patroling
 	(print "Pilot: I'll stay in the area just in case anything happens.")
 	(print "Pilot: When you find the Captain radio and I'll come pick up everyone.")
@@ -52,7 +52,7 @@
 	(sleep (* 30 2))
 	(print "[over the radio]... Forerunner structure in the swamp... heavy Covenant presence...")
 	(sleep (* 30 2))
-	(print "[over the radio]... Mayday... this is command dropship Cerberus...") 
+	(print "[over the radio]... Mayday... this is command dropship Cerberus...")
 	(sleep (* 30 2))
 	(print "[over the radio]... ... ...")
 	(sleep (* 30 2))
@@ -64,7 +64,7 @@
 (script dormant dialog_marine_b
 	(print "Marine: I said stay back!")
 	)
-	
+
 (script dormant dialog_marine_c
 	(print "Marine: (angry/scared) Aaaaaah!!!!")
 	)
@@ -72,7 +72,7 @@
 (script dormant dialog_marine_d
 	(print "Marine: Get away!")
 	)
-	
+
 (script dormant dialog_marine_e
 	(print "Marine: Find your own hiding place!")
 	)
@@ -85,7 +85,7 @@
 (script dormant dialog_marine_g
 	(print "Marine: (hysterical) Aaah!!! Aaah!!! Aaaaaah!!!")
 	)
-	
+
 (script dormant dialog_marine_h
 	(print "Marine: Just leave me alone!")
 	)
@@ -118,9 +118,9 @@
 (script dormant dialog_cyborg_extraction
 	(print "Chief: I need extraction, I'll explain later.")
 	)
-	
+
 (script dormant dialog_pilot_no_can_do
-	(print "Pilot: I can't sir.") 
+	(print "Pilot: I can't sir.")
 	(print "Pilot: Your somewhere under the swamp's canopy and I don't see any way through.")
 	)
 

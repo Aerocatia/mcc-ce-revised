@@ -7,7 +7,7 @@
 	(ai_vehicle_enterable_actor_type insertion_turret_a grunt)
 	(ai_vehicle_enterable_actor_type insertion_turret_b grunt)
 	)
-	
+
 ;========== Breadcrumbs nav points ==========
 (global short g_breadcrumb_nav_index 0)
 
@@ -26,7 +26,7 @@
 			(set g_breadcrumb_nav_index 1)
 		)
 	)
-	
+
 	; On downward slope leading deeper in structure
 	(if (= g_breadcrumb_nav_index 1)
 		(begin
@@ -41,7 +41,7 @@
 			(set g_breadcrumb_nav_index 2)
 		)
 	)
-	
+
 	; On console which player has to interact with
 	(if (= g_breadcrumb_nav_index 2)
 		(begin
@@ -56,7 +56,7 @@
 			(set g_breadcrumb_nav_index 3)
 		)
 	)
-	
+
 	; On outside open area
 	(if (= g_breadcrumb_nav_index 3)
 		(begin
@@ -79,7 +79,7 @@
 		)
 	)
 
-	
+
 	; On bend in outside open area
 	(if (= g_breadcrumb_nav_index 4)
 		(begin
@@ -94,7 +94,7 @@
 			(set g_breadcrumb_nav_index 5)
 		)
 	)
-	
+
 	; On console for opening doors
 	(if (= g_breadcrumb_nav_index 5)
 		(begin
@@ -199,7 +199,7 @@
 			(set g_breadcrumb_nav_index 12)
 		)
 	)
-	
+
 	; In hallway
 	(if (= g_breadcrumb_nav_index 12)
 		(begin
@@ -214,7 +214,7 @@
 			(set g_breadcrumb_nav_index 13)
 		)
 	)
-	
+
 	; Outside bridge to inside 2
 	(if (= g_breadcrumb_nav_index 13)
 		(begin
@@ -229,7 +229,7 @@
 			(set g_breadcrumb_nav_index 14)
 		)
 	)
-	
+
 	; In corridor sloping down
 	(if (= g_breadcrumb_nav_index 14)
 		(begin
@@ -244,7 +244,7 @@
 			(set g_breadcrumb_nav_index 15)
 		)
 	)
-	
+
 	; In corridor leading to next interactable console
 	(if (= g_breadcrumb_nav_index 15)
 		(begin
@@ -259,7 +259,7 @@
 			(set g_breadcrumb_nav_index 16)
 		)
 	)
-	
+
 	; On interactable console
 	(if (= g_breadcrumb_nav_index 16)
 		(begin
@@ -274,7 +274,7 @@
 			(set g_breadcrumb_nav_index 17)
 		)
 	)
-	
+
 	; On outside open area
 	(if (= g_breadcrumb_nav_index 17)
 		(begin
@@ -296,7 +296,7 @@
 			(set g_breadcrumb_nav_index 18)
 		)
 	)
-	
+
 	; On 1st console that leads to final area
 	(if (= g_breadcrumb_nav_index 18)
 		(begin
@@ -311,7 +311,7 @@
 			(set g_breadcrumb_nav_index 19)
 		)
 	)
-	
+
 	; On 2nd console that leads to final area
 	(if (= g_breadcrumb_nav_index 19)
 		(begin
@@ -326,7 +326,7 @@
 			(set g_breadcrumb_nav_index 20)
 		)
 	)
-	
+
 	; On final console that leads to final area
 	(if (= g_breadcrumb_nav_index 20)
 		(begin
@@ -383,7 +383,7 @@
 	(sleep 1)
 	(objects_predict (ai_actors a1_cov))
 	)
-	
+
 (script static void enc_a1_rear
 	(ai_place a1_cov/grunts_rear)
 	(sleep 1)
@@ -412,7 +412,7 @@
 	(ai_place a_bridge/elites_reins)
 	)
 
-(script dormant enc_a_bridge_reins	
+(script dormant enc_a_bridge_reins
 	(begin_random
 		(if a_bridge_rein
 			(begin (ai_place a_bridge/grunts_reins)
@@ -485,7 +485,7 @@
 		(begin (ai_go_to_vehicle a_bridge/grunts_a ext_a_bridge_turret_d gunner) (sleep default_turret_delay))
 		(sleep default_turret_delay))
 	)
-	
+
 (script continuous ini_a_bridge_turret_far
 	(begin_random
 		(begin (ai_go_to_vehicle a_bridge/turret_grunts ext_a_bridge_turret_a gunner) (sleep default_turret_delay))
@@ -539,7 +539,7 @@
 ;	(ai_place ext_a_area_a_cov/elites_e)
 	(ai_place ext_a_area_a_cov/elites_k)
 	(ai_place ext_a_area_a_cov/jackals_k1)
-	
+
 	(begin_random
 		(if ext_a_spawn
 			(begin (ai_place ext_a_area_a_cov/jackals_e)
@@ -631,12 +631,12 @@
 	(ai_place ext_a_area_b_marines/sarge)
 	(sleep 1)
 	(objects_predict (ai_actors ext_a_area_b_marines))
-	
+
 	(sleep 300)
 	(ai_migrate ext_a_area_b_marines ext_a_area_b_marines/squad_a)
 	(ai_follow_target_players ext_a_area_b_marines/squad_a)
 	)
-	
+
 (script dormant enc_ext_a_area_c_cov
 	(begin_random
 		(if ext_a_spawn
@@ -721,7 +721,7 @@
 	(objects_predict (ai_actors ext_a_area_c_cov))
 	)
 
-	
+
 ;========== Initialization Scripts (Exterior A) ==========
 
 (script dormant ini_ext_a_dropships_a
@@ -760,7 +760,7 @@
 	(if ext_a_mig_cov
 		(begin (set ext_a_mig_cov_limit (- ext_a_mig_cov_limit 1))
 			  (sleep 1)
-			  (ai_command_list_by_unit 
+			  (ai_command_list_by_unit
 				(unit (list_get (ai_actors ext_a_area_b_cov/squad_a) ext_a_mig_cov_limit))
 					ext_a_area_a_ledge_a)
 			  (if (= ext_a_mig_cov_limit 0) (set ext_a_mig_cov 0))))
@@ -769,7 +769,7 @@
 	(if ext_a_mig_cov
 		(begin (set ext_a_mig_cov_limit (- ext_a_mig_cov_limit 1))
 			  (sleep 1)
-			  (ai_command_list_by_unit 
+			  (ai_command_list_by_unit
 				(unit (list_get (ai_actors ext_a_area_b_cov/squad_a) ext_a_mig_cov_limit))
 					ext_a_area_a_ledge_b)
 			  (if (= ext_a_mig_cov_limit 0) (set ext_a_mig_cov 0))))
@@ -778,7 +778,7 @@
 	(if ext_a_mig_cov
 		(begin (set ext_a_mig_cov_limit (- ext_a_mig_cov_limit 1))
 			  (sleep 1)
-			  (ai_command_list_by_unit 
+			  (ai_command_list_by_unit
 				(unit (list_get (ai_actors ext_a_area_b_cov/squad_a) ext_a_mig_cov_limit))
 					ext_a_area_a_ledge_c)
 			  (if (= ext_a_mig_cov_limit 0) (set ext_a_mig_cov 0))))
@@ -787,7 +787,7 @@
 	(if ext_a_mig_cov
 		(begin (set ext_a_mig_cov_limit (- ext_a_mig_cov_limit 1))
 			  (sleep 1)
-			  (ai_command_list_by_unit 
+			  (ai_command_list_by_unit
 				(unit (list_get (ai_actors ext_a_area_b_cov/squad_a) ext_a_mig_cov_limit))
 					ext_a_area_a_ledge_d)
 			  (if (= ext_a_mig_cov_limit 0) (set ext_a_mig_cov false))))
@@ -801,34 +801,34 @@
 	(vehicle_unload ext_a_turret_a "gunner")
 	(ai_migrate ext_a_area_a_cov ext_a_area_a_cov/squad_o)
 	(ai_follow_target_players ext_a_area_a_cov)
-	
+
 	(sleep_until (volume_test_objects ext_a_area_b_trigger (players)))
 	(sleep -1 dialog_ext_a_a_clear)
 	(sleep 1)
 
 	(ai_migrate ext_a_area_a_marines ext_a_area_b_marines/squad_a)
 	(ai_migrate ext_a_area_a_cov ext_a_area_b_cov/squad_all)
-	
+
 	(ai_command_list ext_a_area_a_ghost_a ext_a_area_a_ledge_c)
 	(ai_command_list ext_a_area_a_ghost_b ext_a_area_a_ledge_c)
 	(ai_command_list ext_a_area_a_wraith ext_a_wraith_ledge)
-	
+
 	(sleep 1)
 	(set ext_a_mig_cov_limit (ai_living_count ext_a_area_b_cov/squad_a))
 	(sleep 1)
 	(inspect ext_a_mig_cov_limit)
 
-	(ai_command_list_by_unit 
+	(ai_command_list_by_unit
 		(unit (list_get (ai_actors ext_a_area_b_cov/squad_a) ext_a_mig_cov_limit))
 			ext_a_area_a_ledge_a)
-		
+
 	(wake ext_a_migration)
-	
-	(ai_command_list_by_unit 
+
+	(ai_command_list_by_unit
 		(unit (list_get (ai_actors ext_a_area_b_marines/squad_a) 0)) ext_a_area_a_ledge_b)
-	(ai_command_list_by_unit 
+	(ai_command_list_by_unit
 		(unit (list_get (ai_actors ext_a_area_b_marines/squad_a) 1)) ext_a_area_a_ledge_c)
-	(ai_command_list_by_unit 
+	(ai_command_list_by_unit
 		(unit (list_get (ai_actors ext_a_area_b_marines/squad_a) 2)) ext_a_area_a_ledge_b)
 	(ai_command_list_by_unit
 		(unit (list_get (ai_actors ext_a_area_b_marines/squad_a) 3)) ext_a_area_a_ledge_c)
@@ -842,20 +842,20 @@
 	(wake general_save)
 	(vehicle_load_magic ext_a_area_b_ghost_a "driver" (ai_actors ext_a_area_b_cov/ghost_a_pilot))
 	(vehicle_load_magic ext_a_area_b_ghost_b "driver" (ai_actors ext_a_area_b_cov/ghost_b_pilot))
-	
+
 	(ai_vehicle_encounter ext_a_area_b_ghost_a ext_a_area_b_ghost_a/squad_g)
 	(ai_vehicle_encounter ext_a_area_b_ghost_b ext_a_area_b_ghost_b/squad_g)
-	
+
 	(ai_follow_target_players ext_a_area_b_ghost_a/squad_g)
 	(ai_follow_target_players ext_a_area_b_ghost_b/squad_g)
 
 	(ai_vehicle_enterable_distance ext_a_area_b_ghost_a 15)
 	(ai_vehicle_enterable_distance ext_a_area_b_ghost_b 15)
-	
+
 	(ai_magically_see_players ext_a_area_b_ghost_a)
 	(ai_magically_see_players ext_a_area_b_ghost_b)
 	)
-	
+
 (script dormant ini_ext_a_area_c_banshee
 	(ai_place ext_a_area_c_cov/banshee_pilot)
 	(ai_go_to_vehicle ext_a_area_c_cov/banshee_pilot ext_a_area_c_banshee "driver")
@@ -893,20 +893,20 @@
 
 (script static void migration_a_a
 	(sleep 1))
-	
+
 (script static void migration_a_b
 	(ai_migrate ext_a_area_a_marines ext_a_area_b_marines/squad_a)
 	(sleep 1)
 	(ai_follow_target_players ext_a_area_b_marines/squad_a)
 	)
-	
+
 (script static void migration_a_c
 	(ai_migrate ext_a_area_a_marines ext_a_area_c_marines/squad_a)
 	(ai_migrate ext_a_area_b_marines ext_a_area_c_marines/squad_a)
 	(sleep 1)
 	(ai_follow_target_players ext_a_area_c_marines/squad_a)
 	)
-	
+
 (script static void migration_crev
 	(ai_migrate ext_a_area_a_marines crev_marines/squad_a)
 	(ai_migrate ext_a_area_b_marines crev_marines/squad_a)
@@ -969,7 +969,7 @@
 		    (exit_jeep))
 	(sleep 300)
 	)
-	
+
 (script continuous ini_tank_exit_a
 	(sleep_until (not (vehicle_test_seat_list ext_a_tank "scorpion-driver" (players))))
 	(sleep 90)
@@ -1004,7 +1004,7 @@
 	(sleep 1)
 	(objects_predict (ai_actors crevasse_cov_b))
 	)
-	
+
 
 ;========== Initialization Scripts (Crevasse) ==========
 
@@ -1019,7 +1019,7 @@
 		(begin (ai_go_to_vehicle crevasse_cov_a/turret_a_gunners crevasse_turret_a gunner) (sleep default_turret_delay))
 		(sleep default_turret_delay))
 	)
-	
+
 (script continuous ini_crevasse_turret_b
 	(begin_random
 		(begin (ai_go_to_vehicle crevasse_cov_a/turret_b_gunners crevasse_turret_b gunner) (sleep default_turret_delay))
@@ -1031,7 +1031,7 @@
 		(begin (ai_go_to_vehicle crevasse_cov_b/turret_c_gunners crevasse_turret_c gunner) (sleep default_turret_delay))
 		(sleep default_turret_delay))
 	)
-	
+
 (script dormant ini_crev_dialog
 	(sleep_until (volume_test_objects crev_dialog_trigger (players)))
 	(ai_conversation enter_crev)
@@ -1088,14 +1088,14 @@
 	(ai_place ext_b_area_b_cov/jackals_b)
 	(ai_place ext_b_area_b_cov/turret_gunner_a)
 	(ai_place ext_b_area_b_cov/turret_gunner_b)
-	
+
 	(ai_go_to_vehicle ext_b_area_b_cov/turret_gunner_a ext_b_b_turret_a "gunner")
 	(ai_go_to_vehicle ext_b_area_b_cov/turret_gunner_b ext_b_b_turret_b "gunner")
 	(sleep 1)
 	(objects_predict ext_b_b_turret_a)
 	(objects_predict (ai_actors ext_b_area_b_cov))
 	)
-	
+
 (script dormant enc_ext_b_b_marines
 	(ai_place ext_b_marines/marines_tunnel)
 	(ai_place ext_b_marines/sarge)
@@ -1106,7 +1106,7 @@
 	(ai_place ext_b_area_b_cov/hunters)
 	(sleep 1)
 	(objects_predict (ai_actors ext_b_area_b_cov))
-	
+
 	(sleep 150)
 	(ai_conversation ext_b_b_ini)
 	)
@@ -1126,7 +1126,7 @@
 	(ai_place ext_b_area_b_cov/grunts_m)
 	(ai_place ext_b_area_b_cov/turret_gunner_c)
 	(ai_go_to_vehicle ext_b_area_b_cov/turret_gunner_c ext_b_b_turret_c "gunner")
-	
+
 ;	(ai_place ext_b_area_c_cov/elites_a)
 ;	(ai_place ext_b_area_c_cov/grunts_a)
 	(sleep 1)
@@ -1157,16 +1157,16 @@
 	(sleep 1)
 	(ai_go_to_vehicle ext_b_area_c_cov/turret_gunner_b ext_b_c_turret_b "gunner")
 	(ai_go_to_vehicle ext_b_area_c_cov/turret_gunner_c ext_b_c_turret_c "gunner")
-	
+
 	(ai_go_to_vehicle ext_b_area_c_cov/ghost_pilot_a ext_b_c_ghost_a "driver")
 	(ai_go_to_vehicle ext_b_area_c_cov/ghost_pilot_b ext_b_c_ghost_b "driver")
-	
+
 	(ai_vehicle_encounter ext_b_c_ghost_a ext_b_c_ghost_a/squad_j)
 	(ai_vehicle_encounter ext_b_c_ghost_b ext_b_c_ghost_b/squad_l)
-	
+
 	(ai_follow_target_players ext_b_c_ghost_a/squad_j)
 	(ai_follow_target_players ext_b_c_ghost_b/squad_l)
-	
+
 	(objects_predict (ai_actors ext_b_area_c_cov))
 	(objects_predict ext_b_c_ghost_a)
 	)
@@ -1177,7 +1177,7 @@
 	(sleep 1)
 	(objects_predict (ai_actors ext_b_area_c_cov))
 	)
-	
+
 ;========== Initialization Scripts (Exterior B) ==========
 
 (script dormant ini_ext_b_a_dropship_a
@@ -1191,7 +1191,7 @@
 		    (exit_jeep))
 	(sleep 300)
 	)
-	
+
 (script continuous ini_tank_exit_b
 	(sleep_until (= (vehicle_test_seat_list ext_a_tank "scorpion-driver" (players)) 0))
 	(sleep 90)
@@ -1202,12 +1202,12 @@
 
 (script dormant ini_ext_b_tunnel
 	(wake enc_ext_b_tunnel)
-	
+
 	(sleep_until (= (ai_status ext_b_area_a_cov) 6))
 	(ai_go_to_vehicle ext_b_area_a_cov/elites_a tunnel_ghost_b "driver")
 	(ai_vehicle_encounter tunnel_ghost_a tunnel_ghost_a/squad_a)
 	(ai_follow_target_players tunnel_ghost_a/squad_a)
-	
+
 	(sleep 600)
 	(ai_vehicle_enterable_distance tunnel_ghost_b 10)
 	(ai_vehicle_encounter tunnel_ghost_b tunnel_ghost_b/squad_a)
@@ -1230,14 +1230,14 @@
 	(sleep 1)
 	(objects_predict (ai_actors ext_b_area_a_cov/elites_tower))
 	)
-	
+
 (script dormant ini_ext_b_second
 	(ai_place ext_b_area_a_cov/turret_a_gunner)
 	(ai_place ext_b_area_a_cov/turret_b_gunner)
 	(ai_place ext_b_area_a_cov/ghost_pilot_c)
 	(ai_place ext_b_area_a_cov/ghost_pilot_d)
 	(ai_place ext_b_area_a_cov/wraith_gunner)
-	
+
 	(ai_go_to_vehicle ext_b_area_a_cov/ghost_pilot_c ext_b_a_ghost_c "driver")
 	(ai_go_to_vehicle ext_b_area_a_cov/ghost_pilot_d ext_b_a_ghost_d "driver")
 	(ai_go_to_vehicle ext_b_area_a_cov/turret_a_gunner ext_b_a_turret_a "gunner")
@@ -1247,7 +1247,7 @@
 	(ai_vehicle_encounter ext_b_a_ghost_c ext_b_a_ghost_c/squad_c)
 	(ai_vehicle_encounter ext_b_a_ghost_d ext_b_a_ghost_d/squad_d)
 	(ai_vehicle_encounter ext_b_a_wraith ext_b_a_wraith/wraith)
-	
+
 	(ai_follow_target_players ext_b_area_a_cov/ghost_pilot_c)
 	(ai_follow_target_players ext_b_area_a_cov/ghost_pilot_d)
 	(ai_follow_target_players ext_b_a_ghost_c/squad_c)
@@ -1257,7 +1257,7 @@
 	(objects_predict ext_b_a_turret_a)
 	(objects_predict ext_b_a_wraith)
 	(objects_predict (ai_actors ext_b_area_a_cov))
-	
+
 	(ai_migrate ext_b_area_a_cov/elites_a ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/grunts_a ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/jackals_c ext_b_area_a_cov/squad_l)
@@ -1268,7 +1268,7 @@
 	(ai_migrate ext_b_area_a_cov/elites_f ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/grunts_f ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/jackals_f ext_b_area_a_cov/squad_l)
-	
+
 	(ai_follow_target_players  ext_b_area_a_cov/squad_l)
 	(sleep 30)
 	(ai_magically_see_players ext_b_a_wraith)
@@ -1289,19 +1289,19 @@
 (script dormant ini_ext_b_trigger_d
 	(ai_place ext_b_area_a_cov/hunter_o)
 	(ai_place ext_b_area_a_cov/hunter_q)
-	
+
 	(if (and (= (ai_living_count ext_b_a_ghost_a) 0)
 		    (= (ai_living_count ext_b_a_ghost_b) 0)
 		    (= (ai_living_count ext_b_a_ghost_c) 0)
 		    (= (ai_living_count ext_b_a_ghost_d) 0))
 	    (begin  (ai_place ext_b_area_a_cov/ghost_pilot_e) (ai_place ext_b_area_a_cov/ghost_pilot_f)))
-	
+
 	(ai_go_to_vehicle ext_b_area_a_cov/ghost_pilot_e ext_b_a_ghost_e "driver")
 	(ai_go_to_vehicle ext_b_area_a_cov/ghost_pilot_f ext_b_a_ghost_f "driver")
 
 	(ai_vehicle_encounter ext_b_a_ghost_c ext_b_a_ghost_e/squad_e)
 	(ai_vehicle_encounter ext_b_a_ghost_d ext_b_a_ghost_f/squad_f)
-	
+
 	(ai_follow_target_players ext_b_area_a_cov/ghost_pilot_e)
 	(ai_follow_target_players ext_b_area_a_cov/ghost_pilot_f)
 	(ai_follow_target_players ext_b_a_ghost_e/squad_e)
@@ -1309,7 +1309,7 @@
 	(sleep 1)
 	(objects_predict ext_b_a_ghost_c)
 	(objects_predict (ai_actors ext_b_area_a_cov))
-	
+
 	(ai_migrate ext_b_area_a_cov/elites_u ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/grunts_u ext_b_area_a_cov/squad_l)
 	(ai_migrate ext_b_area_a_cov/jackals_u ext_b_area_a_cov/squad_l)
@@ -1337,7 +1337,7 @@
 	(ai_migrate ext_b_area_b_cov/grunts_p ext_b_area_b_cov/squad_p)
 	(ai_migrate ext_b_area_b_cov/jackals_p ext_b_area_b_cov/squad_p)
 	(ai_follow_target_players  ext_b_area_b_cov/squad_p)
-	
+
 	)
 
 (script dormant ini_pipe_cov
@@ -1385,7 +1385,7 @@
 	(ai_vehicle_enterable_disable ext_b_a_ghost_f)
 	(ai_vehicle_enterable_disable tunnel_ghost_a)
 	(ai_vehicle_enterable_disable tunnel_ghost_b)
-	
+
 	(sleep 1)
 
 	(ai_exit_vehicle ext_b_a_ghost_a)
@@ -1447,7 +1447,7 @@
 				  (if (= b3_top_spawn_counter b3_top_squad_index) (set b3_top_spawn false)))))
 	(set b3_top_spawn_counter 0)
 	(set b3_top_spawn true)
-	
+
 	(sleep 1)
 	(ai_follow_target_ai b3_top_cov/grunts_a b3_top_cov/elite_commander)
 	(ai_follow_target_ai b3_top_cov/jackals_a b3_top_cov/elite_commander)
@@ -1503,7 +1503,7 @@
 	(ai_place b3_bridge/grunts_g)
 	(ai_place b3_bridge/jackals_g)
 	(ai_place b3_bridge/elites_e)
-	
+
 	(ai_place b4_bridge/b3_grunts_c)
 	(ai_place b4_bridge/b3_grunts_e)
 	(ai_place b4_bridge/b3_grunts_g)
@@ -1572,7 +1572,7 @@
 
 (script dormant enc_b4_bridge_reins_a
 	(ai_place b4_bridge/elites_g)
-	
+
 	(begin_random
 		(if b4_bridge_spawn
 			(begin (ai_place b4_bridge/grunts_e)
@@ -1650,10 +1650,10 @@
 	(sleep 1)
 	(objects_predict (ai_actors c_bridge))
 	)
-	
+
 (script dormant enc_c_bridge_initial
 	(ai_place c_bridge/elites_a)
-	
+
 	(begin_random
 		(if c_bridge_spawn
 			(begin (ai_place c_bridge/grunts_a1)
@@ -1676,7 +1676,7 @@
 
 (script dormant enc_c_bridge_second
 	(ai_place c_bridge/elites_b)
-	
+
 	(begin_random
 		(if c_bridge_spawn
 			(begin (ai_place c_bridge/grunts_b1)
@@ -1702,7 +1702,7 @@
 	(ai_place c_bridge/grunts_c)
 	(sleep 1)
 	(objects_predict (ai_actors c_bridge))
-	
+
 	(device_set_position c_bridge_far_door 1)
 	)
 
@@ -1711,7 +1711,7 @@
 (script dormant ini_c_bridge_banshee
 	(ai_vehicle_encounter ext_c_banshee_a ext_c_banshee/banshee)
 	(ai_vehicle_encounter ext_c_banshee_b ext_c_banshee/banshee)
-	
+
 	(sleep_until (volume_test_objects c_bridge_banshee_trigger (players)) 30 (* 30 15))
 	(ai_go_to_vehicle c_bridge/banshee_a_elite ext_c_banshee_a driver )
 	(ai_go_to_vehicle c_bridge/banshee_b_elite ext_c_banshee_b driver )
@@ -1726,7 +1726,7 @@
 	(sleep 1)
 	(objects_predict (ai_actors c1_top_cov))
 	)
-	
+
 (script dormant enc_c1_bottom
 	(ai_place c1_bottom_cov/grunts_w)
 	(ai_place c1_bottom_cov/stealth_elites)
@@ -1734,7 +1734,7 @@
 	(sleep 1)
 	(objects_predict (ai_actors c1_bottom_cov))
 	)
-	
+
 ;========== Encounter Scripts (Exterior C) ==========
 
 (script dormant enc_ext_c_ghost_pilots
@@ -1819,7 +1819,7 @@
 	(ai_vehicle_encounter ext_c_ghost_a ext_c_cov/ghost_a)
 	(ai_vehicle_encounter ext_c_ghost_b ext_c_cov/ghost_b)
 	(ai_vehicle_encounter ext_c_ghost_c ext_c_cov/ghost_c)
-	
+
 	(if (>= (ai_status ext_c_cov/ghost_pilot_a) 5)
 	    (begin (sleep (random_range 0 120)) (ai_go_to_vehicle ext_c_cov/ghost_pilot_a ext_c_ghost_a driver)))
 	(if (>= (ai_status ext_c_cov/ghost_pilot_b) 5)
@@ -1827,7 +1827,7 @@
 	(if (>= (ai_status ext_c_cov/ghost_pilot_c) 5)
 	    (begin (sleep (random_range 0 120)) (ai_go_to_vehicle ext_c_cov/ghost_pilot_c ext_c_ghost_c driver)))
 	(sleep 5)
-	
+
 	(if (and (> (ai_living_count ext_c_cov/ghost_a) 0)
 		    (<= (ai_status ext_c_cov/ghost_a) 2))
 	    (ext_c_ghost_exit_a))
@@ -1877,13 +1877,13 @@
 		(begin (ai_go_to_vehicle zig_cov_top/turret_grunts zig_top_turret_b gunner) (sleep control_turret_delay))
 		(sleep control_turret_delay))
 	)
-		
+
 (script dormant ini_ext_c_migration
 	(sleep_until (volume_test_objects zig_migration_trigger (players)))
 	(wake general_save)
 	(ai_migrate ext_c_cov zig_cov_bottom/squad_all)
 	)
-	
+
 (script dormant ini_control_door
 	(sleep_until (> (device_get_position control_door_a) 0) 5)
 	(device_set_never_appears_locked control_door_a 1)
@@ -1927,13 +1927,13 @@
 
 (script dormant ext_a_setup
 	(ai_erase a2_top_cov)
-	
+
 	(vehicle_load_magic ext_a_turret_a gunner (ai_actors ext_a_area_a_cov/grunts_a))
 	(ai_vehicle_enterable_distance ext_a_turret_a 10)
 	(ai_vehicle_enterable_actor_type ext_a_turret_a grunt)
-		
+
 	(object_destroy ext_a_pelican_jeep)
-	
+
 	(object_create ext_a_jeep)
 	(object_create_containing "ext_a_dump_1")
 ;	(object_create ext_a_area_a_rocket)
@@ -1958,7 +1958,7 @@
 ;	(object_create ext_a_marine_2)
 ;	(object_create ext_a_marine_3)
 ;	(object_create ext_a_marine_4)
-	
+
 ;	(ai_migrate a2_bottom_cov ext_a_area_a_cov/a2_cleanup)
 ;	(ai_magically_see_players ext_a_area_a_cov/a2_cleanup)
 ;	(sleep 1)
@@ -1966,10 +1966,10 @@
 ;	(sleep 1)
 ;	(ai_migrate ext_a_area_a_cov/a2_cleanup ext_a_area_a_cov/squad_w)
 ;	(ai_follow_target_players ext_a_area_a_cov/squad_w)
-	
+
 	(ai_vehicle_encounter ext_a_jeep ext_a_jeep)
 	(ai_vehicle_encounter ext_a_tank ext_a_tank)
-	
+
 	(objects_predict ext_a_turret_a)
 	(objects_predict ext_a_jeep)
 ;	(objects_predict ext_a_area_a_rocket)
@@ -1989,7 +1989,7 @@
 (script dormant ext_b_setup
 	(ai_vehicle_encounter ext_a_jeep ext_b_jeep)
 	(ai_vehicle_encounter ext_a_tank ext_b_tank)
-	
+
 	(ai_vehicle_encounter ext_a_dropship_ghost_a mig_b_ghost_a)
 	(ai_vehicle_encounter ext_a_dropship_ghost_b mig_b_ghost_b)
 	(ai_vehicle_encounter ext_a_area_b_ghost_a mig_b_ghost_c)
@@ -2002,7 +2002,7 @@
 ;	(ai_migrate crev_cov ext_b_area_a_cov/squad_y)
 ;	(ai_teleport_to_starting_location_if_unsupported ext_b_area_a_cov/squad_y)
 ;	(ai_follow_target_players ext_b_area_a_cov/squad_y)
-	
+
 	(ai_migrate crev_marines ext_b_marines_ini/squad_y)
 	(ai_follow_target_players ext_b_marines_ini/squad_y)
 
@@ -2044,7 +2044,7 @@
 ;	(objects_predict insertion_banshee_b)
 	(objects_predict insertion_turret_a)
 	(objects_predict insertion_turret_b)
-	
+
 ; this used to be 28 seconds
 	(sleep 60)
 ;	(ai_conversation insertion)
@@ -2061,7 +2061,7 @@
 ;	(objects_predict insertion_banshee_b)
 	(objects_predict insertion_turret_a)
 	(objects_predict insertion_turret_b)
-	
+
 ; this used to be 28 seconds
 	(sleep (* 30 21))
 ;	(ai_conversation insertion)
@@ -2083,7 +2083,7 @@
 ;	(ai_vehicle_encounter insertion_banshee_a insertion_banshee/banshee)
 ;	(ai_vehicle_encounter insertion_banshee_b insertion_banshee/banshee)
 	(ai_attack insertion_cov/grunts)
-	
+
 	(if (= (game_difficulty_get_real) impossible) (wake insertion_turrets))
 ;	(ai_magically_see_players insertion_cov/grunts)
 	)
@@ -2093,11 +2093,11 @@
 	(wake general_save)
 	(game_save_no_timeout)
 	(enc_a1_initial)
-	
+
 	(sleep_until (= (device_get_position a1_entrance_door) 1))
 	(device_one_sided_set a1_entrance_door false)
 	(enc_a1)
-		
+
 	(sleep_until (volume_test_objects a1_backdoor_trigger (players)))
 	(enc_a1_rear)
 	(ai_defend a1_cov/middle)
@@ -2123,7 +2123,7 @@
 
 	(sleep_until (volume_test_objects ext_a_banshee_a_trigger (players)))
 	(wake enc_a_bridge_second)
-	
+
 	(sleep_until (volume_test_objects a_bridge_reins_trigger (players)))
 	(wake general_save)
 	(ai_defend a_bridge/mid_squad)
@@ -2169,7 +2169,7 @@
 	(ai_playfight ext_a_area_a_marines true)
 	(ai_playfight ext_a_area_a_cov/jackals_e true)
 	(ai_playfight ext_a_area_a_cov/grunts_e true)
-	
+
 ;	(sleep_until (> (device_get_position ext_a_door) 0))
 ;	(ai_conversation ext_a_a)
 
@@ -2193,7 +2193,7 @@
 ;	(wake dialog_scorpion_dead)
 	(sleep 1)
 	(objects_predict ext_a_tank)
-	
+
 	(sleep_until (volume_test_objects ext_a_area_b_ghosts (players)))
 	(if (< (ai_living_count ext_a_area_b_cov) 6) (wake enc_ext_a_area_b_2))
 
@@ -2203,11 +2203,11 @@
 	(object_destroy_containing "a2_dump")
 	(set exterior_player_location 3)
 	(wake general_save)
-	(wake ext_a_c_setup)			  
+	(wake ext_a_c_setup)
 	(wake dialog_ext_a_c_wraith)
 	(wake dialog_ext_a_c)
 ;	(wake dialog_ext_a_c_door)
-	
+
 	(wake ini_ext_a_c_dropship_a)
 	(wake ini_ext_a_c_dropship_b)
 	(wake ini_ext_a_c_dropship_c)
@@ -2218,8 +2218,8 @@
 	(sleep 1)
 	(wake enc_ext_a_area_c_cov)
 	(wake ini_ext_a_area_c_turrets)
-	
-	
+
+
 	(sleep_until (volume_test_objects ext_a_c_follow_trigger (players)))
 	(wake general_save)
 	(wake ini_ext_a_area_c_banshee)
@@ -2239,7 +2239,7 @@
 	(sleep 1)
 ;	(ai_follow_target_players crev_cov/squad_a)
 	(ai_follow_target_players crev_marines/squad_a)
-	
+
 	(wake general_save)
 	(wake enc_crevasse)
 ;	(wake ini_crevasse_reins)
@@ -2267,7 +2267,7 @@
 	(wake ini_ext_b_tunnel)
 	(wake ini_jeep_exit_b)
 	(wake ini_tank_exit_b)
-	
+
 	(sleep_until (volume_test_objects ext_b_a_trigger_a (players)))
 	(object_create_containing "ext_b_dump_1")
 	(wake obj_chasm2)
@@ -2275,7 +2275,7 @@
 	(wake ini_tunnel_follow)
 	(wake ini_ext_b_tower)
 	(wake ini_ext_b_a_dropship_a)
-	
+
 	(sleep_until (or (volume_test_objects ext_b_a_trigger_b (players))
 				  (volume_test_objects ext_b_a_trigger_c (players))))
 	(object_destroy_containing "ext_a_dump_4")
@@ -2283,30 +2283,30 @@
 	(wake ini_ext_b_trigger_b)
 	(wake ini_ext_b_trigger_c)
 	(wake ini_ext_b_second)
-	
+
 	(sleep_until (volume_test_objects ext_b_a_trigger_d (players)))
 	(wake general_save)
 	(wake ini_ext_b_trigger_d)
 	(wake ini_ext_b_banshee_a)
-	
+
 	(sleep_until (volume_test_objects ext_b_b_trigger_a (players)) 5)
 	(object_create_containing "ext_b_dump_2")
 	(set exterior_player_location 6)
 	(wake general_save)
 	(ai_migrate ext_b_area_a_cov ext_b_area_b_cov/squad_a)
 	(ai_follow_target_players ext_b_area_b_cov/squad_a)
-	
+
 	(ai_migrate ext_b_marines_ini ext_b_marines/squad_v)
 	(ai_follow_target_players ext_b_marines/squad_v)
 	(wake enc_ext_b_b)
-	
+
 	(sleep -1 ini_ext_b_trigger_b)
 	(sleep -1 ini_ext_b_trigger_c)
-	
+
 	(sleep_until (volume_test_objects ext_b_b_trigger_b (players)))
 	(wake general_save)
 	(wake enc_ext_b_b_marines)
-	
+
 	(sleep_until (volume_test_objects ext_b_b_floor_trigger (players)))
 	(wake music_b40_041)
 	(wake ext_b_b_vehicle_exit)
@@ -2314,17 +2314,17 @@
 	(ai_follow_target_players ext_b_marines/squad_u)
 
 	(wake ini_ext_b_b_dropship_a)
-	
+
 	(sleep_until (volume_test_objects ext_b_b_trigger_c (players)))
 	(wake general_save)
-	
+
 	(sleep_until (volume_test_objects ext_b_tunnel_trigger (players)) 5)
 	(object_create_containing "ext_b_dump_3")
 	(wake enc_ext_b_cave)
 
 	(sleep_until (volume_test_objects ext_b_b_trigger_d (players)))
 	(wake enc_ext_b_b_final)
-	
+
 	(sleep_until (volume_test_objects ext_b_c_trigger_a (players)))
 	(sound_looping_set_alternate "levels\b40\music\b40_041" 1)
 	(wake general_save)
@@ -2346,7 +2346,7 @@
 	(sleep 30)
 	(wake dialog_ext_b_c_clear)
 	)
-	
+
 (script dormant mission_b3
 ;	(wake general_save)
 	(object_create_containing "b3_dump")
@@ -2354,12 +2354,12 @@
 	(wake music_b40_042)
 	(wake ini_b3_bottom_cov)
 	(wake music_b40_05)
-	
+
 	(sleep_until (volume_test_objects b3_lift_cov_trigger (players)))
 	(wake enc_b3_lift_cov)
 	(ai_erase ext_b_marines)
 	(ai_erase ext_b_marines_ini)
-	
+
 	(sleep_until (volume_test_objects b3_top_trigger (players)))
 	(wake general_save)
 	(wake enc_b3_top_cov)
@@ -2374,23 +2374,23 @@
 	(set play_music_b40_05 0)
 	(wake enc_b3_bridge)
 	(wake ini_b4_bridge_cheat)
-	
+
 	(sleep_until (volume_test_objects b3_bridge_reins_trigger (players)))
 	(wake general_save)
 	(wake enc_b3_bridge_reins)
 
-	(sleep_until (volume_test_objects b4_a_trigger (players)) 10)	
+	(sleep_until (volume_test_objects b4_a_trigger (players)) 10)
 	(wake general_save)
 	(object_create_containing "b4_dump")
 	(wake enc_b4_a)
-	
+
 	(sleep_until (volume_test_objects b4_hall_trigger (players)))
 	(wake general_save)
 	(wake enc_b4_hall)
 	(ai_migrate b4_a_cov b4_hall/all)
 	(sleep 1)
 	(if (> (ai_status b4_hall) 4) (ai_magically_see_players b4_hall/all))
-	
+
 	(sleep_until (volume_test_objects b4_b_trigger (players)))
 	(wake general_save)
 	(wake enc_b4_b)
@@ -2408,7 +2408,7 @@
 	(sleep_until (volume_test_objects b4_bridge_reins_trigger_a (players)))
 	(wake general_save)
 	(wake enc_b4_bridge_reins_a)
-	
+
 	(sleep_until (volume_test_objects b4_bridge_reins_trigger_b (players)))
 	(wake enc_b4_bridge_reins_b)
 	)
@@ -2421,7 +2421,7 @@
 	(wake music_b40_061)
 	(wake enc_b5_a)
 	(set play_music_b40_06 false)
-	
+
 	(ai_migrate b3_bridge/hunters b4_bridge/hunters_teleport)
 	(ai_teleport_to_starting_location b4_bridge/hunters_teleport)
 
@@ -2431,7 +2431,7 @@
 	(ai_migrate b5_a_cov b5_hall_cov/all)
 	(sleep 1)
 	(if (> (ai_status b5_hall_cov) 4) (ai_magically_see_players b5_hall_cov/all))
-	
+
 	(sleep_until (volume_test_objects b5_b_trigger (players)))
 	(wake general_save)
 	(wake enc_b5_b)
@@ -2456,13 +2456,13 @@
 	(wake music_b40_08)
 	(wake ini_control_door)
 	(wake general_save)
-	
+
 	(sleep_until (> (device_get_position control_door_a) 0) 5)
 	(ai_braindead control_cov false)
-	
+
 	(sleep 300)
 	(device_set_position control_door_b 1)
-	
+
 	(sleep_until (volume_test_objects inside_control (players)))
 	(ai_migrate control_cov control_cov/inside)
 
@@ -2488,11 +2488,11 @@
 	(sleep 30)
 	(wake enc_c_bridge_second)
 	(sleep 60)
-	
+
 	(sleep_until (= (device_get_position c_bridge_near_door) 1))
 	(device_one_sided_set c_bridge_near_door false)
 ;	(wake dialog_ext_c_banshee)
-	
+
 	(sleep_until (volume_test_objects c_bridge_reins_trigger (players)))
 	(wake enc_c_bridge_reins)
 	(device_one_sided_set c_bridge_far_door false)
@@ -2505,7 +2505,7 @@
 	(set play_music_b40_07 false)
 	(wake enc_c1_top)
 	(wake music_b40_071)
-	
+
 	(sleep_until (volume_test_objects c1_bottom_trigger (players)))
 ;	(wake general_save)
 	(wake enc_c1_bottom)
@@ -2525,7 +2525,7 @@
 
 	(sleep_until (volume_test_objects zig_trigger_a (players)))
 	(wake general_save)
-	
+
 	(sleep_until (volume_test_objects zig_trigger_b (players)))
 	(wake enc_ext_c_zig_top)
 	(wake general_save)
@@ -2553,12 +2553,12 @@
 	(sleep -1 ini_tank_exit_b)
 	(sleep -1 general_save)
 	)
-	
+
 ;========== Teleport Scripts ==========
 
 (script startup mission_b40
-   (if (mcc_mission_segment "cine1_intro") (sleep 1))              
-   
+   (if (mcc_mission_segment "cine1_intro") (sleep 1))
+
 	(fade_out 0 0 0 0)
 	(kill_all_continuous)
 	(cls)
@@ -2566,7 +2566,7 @@
 
 ;	(if debug (print "yummy!"))
 ;	(if debug (print "tuna?"))
-	
+
 	(ai_allegiance player human)
 	(ai_allegiance human player)
 
@@ -2579,18 +2579,18 @@
 	(sleep 1)
 	(cutscene_insertion_b)
 	(game_save_totally_unsafe)
-	
+
    (mcc_mission_segment "01_start")
-   
+
 ;<JLG>
 	(if (and (not (game_is_cooperative))
 		    (= normal (game_difficulty_get)))
 	    (wake help_tank))
-	    
+
 	(if (and (not (game_is_cooperative))
 		    (= normal (game_difficulty_get)))
 	    (wake help_banshee))
-	    
+
 	(wake title_thunder)
 	(wake title_control)
 ;</JLG>
@@ -2602,11 +2602,11 @@
 	(if (breadcrumbs_nav_points_active)
 		(wake breadcrumbs_nav_points_b40)
 	)
-	
+
 	(sleep_until (volume_test_objects a1_trigger (players)) 10)
 	(wake mission_a1)
    (mcc_mission_segment "02_a1")
-	
+
 	(sleep_until (volume_test_objects a_bridge_trigger (players)) 10)
 	(wake mission_a_bridge)
    (mcc_mission_segment "03_a_bridge")
@@ -2614,7 +2614,7 @@
 	(sleep_until (volume_test_objects a2_top_trigger (players)) 10)
 	(wake mission_a2)
    (mcc_mission_segment "04_a2")
-	
+
 	(sleep_until (volume_test_objects ext_a_trigger (players)) 10)
 	(wake mission_ext_a)
    (mcc_mission_segment "05_ext_a")
@@ -2622,11 +2622,11 @@
 	(sleep_until (volume_test_objects crevasse_trigger (players)) 10)
 	(wake mission_crevasse)
    (mcc_mission_segment "06_crevasse")
-	
+
 	(sleep_until (volume_test_objects ext_b_trigger (players)) 10)
 	(wake mission_ext_b)
    (mcc_mission_segment "07_ext_b")
-	
+
 	(sleep_until (volume_test_objects b3_bottom_trigger (players)) 10)
 	(wake mission_b3)
    (mcc_mission_segment "08_b3")
@@ -2642,7 +2642,7 @@
 	(sleep_until (volume_test_objects ext_c_trigger_a (players)) 10)
 	(wake mission_c_bridge)
    (mcc_mission_segment "11_c_bridge")
-	
+
 	(sleep_until (volume_test_objects c1_top_trigger (players)) 10)
 	(wake mission_c1)
    (mcc_mission_segment "12_c1")
@@ -2650,6 +2650,6 @@
 	(sleep_until (volume_test_objects ext_c_trigger_b (players)) 10)
 	(wake mission_ext_c)
    (mcc_mission_segment "13_ext_c")
-	
+
 	)
 

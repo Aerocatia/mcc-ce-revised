@@ -57,7 +57,7 @@
 			(if (< g_breadcrumb_nav_index 4) (set g_breadcrumb_nav_index 4))
 		)
 	)
-	
+
 	; Silent Cartographer inner locked door
 	(if (= g_breadcrumb_nav_index 4)
 		(begin
@@ -85,7 +85,7 @@
 			)
 		)
 	)
-	
+
 	; Silent Cartographer outside platform
 	(if (= g_breadcrumb_nav_index 6)
 		(begin
@@ -115,7 +115,7 @@
 			(if (< g_breadcrumb_nav_index 8) (set g_breadcrumb_nav_index 8))
 		)
 	)
-	
+
 	; Inner island structure entrance
 	(if (= g_breadcrumb_nav_index 8)
 		(begin
@@ -130,7 +130,7 @@
 			(set g_breadcrumb_nav_index 9)
 		)
 	)
-	
+
 	; Structure locked door control
 	(if (= g_breadcrumb_nav_index 9)
 		(begin
@@ -139,7 +139,7 @@
 			(breadcrumbs_deactivate_team_nav_point_object player shaftb_control)
 		)
 	)
-	
+
 	; Inside structure the player needs to reach to encounter the door
 	(if (= g_breadcrumb_nav_index 10)
 		(begin
@@ -150,7 +150,7 @@
 				)
 			)
 			(breadcrumbs_activate_team_nav_point_position "default" player 22 -22 10 "navpoint_1" 0.3)
-			
+
 			(sleep_until
 				(or
 					(volume_test_objects shaftA_entrance_inv (players))
@@ -206,7 +206,7 @@
 			(set g_breadcrumb_nav_index 14)
 		)
 	)
-	
+
 	; On narrow passage where player has to continue on foot
 	(if (= g_breadcrumb_nav_index 14)
 		(begin
@@ -221,7 +221,7 @@
 			(set g_breadcrumb_nav_index 15)
 		)
 	)
-	
+
 	; On stairs leading down to console
 	(if (= g_breadcrumb_nav_index 15)
 		(begin
@@ -236,7 +236,7 @@
 			(set g_breadcrumb_nav_index 16)
 		)
 	)
-	
+
 	; Map control
 	(if (= g_breadcrumb_nav_index 16)
 		(begin
@@ -292,7 +292,7 @@
 			(set g_breadcrumb_nav_index 20)
 		)
 	)
-	
+
 	; Silenth Cartographer exit
 	(if (= g_breadcrumb_nav_index 20)
 		(begin
@@ -307,7 +307,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 20))
 		)
 	)
-	
+
 	; Extraction pelican
 	(if (= g_breadcrumb_nav_index 21)
 		(begin
@@ -328,7 +328,7 @@
 	)
 	(breadcrumbs_deactivate_team_nav_point player "island_warthog_route_1")
 	(set g_breadcrumb_nav_index 1)
-	
+
 	(sleep_until
 		(or
 			(volume_test_objects beach_5 (players))
@@ -448,7 +448,7 @@
 	(objects_predict shaftA_cship)
 	(objects_predict (ai_actors beach_slab))
 	(objects_predict (ai_actors shaftA_entrance))
-	
+
 	(sleep_until global_shaftA_switched)
 	(ai_kill beach_lz_marine)
 	)
@@ -460,7 +460,7 @@
 	(wake save_beach_pass)
 	(ai_place beach_slab)
 	(wake save_beach_slab)
-	
+
 ;	(sleep_until (or (volume_test_objects beach_1 (players))
 ;				  (volume_test_objects beach_2 (players))) 1)
 ;	(if (volume_test_objects beach_1 (players)) (set mark_beach_ghost_pass true))
@@ -533,7 +533,7 @@
 				  (volume_test_objects shaftA_slam (players))
 				  (volume_test_objects shaftA_entrance (players))) 1 delay_blink)
 ;	(ai_command_list_advance shaftA_locked/locker_elite)
-	
+
 	(sleep_until (or (volume_test_objects shaftA_slam (players))
 				  (volume_test_objects shaftA_entrance (players))) 1 delay_blink)
 
@@ -592,7 +592,7 @@
 	(sleep 60)
 	(unit_close shaftA_inv_cship)
 	)
-	
+
 (script dormant obj_shaftA_goal
 	(sleep_until (= 1 (device_group_get map_position)) 1)
 	(set g_breadcrumb_nav_index 17)
@@ -635,7 +635,7 @@
 	(set g_breadcrumb_nav_index 21)
 
 	(sleep (recording_time extraction_pelican))
-	
+
 	(sleep_until (or (vehicle_test_seat_list extraction_pelican "P-riderLF" (players))
 				  (vehicle_test_seat_list extraction_pelican "P-riderRF" (players))) 1)
 	(if (game_is_cooperative) (sleep_until (and (vehicle_test_seat_list extraction_pelican "P-riderLF" (players))
@@ -646,9 +646,9 @@
 	(ai_braindead shaftA_entrance_inv 1)
 	(object_destroy shafta_inv_cship)
 	(object_destroy lid_cship)
- 
-   (if (mcc_mission_segment "cine5_final") (sleep 1))              
-   
+
+   (if (mcc_mission_segment "cine5_final") (sleep 1))
+
 	(if (cinematic_skip_start) (cutscene_extraction_exit))
 	(cinematic_skip_stop)
 	(game_won)
@@ -720,7 +720,7 @@
 
 	(sleep_until (volume_test_objects shaftA_jig (players)) 1)
 	(if (not global_shaftA_switched) (ai_conversation shaftA_descent))
-	
+
 	(sleep_until (and (= 0 (ai_living_count shaftA_ante/rein_elite))
 				   (volume_test_objects shaftA_switch (players))) 10)
 	(if (not global_shaftA_switched) (ai_conversation shaftA_switchit))
@@ -792,7 +792,7 @@
 	)
 
 (script static void cutscene_shaftB_goal
-   (if (mcc_mission_segment "cine2_map_room") (sleep 1))              
+   (if (mcc_mission_segment "cine2_map_room") (sleep 1))
 
 	(player_enable_input 0)
 	(fade_out 0 0 0 30)
@@ -809,7 +809,7 @@
 
 	(camera_set shaft_switch_1 0)
 	(sleep 90)
-	
+
 	(camera_set shaft_switch_2 180)
 	(fade_in 0 0 0 60)
 	(sleep 60)
@@ -850,7 +850,7 @@
 	(ai_place valley_mouth)
 	(ai_place valley_canyon)
 	(wake save_valley_canyon)
-	
+
 	(sleep_until (volume_test_objects valley_back (players)))
 	(set global_valley_back_start true)
 ;	(deactivate_team_nav_point_flag player shaftB_entrance_flag)
@@ -867,7 +867,7 @@
 
 	(sleep_until (= 0 (device_group_get shaftB_switch_position)) 1)
 	(set g_breadcrumb_nav_index 10)
-	
+
 	(set play_music_b30_03_alt true)
 	(switch_bsp 0)
 	(volume_teleport_players_not_inside shaftB_control shaftB_control_teleflag)
@@ -955,40 +955,40 @@
 
 ;========== Main Script ==========
 (script startup cutscene_insertion
-   (if (mcc_mission_segment "cine1_intro") (sleep 1))              
-	
+   (if (mcc_mission_segment "cine1_intro") (sleep 1))
+
 	(sound_looping_start sound\sinomatixx_foley\b30_insertion_foley none 1)
 	(sound_class_set_gain vehicle .3 0)
-	
+
 	(fade_out 0 0 0 0)
 	(cinematic_start)
 	(show_hud 0)
 	(camera_control on)
 	(wake music_b30)
-	
+
 	(set play_music_b30_01 true)
-	
+
 	(fade_in 0 0 0 60)
 	(camera_set insertion_1b 0)
 	(sleep 60)
-	
+
 	(object_create insertion_pelican_1)
 	(object_create insertion_pelican_2)
-	
+
 	(object_beautify insertion_pelican_1 on)
-	
+
 	(ai_place beach_lz_marine)
 	(ai_place beach_lz)
 	(unit_enter_vehicle (player0) insertion_pelican_1 "P-riderLF")
 	(unit_enter_vehicle (player1) insertion_pelican_2 "P-riderLF")
 	(vehicle_load_magic insertion_pelican_1 "rider" (ai_actors beach_lz_marine/left_marine))
 	(vehicle_load_magic insertion_pelican_2 "rider" (ai_actors beach_lz_marine/right_marine))
-	
+
 	(object_teleport insertion_pelican_1 insertion_pelican_flag_1)
 	(recording_play_and_hover insertion_pelican_1 insertion_pelican_1_in)
 	(object_teleport insertion_pelican_2 insertion_pelican_flag_2)
 	(recording_play_and_hover insertion_pelican_2 insertion_pelican_2_in)
-	
+
 	(objects_predict insertion_pelican_1)
 	(objects_predict insertion_pelican_2)
 	(objects_predict (ai_actors beach_lz_marine))
@@ -1001,7 +1001,7 @@
 ;	<max translation>, <max rotation>, <left rumble>, <right rumble>
 ;	(player_effect_play 1 2 6.5 0)
 ;	<intensity>, <attack (seconds)>, <sustain (seconds)>, <decay (seconds)>
-	
+
 	(camera_set insertion_2a 120)
 	(sleep 60)
 	(camera_set insertion_2b 90)
@@ -1019,11 +1019,11 @@
 	(sleep 30)
 	(sound_impulse_start sound\dialog\b30\B30_insert_020_Cortana none 1)
 		(sleep (sound_impulse_time sound\dialog\b30\B30_insert_020_Cortana))
-	
+
 	(sleep (max 0 (- (recording_time insertion_pelican_1) 900)))
 	(sound_impulse_start sound\dialog\b30\B30_insert_030_Pilot none 1)
 		(sleep (sound_impulse_time sound\dialog\b30\B30_insert_030_Pilot))
-	
+
 	(sleep (max 0 (- (recording_time insertion_pelican_1) 300)))
 	(sound_impulse_start sound\dialog\b30\B30_insert_040_Pilot none 1)
 		(sleep (sound_impulse_time sound\dialog\b30\B30_insert_040_Pilot))
@@ -1039,7 +1039,7 @@
 ;	(sound_impulse_start sound\dialog\b30\B30_insert_060_Cortana none 1)
 
 	(set global_mission_start true)
-	
+
 	(sound_class_set_gain vehicle 1 2)
 
 	(sleep 60)
@@ -1048,7 +1048,7 @@
 
 	(sleep 30)
 	(vehicle_unload insertion_pelican_1 "rider")
-	
+
 	(sleep_until (not (volume_test_objects mission_start (players))))
 	(vehicle_hover insertion_pelican_1 0)
 	(recording_play_and_delete insertion_pelican_1 insertion_pelican_1_out)

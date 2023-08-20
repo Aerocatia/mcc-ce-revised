@@ -5,7 +5,7 @@
 
 (script static unit player1
   (unit (list_get (players) 1)))
-  
+
 (script static short player_count
   (list_count (players)))
 

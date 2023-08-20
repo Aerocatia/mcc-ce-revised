@@ -39,7 +39,7 @@
 	(ai_command_list cryo_tech/tech introduction_3);Leaning tech animation
 	(sound_impulse_start sound\dialog\a10\A10_010_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1); (print "Sorry for the quick thaw, sir.")
 		(sleep (sound_impulse_time sound\dialog\a10\A10_010_CryoTech))
-	(sound_impulse_start sound\dialog\a10\A10_020_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1); (print "The disorientation should pass quickly.") 
+	(sound_impulse_start sound\dialog\a10\A10_020_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1); (print "The disorientation should pass quickly.")
 		(sleep (sound_impulse_time sound\dialog\a10\A10_020_CryoTech))
 
 	(ai_command_list cryo_tech/asst introduction_4);Waving asst animation
@@ -125,21 +125,21 @@
 	(show_hud_help_text 0)
 
    (if (mcc_mission_segment "cine2_exiting_cryo") (sleep 1))
-   
+
 	(fade_out 1 1 1 15)
 	(sleep 30)
 	(cinematic_start)
 	(camera_control on)
 	(camera_set tutorial_action_2 0)
 	(camera_set tutorial_action_1 250)
-	
+
 	(object_beautify (player0) true)
-	
+
 	(fade_in 1 1 1 15)
 	(sleep 15)
-	
+
 	(sound_looping_start sound\sinomatixx_foley\a10_cryoexit_foley none 1)
-	
+
 	(unit_exit_vehicle (player0))
 	(sleep 170)
 
@@ -153,9 +153,9 @@
 	(sleep 30)
 	(fade_in 1 1 1 15)
 	(sleep 15)
-	
+
 	(object_beautify (player0) false)
-	
+
 	(player_camera_control 1)
 	(sleep (sound_impulse_time sound\dialog\a10\A10_070_CryoTech))
 	(set mark_tutorial_action true)
@@ -204,7 +204,7 @@
 
 	(sound_impulse_start sound\dialog\a10\A10_130_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1); (print "We're going to test your targeting systems now.")
 	(sleep (sound_impulse_time sound\dialog\a10\A10_130_CryoTech))
-	
+
 	(sound_impulse_start sound\dialog\a10\A10_140_CryoTech (list_get (ai_actors cryo_tech/tech) 0) 1); (print "Please target the flashing panel by looking at it.  When you've successfully targetted it the panel will change color.")
 	(sleep 60)
 	(set test_looking_cycle 1)
@@ -350,7 +350,7 @@
 						   (enable_hud_help_flash 1)
 						   (hud_set_help_text tutorial_looking_choose_1);Verticle looking is inverted|nLook up and down
 						   (player_action_test_reset)
-						
+
 						   (sleep_until (and (player_action_test_look_relative_up)
 										 (player_action_test_look_relative_down)) 1 60)
 						   (ai_command_list_advance cryo_tech/tech)
@@ -387,7 +387,7 @@
 	(enable_hud_help_flash 1)
 	(hud_set_help_text tutorial_looking_choose_3);Verticle looking is normal|nLook up and down
 	(player_action_test_reset)
-	
+
 	(sleep_until (and (player_action_test_look_relative_up)
 				   (player_action_test_look_relative_down)) 1 60)
 	(ai_command_list_advance cryo_tech/tech)
@@ -620,7 +620,7 @@
 				   (objects_can_see_object (players) first_contact_door_1 20)) 1)
 	(device_operates_automatically_set first_contact_door_2 0)
 	(device_set_position first_contact_door_2 0)
-	(ai_place first_contact)	
+	(ai_place first_contact)
 		(object_cannot_take_damage (ai_actors first_contact))
 		(units_set_current_vitality (ai_actors first_contact) 1 0)
 		(unit_doesnt_drop_items (ai_actors first_contact))
@@ -659,7 +659,7 @@
 
 	(sleep_until (volume_test_objects first_contact_trigger_4 (ai_actors first_contact_anti)) 1 90)
 	(ai_try_to_fight_nothing first_contact_anti)
-	
+
 	(sleep_until (volume_test_objects first_contact_trigger_4 (ai_actors first_contact_anti)) 1)
 	(ai_defend first_contact/marine)
 
@@ -695,7 +695,7 @@
 	(sleep_until (player_action_test_primary_trigger) 1)
 	(enable_hud_help_flash 0)
 	(show_hud_help_text 0)
-	
+
 	(sleep_until (or (and (= 0 (ai_living_count cafeteria_anti))
 					  (volume_test_objects weapon_trigger (players)))
 				  (volume_test_objects bsp1,2 (players))) 1)
@@ -774,7 +774,7 @@
 	(sleep_until (= 1 (device_get_position melee_door_2)) 1)
 	(sound_impulse_start "sound\sfx\impulse\impacts\a10_door_bash" melee_door_2 1)
 	(set global_test_melee false)
-	
+
 	(sleep_until (volume_test_objects melee_trigger_2 (players)) 1 delay_blink)
 	(display_scenario_help 1)
 	(ai_place tunnel_anti/sucker_grunt)
@@ -820,13 +820,13 @@
 	(wake title_training)
 
 	(hud_set_objective_text dia_training)
-	
+
 	(cinematic_screen_effect_start 1)
 	(cinematic_screen_effect_set_filter_desaturation_tint 1 1 1)
 	(cinematic_screen_effect_set_filter 1 0 1 0 true 5)
 	(cinematic_screen_effect_set_convolution 1 2 10 .001 5)
 	(fade_in 1 1 1 30)
-	
+
 	(sleep 60)
 	(wake tutorial_introduction)
 
@@ -839,7 +839,7 @@
 	(object_destroy cryotube_1_steam_2)
 	(sleep 5)
 	(object_destroy cryotube_2_steam_2)
-	
+
 	(cinematic_screen_effect_stop)
 
 	(sleep_until mark_tutorial_introduction 1)
@@ -858,7 +858,7 @@
 	(sleep_until mark_tutorial_looking_targeted 1)
 	(if (not (player0_look_pitch_is_inverted)) (begin (wake tutorial_looking_choose) (sleep_until mark_tutorial_looking_choose 1)))
 	(game_save)
-	
+
 	(wake tutorial_moving_2)
 	(set g_breadcrumb_nav_index 3)
 	(sleep_until mark_tutorial_moving_2 1)
@@ -871,7 +871,7 @@
 	(set test_moving_crouch true)
 	(set mark_tutorial_setup true)
 	(wake tutorial_first_contact)
-	
+
 	(sleep_until mark_bridge_cutscene 1)
 	(wake tutorial_weapon)
 	(set test_light true)

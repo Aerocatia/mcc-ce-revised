@@ -11,8 +11,8 @@
 (script stub void cutscene_extraction
 	(print "merging cinema script failed")
 	)
-	
-;========== MIssion Outline ==========
+
+;========== Mission Outline ==========
 
 ;	== Intro Cutscene ==
 
@@ -87,19 +87,19 @@
 (global boolean play_music_b40_071 true)
 (global boolean play_music_b40_08 true)
 
-;========== save Game Scripts ==========
+;========== Save Game Scripts ==========
 
 (script static void save
 	(sleep_until (game_safe_to_save))
 	(game_save))
-	
+
 (script continuous general_save
 ;	(save)
 	(if (= mission_start 0) (sleep -1))
 	(game_save_no_timeout)
 	(sleep -1)
 	)
-	
+
 ;(script dormant a2_top_save
 ;	(sleep_until (or (= (ai_living_count a2_top_cov) 0)
 ;				  (volume_test_objects a2_top_save (players))))
@@ -242,7 +242,7 @@
 	(sound_looping_start "levels\b40\music\b40_061" none 1)
 	(sleep_until (volume_test_objects b5_b_trigger (players)))
 	(sleep 30)
-	(sleep_until (or (not play_music_b40_061) 
+	(sleep_until (or (not play_music_b40_061)
 				  (= (ai_living_count b5_b_cov/hunters) 0)))
 	(sound_looping_stop "levels\b40\music\b40_061")
 	)
@@ -290,7 +290,7 @@
 	(if (= (volume_test_objects ext_a_area_b_trigger (players)) 0) (ai_conversation ext_a_a_clear))
 	)
 
-(script dormant dialog_ext_a_b	
+(script dormant dialog_ext_a_b
 	(sleep_until (= (ai_living_count ext_a_area_b_cov) 0))
 	(ai_conversation ext_a_b_clear)
 	)
@@ -305,7 +305,7 @@
 (script dormant dialog_ext_a_c
 	(sleep_until (volume_test_objects ext_a_c_dialog (players)))
 	(ai_conversation ext_a_c)
-	
+
 	(sleep 300)
 	(sleep_until (or (<= (unit_get_health crev_ent_wraith_a) 0)
 				  (<= (unit_get_health crev_ent_wraith_b) 0)))
@@ -316,7 +316,7 @@
 (script dormant dialog_ext_a_c_door
 	(sleep_until (volume_test_objects ext_a_c_door (players)))
 	(ai_conversation crev_door)
-	
+
 	(sleep_until (> (device_get_position garagedoor_a) 0))
 	(ai_conversation crev_door_open)
 	)
@@ -336,7 +336,7 @@
 	(sleep 60)
 	(ai_conversation ext_b_c)
 	)
-	
+
 (script dormant dialog_b5_clear
 	(sleep_until (= (ai_living_count b5_b_cov) 0))
 	(sleep 60)
@@ -353,7 +353,7 @@
 	(sleep_until (objects_can_see_object (players) ext_c_banshee_a 30))
 	(sleep 30)
 	(ai_conversation c_bridge_banshee)
-	
+
 	(sleep_until (and (vehicle_test_seat_list ext_c_banshee_a "b-driver" (ai_actors ext_c_banshee/banshee))
 				   (vehicle_test_seat_list ext_c_banshee_b "b-driver" (ai_actors ext_c_banshee/banshee))))
 	(sleep 30)
@@ -364,7 +364,7 @@
 	(sleep_until (= (ai_living_count control_cov) 0))
 	(sleep 60)
 	(ai_conversation control_clear)
-	)			  
+	)
 
 ;========== End Game Script ==========
 
@@ -376,7 +376,7 @@
 	(set play_music_b40_08 false)
 ;<JLG>
    (if (mcc_mission_segment "cine2_final") (sleep 1))
-   
+
 	(fade_out 1 1 1 15)
 	(sleep 15)
 	(ai_kill_silent control_cov)
@@ -522,12 +522,12 @@
 ; tweak this value if conversation starts too soon
 	(sleep 150)
 	(ai_conversation ext_b_b_reins)
-	
+
 	(sleep (recording_time c_dropship_b))
 	(unit_open c_dropship_b)
 	(sleep 30)
-	
-	(begin_random 
+
+	(begin_random
 		(begin (vehicle_unload c_dropship_b cd-passengerl01) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerl02) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerl03) (sleep 5))
@@ -536,7 +536,7 @@
 		(begin (vehicle_unload c_dropship_b cd-passengerr02) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerr03) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerr04) (sleep 5)))
-		
+
 	(sleep 90)
 	(vehicle_hover c_dropship_b 0)
 	(recording_play_and_delete c_dropship_b ext_b_b_dropship_a_out)
@@ -564,7 +564,7 @@
 	(vehicle_load_magic c_dropship_b "passengerr" (ai_actors ext_b_area_a_cov/elites_f))
 	(vehicle_load_magic c_dropship_b "passengerr" (ai_actors ext_b_area_a_cov/grunts_f))
 	(vehicle_load_magic c_dropship_b "passengerr" (ai_actors ext_b_area_a_cov/jackals_f))
-	
+
 	(sleep 1)
 	(objects_predict c_dropship_b)
 	(objects_predict ext_b_a_ghost_a)
@@ -578,8 +578,8 @@
 	(sleep 15)
 	(unit_open c_dropship_b)
 	(sleep 30)
-	
-	(begin_random 
+
+	(begin_random
 		(begin (vehicle_unload c_dropship_b cd-passengerl01) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerl02) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerl03) (sleep 5))
@@ -588,23 +588,23 @@
 		(begin (vehicle_unload c_dropship_b cd-passengerr02) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerr03) (sleep 5))
 		(begin (vehicle_unload c_dropship_b cd-passengerr04) (sleep 5)))
-		
+
 	(sleep 30)
 	(vehicle_hover c_dropship_b 0)
 	(recording_play_and_delete c_dropship_b ext_b_dropship_a_out)
-	
+
 	(ai_vehicle_enterable_distance ext_b_a_ghost_a 20)
 	(ai_vehicle_enterable_distance ext_b_a_ghost_b 20)
-	
+
 	(ai_go_to_vehicle ext_b_area_a_cov/elites_e ext_b_a_ghost_a "driver")
 	(ai_go_to_vehicle ext_b_area_a_cov/elites_f ext_b_a_ghost_b "driver")
-	
+
 	(ai_vehicle_encounter ext_b_a_ghost_a ext_b_a_ghost_a/squad_a)
 	(ai_vehicle_encounter ext_b_a_ghost_b ext_b_a_ghost_b/squad_a)
-	
+
 	(ai_follow_target_players ext_b_a_ghost_a)
 	(ai_follow_target_players ext_b_a_ghost_b)
-	
+
 	(ai_magically_see_players ext_b_a_ghost_a)
 	(ai_magically_see_players ext_b_a_ghost_b)
 	)
@@ -616,7 +616,7 @@
 	(ai_place ext_a_area_a_marines)
 	(unit_enter_vehicle ext_a_pelican_jeep pelican_a "cargo")
 	(vehicle_load_magic pelican_a "rider" (ai_actors ext_a_area_a_marines/marines_pelican))
-	
+
 	(sleep 1)
 	(ai_braindead ext_a_area_a_marines/marines_pelican true)
 	(objects_predict pelican_a)
@@ -635,7 +635,7 @@
 	(ai_disregard	(ai_actors ext_a_area_a_marines/marines_pelican) true)
 	(ai_command_list ext_a_area_a_marines ext_a_pelican_marines)
 	(recording_play_and_delete pelican_a ext_a_pelican_out)
-	
+
 	(sleep_until (= (ai_command_list_status (ai_actors ext_a_area_a_marines)) 1))
 	(ai_braindead ext_a_area_a_marines/marines_pelican true)
 	)
@@ -672,7 +672,7 @@
 ;	(unit_open c_dropship_a)
 ;	(sleep 15)
 
-;	(begin_random 
+;	(begin_random
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl01) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl02) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl03) (sleep 5))
@@ -690,7 +690,7 @@
 	(ai_vehicle_encounter ext_a_dropship_wraith_a ext_a_area_a_wraith/squad_i)
 	(ai_magically_see_encounter ext_a_area_a_wraith ext_a_area_a_marines)
 
-		
+
 ;	(sleep 15)
 ;	(vehicle_hover c_dropship_a 0)
 ;	(recording_play_and_delete c_dropship_a ext_a_dropship_a_out)
@@ -711,7 +711,7 @@
 	(ai_place ext_a_area_a_cov/ghost_pilot_a)
 ;	(if (= (game_difficulty_get) impossible) (ai_place ext_a_area_a_cov/ghost_pilot_b))
 	(ai_place ext_a_area_a_cov/turret_grunts_b)
-	
+
 	(sleep 1)
 ;	(objects_predict c_dropship_b)
 	(objects_predict ext_a_dropship_turret)
@@ -748,7 +748,7 @@
 ;	(sleep 30)
 ;	(unit_open c_dropship_b)
 ;	(sleep 30)
-	
+
 	(ai_vehicle_encounter ext_a_dropship_ghost_a ext_a_area_a_ghost_a/squad_j)
 	(ai_vehicle_encounter ext_a_dropship_ghost_b ext_a_area_a_ghost_b/squad_j)
 
@@ -756,7 +756,7 @@
 	(ai_follow_target_players ext_a_area_a_ghost_b/squad_j)
 
 
-;	(begin_random 
+;	(begin_random
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl01) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl02) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerl03) (sleep 5))
@@ -765,15 +765,15 @@
 ;		(begin (vehicle_unload c_dropship_b cd-passengerr02) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerr03) (sleep 5))
 ;		(begin (vehicle_unload c_dropship_b cd-passengerr04) (sleep 5)))
-		
+
 	(sleep (random_range 300 450))
-	
+
 	(ai_go_to_vehicle ext_a_area_a_cov/ghost_pilot_a ext_a_dropship_ghost_a "driver")
 	(ai_go_to_vehicle ext_a_area_a_cov/ghost_pilot_b ext_a_dropship_ghost_b "driver")
 
 	(ai_vehicle_enterable_distance ext_a_dropship_ghost_a 15)
 	(ai_vehicle_enterable_distance ext_a_dropship_ghost_b 15)
-	
+
 	(ai_magically_see_players ext_a_area_a_ghost_a)
 	(ai_magically_see_players ext_a_area_a_ghost_b)
 
@@ -788,12 +788,12 @@
 	(object_create crev_ent_wraith_a)
 ;	(unit_close c_dropship_a)
 	(ai_place ext_a_area_c_cov/wraith_a_pilot)
-	
+
 	(sleep 1)
 ;	(objects_predict c_dropship_a)
 	(objects_predict crev_ent_wraith_a)
 	(objects_predict (ai_actors ext_a_area_c_cov))
-	
+
 	(vehicle_load_magic crev_ent_wraith_a "driver" (ai_actors ext_a_area_c_cov/wraith_a_pilot))
 ;	(unit_enter_vehicle crev_ent_wraith_a c_dropship_a "cargo_ghost02")
 
@@ -811,9 +811,9 @@
 ;	(object_destroy c_dropship_b)
 ;	(object_create c_dropship_b)
 ;	(unit_close c_dropship_b)
-	(object_create crev_ent_wraith_b)	
+	(object_create crev_ent_wraith_b)
 	(ai_place ext_a_area_c_cov/wraith_b_pilot)
-	
+
 	(sleep 1)
 ;	(objects_predict c_dropship_b)
 	(objects_predict crev_ent_wraith_b)
@@ -839,11 +839,11 @@
 	(object_create crev_ent_ghost_a)
 	(object_create crev_ent_ghost_b)
 	(object_create crev_ent_ghost_c)
-	
+
 	(ai_place ext_a_area_c_cov/ghost_a_pilot)
 	(ai_place ext_a_area_c_cov/ghost_b_pilot)
 	(ai_place ext_a_area_c_cov/ghost_c_pilot)
-	
+
 	(sleep 1)
 ;	(objects_predict c_dropship_c)
 	(objects_predict crev_ent_ghost_a)
@@ -858,12 +858,12 @@
 ;	(unit_enter_vehicle crev_ent_ghost_a c_dropship_c "cargo_ghost01")
 ;	(unit_enter_vehicle crev_ent_ghost_b c_dropship_c "cargo_ghost02")
 ;	(unit_enter_vehicle crev_ent_ghost_c c_dropship_c "cargo_ghost03")
-	
+
 ;	(object_teleport c_dropship_c crev_ent_dropship_c_flag)
 ;	(recording_play_and_delete c_dropship_c crev_ent_dropship_c_in)
 
 ;	(sleep 1005)
-	
+
 ;	(unit_exit_vehicle crev_ent_ghost_a)
 ;	(sleep 40)
 ;	(unit_exit_vehicle crev_ent_ghost_b)
@@ -873,7 +873,7 @@
 	(ai_vehicle_encounter crev_ent_ghost_a ext_a_area_c_ghost_a/squad_d)
 	(ai_vehicle_encounter crev_ent_ghost_b ext_a_area_c_ghost_b/squad_c)
 	(ai_vehicle_encounter crev_ent_ghost_c ext_a_area_c_ghost_c/squad_c)
-	
+
 	(ai_follow_target_players ext_a_area_c_ghost_a/squad_d)
 	(ai_follow_target_players ext_a_area_c_ghost_b/squad_c)
 	(ai_follow_target_players ext_a_area_c_ghost_c/squad_c)
@@ -881,7 +881,7 @@
 	(ai_vehicle_enterable_distance crev_ent_ghost_a 10)
 	(ai_vehicle_enterable_distance crev_ent_ghost_b 10)
 	(ai_vehicle_enterable_distance crev_ent_ghost_c 10)
-	
+
 	(ai_magically_see_players ext_a_area_c_ghost_a)
 	(ai_magically_see_players ext_a_area_c_ghost_b)
 	(ai_magically_see_players ext_a_area_c_ghost_c)
@@ -904,7 +904,7 @@
 (script static void drive_jeep
 	(ai_command_list test_hum/jump_jeep jeep_jump)
 	)
-	
+
 ;(script static void wraith
 ;	(object_create test_wraith)
 ;	(ai_vehicle_encounter test_wraith test_cov/wraith)
@@ -960,7 +960,7 @@
 ;	(ai_command_list ext_a_area_a_cov/ghost_pilot_a ext_a_area_a_ledge_a)
 ;	(ai_command_list ext_a_area_a_cov/ghost_pilot_b ext_a_area_a_ledge_d)
 ;	(ai_command_list ext_a_area_a_cov/wraith_pilot ext_a_area_a_ledge_a)
-	
+
 ;	(ai_command_list ext_a_area_a_cov/squad_a ext_a_area_a_ledge_a)
 ;	(ai_command_list ext_a_area_a_cov/squad_c ext_a_area_a_ledge_b)
 ;	(ai_command_list ext_a_area_a_cov/squad_e ext_a_area_a_ledge_c)

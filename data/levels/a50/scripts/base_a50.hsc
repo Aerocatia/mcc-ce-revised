@@ -153,7 +153,7 @@
 ;use enc_***_index or ini_***_index to change the # of encounters that get spawned.
 (global short muster_enc_index 0)
 ;used to set the # of characters spawned in the encounter
-;range (1-3) 
+;range (1-3)
 (global short enc_mus_bot_l1_index 2)
 (global short enc_mus_bot_l2_index 2)
 (global short enc_mus_bot_l3_index 2)
@@ -212,7 +212,7 @@
 ;(script static void save
 ;	(sleep_until (game_safe_to_save))
 ;	(game_save))
-	
+
 (script continuous general_save
 ;	(save)
 	(if (= mission_begin 0) (sleep -1))
@@ -398,7 +398,7 @@
 	(device_set_power hangar_door_b 0)
 	(deactivate_team_nav_point_flag player extraction_switch_flag)
 	(breadcrumbs_deactivate_team_nav_point_flag player extraction_switch_flag)
-	
+
 	(sleep_until (and (= (ai_living_count hangar_cov_third_floor/grunts_return) 0)
 				   (= (ai_living_count hangar_cov_third_floor/elites_return) 0)) 30 300)
 	(ai_follow_target_disable hangar_marines_halls)
@@ -407,12 +407,12 @@
 	(sleep 1)
 	(set play_music_a50_11 false)
 	(extraction_cleanup)
-  
+
    (if (mcc_mission_segment "cine4_final") (sleep 1))
 
 	(if (cinematic_skip_start) (cutscene_extraction))
 	(cinematic_skip_stop)
-	
+
 	(game_won)
 	)
 
@@ -441,7 +441,7 @@
 	(sleep (* 30 5))
 	(show_hud_help_text 0)
 	)
-	
+
 (script dormant obj_sniper
 	(show_hud_help_text 1)
 	(hud_set_help_text obj_sniper)
@@ -512,7 +512,7 @@
 	(vehicle_load_magic insertion_pelican "rider" (ai_actors marines_area4/marines_m))
 	(object_teleport insertion_pelican area4_pelican_flag)
 	(recording_play_and_hover insertion_pelican area4_pelican_a_in)
-	
+
 	(sleep 1)
 	(ai_braindead marines_area4/marines_m 1)
 	(objects_predict insertion_pelican)
@@ -532,7 +532,7 @@
 	(vehicle_hover insertion_pelican 0)
 	(recording_play_and_delete insertion_pelican area4_pelican_a_out)
 	(set area4_covenant_reins true)
-	
+
 	(ai_migrate marines_area4/marines_m marines_area4/squad_m)
 	(sleep 1)
 	(ai_follow_target_players marines_area4/squad_m)
@@ -540,7 +540,7 @@
 ;	(sleep_until (and (< (ai_living_count covenant_area4/grunts_q) 2)
 ;				   (< (ai_strength covenant_area4/elites_q) .8)))
 ;	(ai_migrate marines_area4/squad_m marines_area4/squad_q)
-	
+
 ;	(sleep_until (and (= (ai_living_count covenant_area4/elites_q) 0)
 ;				   (= (ai_living_count covenant_area4/grunts_q) 0)))
 ;	(ai_migrate marines_area4/squad_q marines_area4/squad_o)
@@ -566,7 +566,7 @@
 	(vehicle_load_magic insertion_pelican "rider" (ai_actors marines_area4/marines_b))
 	(object_teleport insertion_pelican area4_pelican_b_flag)
 	(recording_play_and_hover insertion_pelican area4_pelican_b_in)
-	
+
 	(sleep 1)
 	(ai_braindead marines_area4/marines_b 1)
 	(objects_predict insertion_pelican)
@@ -594,15 +594,15 @@
 ;	(sleep_until (and (< (ai_living_count covenant_area4/grunts_b) 3)
 ;				   (< (ai_living_count covenant_area4/jackals_g) 2)))
 ;	(ai_migrate marines_area4/squad_b marines_area4/squad_u)
-	
+
 ;	(sleep_until (and (< (ai_living_count covenant_area4/grunts_s) 2)
 ;				   (< (ai_living_count covenant_area4/jackals_u) 2)))
 ;	(ai_migrate marines_area4/squad_u marines_area4/squad_s)
-	
+
 ;	(sleep_until (and (= (ai_living_count covenant_area4/grunts_s) 0)
 ;				   (= (ai_living_count covenant_area4/jackals_u) 0)))
 ;	(ai_migrate marines_area4/squad_s marines_area4/squad_o)
-	
+
 ;	(sleep_until (and (= (ai_living_count covenant_area4/elites_q) 0)
 ;				   (= (ai_living_count covenant_area4/grunts_q) 0)))
 ;	(ai_migrate marines_area4/squad_o marines_area4/squad_x)
@@ -661,7 +661,7 @@
 ;	(object_destroy insertion_pelican)
 	(object_create_anew insertion_pelican)
 	(unit_set_enterable_by_player insertion_pelican false)
-	
+
 	(object_create ship_marine_1)
 ;	(object_create ship_marine_2)
 	(object_create ship_marine_3)
@@ -669,7 +669,7 @@
 	(object_create ship_marine_5)
 ;	(object_create ship_marine_6)
 	(object_create ship_marine_7)
-	
+
 	(ai_attach ship_marine_1 marines_area5/gravity_pad_fodder)
 	(ai_attach ship_marine_2 marines_area5/gravity_pad_fodder)
 	(ai_attach ship_marine_3 marines_area5/gravity_pad_fodder)
@@ -717,7 +717,7 @@
 	(unit_exit_vehicle ship_marine_3)
 	(ai_command_list_by_unit ship_marine_3 forward_4s)
 	(sleep 60)
-	
+
 	(ai_command_list_by_unit ship_marine_6 marine_to_pad_6)
 	(ai_command_list_by_unit ship_marine_7 marine_to_pad_7)
 	(ai_command_list_by_unit ship_marine_5 marine_to_pad_5)
@@ -757,13 +757,13 @@
 	(sleep (* 30 3))
 	(vehicle_hover insertion_pelican 0)
 	(recording_play_and_delete insertion_pelican v_rec_hangar_pelican_a_out)
-	
+
 	(cond ((= hangar_location_index 1) (ai_migrate hangar_marines hangar_marines/mig_marines_a))
 		 ((= hangar_location_index 2) (ai_migrate hangar_marines hangar_marines/mig_marines_b))
 		 ((= hangar_location_index 3) (ai_migrate hangar_marines hangar_marines/mig_marines_d))
 		 ((= hangar_location_index 4) (ai_migrate hangar_marines hangar_marines/mig_marines_e))
 		 ((= hangar_location_index 5) (ai_migrate hangar_marines hangar_marines/mig_marines_f)))
-	(sleep 300)	 
+	(sleep 300)
 	(device_group_set hangar_door_b_power 1)
 	)
 
@@ -856,7 +856,7 @@
 	(sleep 30)
 ;	(vehicle_hover c_dropship_a 1)
 
-	(begin_random 
+	(begin_random
 		(begin (vehicle_unload c_dropship_a cd-passengerl01) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerl02) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerl03) (sleep 5))
@@ -865,7 +865,7 @@
 		(begin (vehicle_unload c_dropship_a cd-passengerr02) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerr03) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerr04) (sleep 5)))
-		
+
 	(sleep 90)
 	(vehicle_hover c_dropship_a 0)
 	(unit_close c_dropship_a)
@@ -885,7 +885,7 @@
 	(ai_place covenant_area5/jackals_drop)
 	(vehicle_load_magic c_dropship_a "passenger" (ai_actors covenant_area5/grunts_drop))
 	(vehicle_load_magic c_dropship_a "passenger" (ai_actors covenant_area5/jackals_drop))
-	
+
 	(recording_play_and_hover c_dropship_a c_dropship_area5_in)
 
 	(sleep 1)
@@ -898,7 +898,7 @@
 	(sleep (- (recording_time c_dropship_a) 400))
 	(ai_conversation area5_cov_reins)
 	(sleep 250)
-	
+
 	(ai_braindead_by_unit c_dropship_a 0)
 	(sleep 120)
 	(ai_braindead covenant_area5 0)
@@ -906,7 +906,7 @@
 	(unit_open c_dropship_a)
 	(sleep 30)
 
-	(begin_random 
+	(begin_random
 		(begin (vehicle_unload c_dropship_a cd-passengerl01) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerl02) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerl03) (sleep 5))
@@ -915,7 +915,7 @@
 		(begin (vehicle_unload c_dropship_a cd-passengerr02) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerr03) (sleep 5))
 		(begin (vehicle_unload c_dropship_a cd-passengerr04) (sleep 5)))
-		
+
 	(sleep 90)
 	(vehicle_hover c_dropship_a 0)
 	(unit_close c_dropship_a)
@@ -932,7 +932,7 @@
 	(vehicle_hover hangar_dropship_b 1)
 	(sound_class_set_gain "vehicle_engine" .25 150)
 
-	
+
 	(sleep 1)
 	(objects_predict hangar_dropship_b)
 	(ai_braindead_by_unit hangar_dropship_b 1)

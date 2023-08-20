@@ -240,7 +240,7 @@
 
 ;- Flavor Dialogue Hooks -------------------------------------------------------
 
-(script static void C20_flavor_120_Monitor 
+(script static void C20_flavor_120_Monitor
 	(print "Monitor: This Construct's research facilities are, of course, most impressive. Perhaps you will have time to reaquaint yourself to them soon.")
 )
 
@@ -263,7 +263,7 @@
 (global boolean music_03_base false)
 (global boolean music_04_base false)
 
-(script static void music_01 
+(script static void music_01
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_01_base)
 	(if cinematics_debug (print "Music O1 Start"))
@@ -275,7 +275,7 @@
 	(sound_looping_stop "levels\c20\music\c20_01")
 )
 
-(script static void music_02 
+(script static void music_02
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_02_base)
 	(if cinematics_debug (print "Music O2 Start"))
@@ -287,7 +287,7 @@
 	(sound_looping_stop "levels\c20\music\c20_02")
 )
 
-(script static void music_03 
+(script static void music_03
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_03_base)
 	(if cinematics_debug (print "Music O3 Start"))
@@ -299,7 +299,7 @@
 	(sound_looping_stop "levels\c20\music\c20_03")
 )
 
-(script static void music_04 
+(script static void music_04
 	; Wait for it... waaaait for it... then begin music
 	(sleep_until music_04_base)
 	(if cinematics_debug (print "Music O4 Start"))

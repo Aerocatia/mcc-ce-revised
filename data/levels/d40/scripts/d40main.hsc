@@ -284,7 +284,7 @@
 			(set g_breadcrumb_nav_index 9)
 		)
 	)
-	
+
 	(if (= g_breadcrumb_nav_index 9)
 		(begin
 			(sleep_until
@@ -294,7 +294,7 @@
 				)
 			)
 			(breadcrumbs_activate_team_nav_point_position "default" player -76.3 -1.79 2 "navpoint_4" 0.55)
-			
+
 			(sleep_until
 				(or
 					(< (objects_distance_to_position (players) -76 -2 2) 3)
@@ -312,7 +312,7 @@
 (global boolean timer_active false)
 (script dormant endgame_cinematics
    (if (mcc_mission_segment "cines_final") (sleep 1))
-   
+
 	(if (<= (hud_get_timer_ticks) 0)
       ; Failure!
 		(begin
@@ -322,30 +322,30 @@
 			(pause_hud_timer true)
 
          (if (mcc_mission_segment "cine5_ending_you_loose") (sleep 1))
-			         
+
 			; Run the failure cinematic
 			(cinematic_time_up)
 		)
-		
+
 		; Success!
-		(begin 
+		(begin
 			; End the timer
 			(show_hud_timer false)
 			(set timer_active false)
 			(pause_hud_timer true)
-			
+
          (if (= "impossible" (game_difficulty_get_real))
             (begin
                (if (mcc_mission_segment "cine3_legendary_ending") (sleep 1))
             )
-            
+
             (begin
                (if (mcc_mission_segment "cine4_final") (sleep 1))
             )
          )
-                  
+
 			; Run the ending cinematic and win
-			(cinematic_finale) 
+			(cinematic_finale)
 			(game_won)
 		)
 	)
@@ -362,7 +362,7 @@
 	(sleep_until (not trench_jeep_test_paused))
 
 	; Is the player in the jeep?
-	(if 
+	(if
 		(or
 			(vehicle_test_seat_list trench_jeep1 "W-driver" (players))
 			(vehicle_test_seat_list trench_jeep2 "W-driver" (players))
@@ -375,10 +375,10 @@
 		(set time_out_of_jeep 0)
 		(set time_out_of_jeep (+ time_out_of_jeep 1))
 	)
-	
+
 	; Sleep for a second
 	(sleep 30)
-	
+
 	; If the time is high enough for cortana to complain?
 	(if (>= time_out_of_jeep 15)
 		(begin
@@ -390,36 +390,36 @@
 
 
 ; Initial timer test
-(script dormant timer_begin 
+(script dormant timer_begin
 	; Dialog
 	(if (= "impossible" (game_difficulty_get))
 		(D40_320_Cortana) ; New time estimate: 5:00
-		(D40_310_Cortana) ; New time estimate: 6:00	
+		(D40_310_Cortana) ; New time estimate: 6:00
 	)
 
 	; Set up the timer
 	(hud_set_timer_position 0 0 bottom_right)
 	(hud_set_timer_time timer_minutes timer_seconds)
 	(hud_set_timer_warning_time 1 0)
-	
+
 	; Display the timer
 	(show_hud_timer true)
 	(set timer_active true)
-	
+
 	; Dialog
-	(D40_330_Cortana) ; Here's a timer. 
+	(D40_330_Cortana) ; Here's a timer.
 
 	; Start the jeep complaint timer
 	(wake trench_jeep_test)
-		
+
 	; Sleep until the timer ends, then kill shizat
-	(sleep_until 
+	(sleep_until
 		(and
 			timer_active
 			(<= (hud_get_timer_ticks) 0)
 		)
 	)
-	
+
 	; If the timer is still active, run the cinematic
 	(if timer_active (wake endgame_cinematics))
 )
@@ -435,11 +435,11 @@
 (script dormant test_for_endgame
 	(D40_450_Cortana) ; That's the ship!
 	(sleep_until (volume_test_objects grand_finale (players)) testing_trench)
-	
+
 	; Remove the endpoint
 	(deactivate_team_nav_point_flag player nav_endpoint)
 	(breadcrumbs_deactivate_team_nav_point_flag player nav_endpoint)
-	
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_08")
 
@@ -451,7 +451,7 @@
 	(object_create_containing "bsp_8_7")
 	(object_create_containing "bsp_8_8")
 	(wake endgame_cleaner)
-	
+
 	; Run ending cinematics
 	(wake endgame_cinematics)
 )
@@ -463,7 +463,7 @@
 (script dormant enc7_7
 	(sleep_until (volume_test_objects enc7_7 (players)) testing_trench)
 ;	(if debug (print "enc7_7"))
-	
+
 	; Endgame testing
 	(wake test_for_endgame)
 
@@ -478,7 +478,7 @@
 	; Run a quickie command list with them
 	(ai_command_list enc7_7_cov/right_gunner enc7_7_shooting)
 	(ai_command_list enc7_7_cov/left_gunner enc7_7_shooting)
-			
+
 	; Bang, sleep, bang, sleep, bang
 	(effect_new explosion_large enc7_7_L1) (sleep 2)
 	(effect_new explosion_large enc7_7_R1)
@@ -486,18 +486,18 @@
 	(sleep_until (volume_test_objects enc7_7_2 (players)) testing_very_fast)
 	(effect_new explosion_steam enc7_7_L4) (sleep 2)
 	(effect_new explosion_large_no enc7_7_R4)
-	
+
 	(sleep_until (volume_test_objects enc7_7_3 (players)) testing_very_fast)
 	(effect_new explosion_medium_no enc7_7_R5)
-	
+
 	(sleep_until (volume_test_objects enc7_7_4 (players)) testing_very_fast)
 	(effect_new explosion_steam enc7_7_R6) (sleep 7)
 	(effect_new explosion_large_no enc7_7_L6)
-	
+
 	(sleep_until (volume_test_objects enc7_7_6 (players)) testing_very_fast)
 	(effect_new explosion_large_no enc7_7_L8) (sleep 5)
 	(effect_new explosion_large enc7_7_R8)
-	
+
 )
 
 
@@ -505,10 +505,10 @@
 (script dormant enc7_1
 	(sleep_until (volume_test_objects enc7_1 (players)) testing_trench)
 ;	(if debug (print "enc7_1"))
-	
+
 	; Wakey
 	(wake enc7_7)
-	
+
 	; bangbangbangbang
 	(effect_new explosion_steam_no enc6_9_blast2) (sleep 18)
 	(effect_new explosion_large enc6_9_blast3) (sleep 15)
@@ -516,14 +516,14 @@
 	(effect_new explosion_large_no enc6_9_blast5) (sleep 10)
 	(effect_new explosion_small enc6_9_blast6) (sleep 15)
 	(effect_new explosion_large enc6_9_blast7) (sleep 13)
-	
+
 	; Place the ground level guys, make them fight each other
 	(ai_place enc7_7_cov/R3)
 	(ai_place enc7_7_cov/R7)
 	(ai_place enc7_7_flood)
 	(ai_try_to_fight enc7_7_cov/R3 enc7_7_flood)
 	(ai_try_to_fight enc7_7_cov/R7 enc7_7_flood)
-	
+
 	; Magical sight
 	(ai_magically_see_players enc7_7_cov)
 	(ai_magically_see_players enc7_7_flood)
@@ -535,17 +535,17 @@
 (script dormant section7
 	(sleep_until (volume_test_objects section7 (players)) testing_trench)
 ;	(if debug (print "section7"))
-	
+
 	; Place units
 	(ai_place enc7_1_flood)
-	
+
 	; bangbangbangbang
 ;	(effect_new explosion_large enc6_9_blast2)
 	(effect_new explosion_large enc6_9_blast8)
-	
+
 	; Wake
 	(wake enc7_1)
-	
+
 	; Kill some shizat
 	(ai_kill enc6_9_flood)
 )
@@ -557,7 +557,7 @@
 ; Trench section 6_10
 (script dormant enc6_10
 ;	(if debug (print "enc6_10"))
-	
+
 	; Place the AI
 	(ai_place enc6_9_flood/infsB)
 )
@@ -577,18 +577,18 @@
 ; Trench section 6_9
 (script dormant enc6_9
 ;	(if debug (print "enc6_9"))
-	
+
 	; Wakey
 	(wake enc6_9_1)
 	(wake enc6_10)
-	
+
 	; Place the AI
 	(ai_place enc6_9_flood/infsA)
 	(ai_place enc6_9_flood/carriers)
-	
+
 	; Bang
 	(effect_new explosion_large enc6_9_blast1)
-	
+
 	; Dialogue
 	(D40_441_Cortana)
 )
@@ -664,7 +664,7 @@
 (script dormant enc6_8_3
 	(sleep_until (volume_test_objects enc6_8_3 (players)) testing_trench)
 ;	(if debug (print "enc6_8_3"))
-	
+
 	; If the player goes backwards...
 	(sleep_until (volume_test_objects enc6_8_6 (players)) testing_trench)
 	(D40_363_Cortana)
@@ -676,11 +676,11 @@
 	(sleep_until (volume_test_objects enc6_8_4 (players)) testing_trench)
 ;	(if debug (print "enc6_8_4"))
 	(wake enc6_8_5)
-	
+
 	; Bang
 	(effect_new explosion_medium_no enc6_8_blast5)
-	
-	; Sleep 
+
+	; Sleep
 	(sleep -1 enc6_8_3)
 )
 
@@ -692,7 +692,7 @@
 	(wake enc6_8_3)
 	(wake enc6_8_4)
 	(wake enc6_8_7)
-	
+
 	; Bang
 	(effect_new explosion_medium_no enc6_8_blast3)
 	(effect_new explosion_large_no enc6_8_blast4)
@@ -704,7 +704,7 @@
 	(sleep_until (volume_test_objects enc6_8_1 (players)) testing_trench)
 ;	(if debug (print "enc6_8_1"))
 	(wake enc6_8_2)
-	
+
 	; Bang
 	(effect_new explosion_large_no enc6_8_blast2)
 )
@@ -726,13 +726,13 @@
 	(set explosion_seperation 15)
 	(wake enc6_8_ambients)
 	(wake enc6_8_1)
-	
+
 	; Stop jeep warnings
 	(sleep -1 trench_jeep_test)
-	
+
 	; Bang
 	(effect_new explosion_small enc6_8_blast1)
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_9 (players)) testing_trench)
 	(enc6_8_cleaner)
@@ -752,7 +752,7 @@
 
 	; Kill the scene
 	(kill_trench_scene)
-		
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_07")
 	(sound_looping_start "levels\d40\music\d40_08" none 1)
@@ -766,7 +766,7 @@
 	(set timer_active true)
 	(pause_hud_timer false)
 	(show_hud_timer true)
-	
+
 	; If the player has more than 2:30 remaining, save
 	(if (>= (hud_get_timer_ticks) trench_safe_save_time)
 		(begin
@@ -787,11 +787,11 @@
 
 	; Place the runners
 	(ai_place enc6_8_cov)
-	
+
 	; Make the runners run
 	(ai_command_list enc6_8_cov enc6_8_longrun)
 
-	; Blam blam blam 
+	; Blam blam blam
 	(effect_new explosion_large enc6_7_blast2) 		(sleep 30)
 	(effect_new explosion_steam_no enc6_7_blast3) 	(sleep 30)
 	(effect_new explosion_steam_no enc6_7_blast4) 	(sleep 30)
@@ -805,7 +805,7 @@
 	(sleep_until (volume_test_objects enc6_7_1 (players)) testing_trench)
 ;	(if debug (print "enc6_7_1"))
 	(wake enc6_7_2)
-	
+
 	; Kill the trench_scene, just in case
 	(if (not trench_scene_continued)
 		(trench_scene_continue)
@@ -823,10 +823,10 @@
 (script dormant enc6_7
 ;	(if debug (print "enc6_7"))
 	(wake enc6_7_1)
-	
+
 	; Bang
 	(effect_new explosion_steam enc6_7_blast1)
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_8 (players)) testing_trench)
 	(wake enc6_8)
@@ -899,7 +899,7 @@
 ;	(if debug (print "enc6_6"))
 	(wake enc6_6_ambients)
 	(wake enc6_6_1)
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_7 (players)) testing_trench)
 	(wake enc6_7)
@@ -933,7 +933,7 @@
 (script dormant enc6_5_8
 	(sleep_until (volume_test_objects enc6_5_8 (players)) testing_trench)
 ;	(if debug (print "enc6_5_8"))
-	
+
 	; Dialog
 	(D40_380_Cortana)
 	(sleep 20)
@@ -954,10 +954,10 @@
 	(sleep_until (volume_test_objects enc6_5_6 (players)) testing_trench)
 ;	(if debug (print "enc6_5_6"))
 	(wake enc6_5_7)
-	
+
 	; Anti-bang
 	(sleep -1 enc6_5_ambients)
-	
+
 	; Bang
 ;	(effect_new explosion_large enc6_5_blast9)
 ;	(effect_new explosion_large enc6_5_blast10)
@@ -968,10 +968,10 @@
 	(ai_place enc6_5_cov/gunner)
 ;	(ai_place enc6_5_cov/gunner_grunts)
 	(ai_go_to_vehicle enc6_5_cov/gunner enc6_5_turret gunner)
-	
+
 	; Dropship
 	(enc6_5_dropship)
-	
+
 	; Advance
 	(ai_defend enc6_5_cov/evacs)
 )
@@ -990,10 +990,10 @@
 ;	(if debug (print "enc6_5_4"))
 	(wake enc6_5_5)
 	(wake enc6_5_6)
-	
+
 	; Manuver
 	(ai_maneuver enc6_5_cov/grunts_advance)
-	
+
 	; Bang bang.
 	(wake enc6_5_ambients)
 )
@@ -1047,10 +1047,10 @@
 ;	(if debug (print "enc6_5"))
 	(wake enc6_5_1)
 	(wake enc6_5_2)
-	
+
 	; Turret
 	(object_create_anew "enc6_5_turret")
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_6 (players)) testing_trench)
 	(wake enc6_6)
@@ -1068,9 +1068,9 @@
 	; Place units
 	(ai_place enc6_5_cov/grunts_advance)
 	(ai_place enc6_5_flood/infsA)
-	
+
 	; Fuel rod grunts
-	(if 
+	(if
 		(or
 			coop
 			(= "hard" (game_difficulty_get))
@@ -1093,7 +1093,7 @@
 	(sleep_until (volume_test_objects enc6_4_7 (players)) testing_trench)
 ;	(if debug (print "enc6_4_7"))
 	(wake enc6_4_8)
-	
+
 	; Bang
 	(effect_new explosion_large_no enc6_4_blast8) (sleep 15)
 	(effect_new explosion_large enc6_4_blast9)
@@ -1112,7 +1112,7 @@
 (script dormant enc6_4_5
 	(sleep_until (volume_test_objects enc6_4_5 (players)) testing_trench)
 ;	(if debug (print "enc6_4_5"))
-	
+
 	; Blam
 	(effect_new explosion_medium_no enc6_4_blast6) (sleep 25)
 	(effect_new explosion_large_no enc6_4_blast7)
@@ -1123,7 +1123,7 @@
 (script dormant enc6_4_4
 	(sleep_until (volume_test_objects enc6_4_4 (players)) testing_trench)
 ;	(if debug (print "enc6_4_4"))
-	
+
 	; Bang
 	(effect_new explosion_steam enc6_4_blast11) (sleep 15)
 	(effect_new explosion_small enc6_4_blast11)
@@ -1134,7 +1134,7 @@
 (script dormant enc6_4_3
 	(sleep_until (volume_test_objects enc6_4_3 (players)) testing_trench)
 ;	(if debug (print "enc6_4_3"))
-	
+
 	; Bang
 	(effect_new explosion_steam enc6_4_blast10) (sleep 15)
 	(effect_new explosion_small enc6_4_blast10)
@@ -1145,7 +1145,7 @@
 (script dormant enc6_4_2
 	(sleep_until (volume_test_objects enc6_4_2 (players)) testing_trench)
 ;	(if debug (print "enc6_4_2"))
-	
+
 	; Blam
 	(effect_new explosion_medium_no enc6_4_blast4) (sleep 25)
 	(effect_new explosion_large_no enc6_4_blast5)
@@ -1170,7 +1170,7 @@
 	(sleep -1 enc6_4_3)
 	(sleep -1 enc6_4_4)
 	(sleep -1 enc6_4_5)
-	
+
 	(sleep 150)
 	(ai_kill enc6_4_flood)
 )
@@ -1198,14 +1198,14 @@
 (script dormant enc6_3_4
 	(sleep_until (volume_test_objects enc6_3_4 (players)) testing_trench)
 ;	(if debug (print "enc6_3_4"))
-	
+
 	; Place
 	(ai_place enc6_3_sents/squadC)
 	(ai_place enc6_4_flood/squadA)
 	(ai_place enc6_4_flood/squadB)
 	(ai_place enc6_4_flood/squadC)
 	(ai_place enc6_4_flood/infs)
-	
+
 	; Kill enc6_2 stuff
 	(ai_kill enc6_2_sents)
 	(ai_kill enc6_2_flood)
@@ -1216,13 +1216,13 @@
 (script dormant enc6_3_2
 	(sleep_until (volume_test_objects enc6_3_2 (players)) testing_trench)
 ;	(if debug (print "enc6_3_2"))
-	
+
 	; Place
 	(ai_place enc6_3_flood/infsB)
-	
+
 	; Kill
 	(ai_kill enc6_3_sents/squadB)
-	
+
 	; Blam
 	(effect_new explosion_medium enc6_3_2_blast1)
 	(effect_new explosion_medium enc6_3_2_blast2)
@@ -1237,7 +1237,7 @@
 (script dormant enc6_3_3
 	(sleep_until (volume_test_objects enc6_3_3 (players)) testing_trench)
 ;	(if debug (print "enc6_3_3"))
-	
+
 	; Blam
 	(effect_new explosion_large enc6_3_3_blast1)
 	(sleep -1 enc6_3_2)
@@ -1251,7 +1251,7 @@
 	(wake enc6_3_2)
 	(wake enc6_3_3)
 	(wake enc6_3_4)
-	
+
 	; Place
 	(ai_place enc6_3_sents/squadB)
 )
@@ -1290,10 +1290,10 @@
 (script dormant enc6_2_8
 	(sleep_until (volume_test_objects enc6_2_8 (players)) testing_trench)
 ;	(if debug (print "enc6_2_8"))
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadF)
-	
+
 	; Bang
 	(effect_new explosion_steam_no enc6_2_blast3)
 )
@@ -1303,7 +1303,7 @@
 (script dormant enc6_2_7
 	(sleep_until (volume_test_objects enc6_2_7 (players)) testing_trench)
 ;	(if debug (print "enc6_2_7"))
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadE)
 
@@ -1316,7 +1316,7 @@
 (script dormant enc6_2_6
 	(sleep_until (volume_test_objects enc6_2_6 (players)) testing_trench)
 ;	(if debug (print "enc6_2_6"))
-	
+
 	; Bang
 	(effect_new explosion_large enc6_2_blast7)
 )
@@ -1327,10 +1327,10 @@
 	(sleep_until (volume_test_objects enc6_2_5 (players)) testing_trench)
 ;	(if debug (print "enc6_2_5"))
 	(wake enc6_2_6)
-	
-	; Place 
+
+	; Place
 	(ai_place enc6_2_flood/infs2)
-	
+
 	; Kill
 	(ai_kill enc6_2_sents/squadA)
 	(ai_kill enc6_2_sents/squadB)
@@ -1341,7 +1341,7 @@
 (script dormant enc6_2_4
 	(sleep_until (volume_test_objects enc6_2_4 (players)) testing_trench)
 ;	(if debug (print "enc6_2_4"))
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadE)
 )
@@ -1351,7 +1351,7 @@
 (script dormant enc6_2_3
 	(sleep_until (volume_test_objects enc6_2_3 (players)) testing_trench)
 ;	(if debug (print "enc6_2_3"))
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadF)
 )
@@ -1361,7 +1361,7 @@
 (script dormant enc6_2_2
 	(sleep_until (volume_test_objects enc6_2_2 (players)) testing_trench)
 ;	(if debug (print "enc6_2_2"))
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadD)
 
@@ -1381,10 +1381,10 @@
 	(wake enc6_2_5)
 	(wake enc6_2_7)
 	(wake enc6_2_8)
-	
+
 	; Place
 	(ai_place enc6_2_sents/squadC)
-	
+
 	; Blast
 	(effect_new explosion_large_no enc6_2_1_blast1)
 	(effect_new explosion_medium enc6_2_1_blast2)
@@ -1406,7 +1406,7 @@
 	(sleep -1 enc6_2_4)
 	(sleep -1 enc6_2_7)
 	(sleep -1 enc6_2_8)
-	
+
 	(sleep 150)
 	(ai_kill enc6_2_flood)
 	(ai_kill enc6_2_sents)
@@ -1417,18 +1417,18 @@
 (script dormant enc6_2
 ;	(if debug (print "enc6_2"))
 	(wake enc6_2_0)
-	
+
 	; Place advance units
 	(ai_place enc6_2_flood/infs)
 	(ai_place enc6_2_flood/combats)
 	(ai_place enc6_2_sents/squadA)
 	(ai_place enc6_2_sents/squadB)
-	
+
 	; Blast
 	(sleep 120)
 	(effect_new explosion_large enc6_2_blast1)
 	(effect_new explosion_medium_no enc6_2_blast2)
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_3 (players)) testing_trench)
 	(wake enc6_3)
@@ -1457,11 +1457,11 @@
 	(sleep_until (volume_test_objects enc6_1_7 (players)) testing_trench)
 ;	(if debug (print "enc6_1_7"))
 	(wake enc6_1_8)
-	
+
 	; Boom
 	(effect_new explosion_grenade enc6_1_7_blast1)
 	(effect_new explosion_medium enc6_1_7_blast2)
-	
+
 	; Kill
 	(ai_kill enc6_1_flood/fodder5)
 )
@@ -1471,7 +1471,7 @@
 (script dormant enc6_1_6
 	(sleep_until (volume_test_objects enc6_1_6 (players)) testing_trench)
 ;	(if debug (print "enc6_1_6"))
-	
+
 	; Place 'n kill
 	(ai_place enc6_1_flood/fodder6)
 	(ai_kill enc6_1_flood/fodder1)
@@ -1479,7 +1479,7 @@
 	(ai_kill enc6_1_flood/squadB)
 	(ai_kill enc6_1_flood/squadC)
 	(ai_kill enc6_1_flood/squadD)
-	
+
 	; Fodder
 	(sleep 30)
 	(ai_place enc6_1_flood/fodder4)
@@ -1499,10 +1499,10 @@
 (script dormant enc6_1_4
 	(sleep_until (volume_test_objects enc6_1_4 (players)) testing_trench)
 ;	(if debug (print "enc6_1_4"))
-	
+
 	; Place units
 	(ai_place enc6_1_flood/fodder2)
-	
+
 	; Wait, then blast
 	(sleep 65)
 	(effect_new explosion_medium enc6_1_4_blast1)
@@ -1515,7 +1515,7 @@
 ;	(if debug (print "enc6_1_3"))
 	(wake enc6_1_4)
 	(wake enc6_1_5)
-	
+
 	; Place units
 	(ai_place enc6_1_flood/fodder3)
 )
@@ -1526,10 +1526,10 @@
 	(sleep_until (volume_test_objects enc6_1_2 (players)) testing_trench)
 ;	(if debug (print "enc6_1_2"))
 	(wake enc6_1_3)
-	
+
 	; PLace
 	(ai_place enc6_1_flood/fodder5)
-	
+
 	; Kill
 	(ai_kill enc6_0_flood)
 )
@@ -1539,11 +1539,11 @@
 (script dormant enc6_1_1
 	(sleep_until (volume_test_objects enc6_1_1 (players)) testing_trench)
 ;	(if debug (print "enc6_1_1"))
-	
+
 	; Fireworks
 	(effect_new explosion_steam_no enc6_1_1_blast3)
 	(effect_new explosion_steam_no enc6_1_1_blast4)
-	
+
 	; Exchange units
 	(sleep 30)
 	(effect_new explosion_grenade enc6_1_1_blast1)
@@ -1579,7 +1579,7 @@
 	(sleep -1 enc6_1_4)
 	(sleep -1 enc6_1_6)
 	(sleep -1 enc6_1_ambients)
-	
+
 	; Kill 'em all
 	(ai_kill enc6_1_flood)
 	(ai_kill enc6_0_flood)
@@ -1591,21 +1591,21 @@
 (script dormant enc6_1
 	(sleep_until (volume_test_objects enc6_1 (players)) testing_trench)
 ;	(if debug (print "enc6_1"))
-	
+
 	; Set globals
 	(set explosion_seperation 30)
-	
+
 	; Wake things
 	(wake enc6_1_ambients)
 	(wake enc6_1_1)
 	(wake enc6_1_2)
-	
+
 	; Place units
 	(ai_magically_see_players enc6_1_flood)
 	(ai_playfight enc6_1_flood true)
 	(ai_place enc6_1_flood/squadB)
 	(ai_place enc6_1_flood/fodder1)
-	
+
 	; Sleep, wake, and kill optional encounters
 	(sleep_until (volume_test_objects enc6_2 (players)) testing_trench)
 	(wake enc6_2)
@@ -1623,7 +1623,7 @@
 	; Place some advance units
 	(ai_place enc6_1_flood/squadA)
 	(ai_place enc6_1_flood/squadC)
-	
+
 	; Start explosions
 	(sleep 90)
 	(effect_new explosion_steam_no enc6_0_1_blast1)
@@ -1633,9 +1633,9 @@
 	(effect_new explosion_steam_no enc6_0_1_blast3)
 	(sleep 45)
 	(effect_new explosion_steam_no enc6_0_1_blast4)
-	
+
 	; Check if the player is in a jeep
-	(if 
+	(if
 		(or
 			(vehicle_test_seat_list trench_jeep1 "W-driver" (players))
 			(vehicle_test_seat_list trench_jeep2 "W-driver" (players))
@@ -1656,18 +1656,18 @@
 	(sleep_until (volume_test_objects enc6_0 (players)) testing_trench)
 ;	(if debug (print "enc6_0"))
 	(wake enc6_0_1)
-	
+
 	; Explosions
-	(effect_new explosion_medium enc6_0_blast1)	
+	(effect_new explosion_medium enc6_0_blast1)
 	(effect_new explosion_grenade enc6_0_blast1)	(sleep 15)
 	(effect_new explosion_grenade enc6_0_blast4)
 	(effect_new explosion_grenade enc6_0_blast2)	(sleep 15)
 	(effect_new explosion_grenade enc6_0_blast3)
-	
+
 	; Place the covies
 	(ai_place enc6_0_cov)
 	(ai_force_active enc6_0_cov true)
-	
+
 	; Place the flood, form a bond
 	(ai_place enc6_0_flood)
 	(ai_try_to_fight enc6_0_flood enc6_0_cov)
@@ -1679,12 +1679,12 @@
 (script dormant enc6_0_dialog
 	(sleep_until (volume_test_objects enc6_0_dialog (players)) 1)
 ;	(D40_340_Cortana)
-	
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_06")
 	(sound_looping_start "levels\d40\music\d40_07" none 1)
 
-	; Deactivate the lift waypoint (redundant, but catches a bug if the player 
+	; Deactivate the lift waypoint (redundant, but catches a bug if the player
 	; runs ahead faster than cortana can finish her dialog)
 	(deactivate_team_nav_point_flag player waypoint_lift)
 	(breadcrumbs_deactivate_team_nav_point_flag player waypoint_lift)
@@ -1706,28 +1706,28 @@
 	(sleep -1 enc6_5_ambients)
 	(sleep -1 enc6_6_ambients)
 	(sleep -1 enc6_8_ambients)
-	
+
 	; Wait till the player arrives
 	(sleep_until (volume_test_objects section6 (players)) testing_trench)
 ;	(if debug (print "section6"))
 
-	; Deactivate the lift waypoint (redundant, but catches a bug if the player 
+	; Deactivate the lift waypoint (redundant, but catches a bug if the player
 	; runs ahead faster than cortana can finish her dialog)
 	(deactivate_team_nav_point_flag player waypoint_lift)
 	(breadcrumbs_deactivate_team_nav_point_flag player waypoint_lift)
 
 	(game_save_cancel)	; Cancel any previous game saves
 	(game_save) ; Save game with timeout
-	
+
    (mcc_mission_segment "16_section6")
-   
+
 	; End the alarm
 	(sound_looping_stop sound\sfx\ambience\d40\engine_critical)
 
 	; Begin the trench
 	(wake enc6_0)
 	(wake enc6_0_dialog)
-	
+
 	; Chapter title
 	(chapter_d40_3)
 )
@@ -1748,7 +1748,7 @@
 	(begin
 		; Close the manifold
 		(device_set_position enc5_1_pistonN1 0)
-		
+
 		; Sound alarm
 		(if (!= (device_get_position enc5_1_pistonn1) 0)
 			(print "PLACEHOLDER: Alarm sound CLOSE_N1")
@@ -1762,7 +1762,7 @@
 	(begin
 		; Close the manifold
 		(device_set_position enc5_1_pistonN3 0)
-		
+
 		; Sound alarm
 		(if (!= (device_get_position enc5_1_pistonn3) 0)
 			(print "PLACEHOLDER: Alarm sound CLOSE_N3")
@@ -1776,7 +1776,7 @@
 	(begin
 		; Close the manifold
 		(device_set_position enc5_1_pistonS1 0)
-		
+
 		; Sound alarm
 		(if (!= (device_get_position enc5_1_pistons1) 0)
 			(print "PLACEHOLDER: Alarm sound CLOSE_S1")
@@ -1790,7 +1790,7 @@
 	(begin
 		; Close the manifold
 		(device_set_position enc5_1_pistonS3 0)
-		
+
 		; Sound alarm
 		(if (!= (device_get_position enc5_1_pistons3) 0)
 			(print "PLACEHOLDER: Alarm sound CLOSE_S3")
@@ -1804,16 +1804,16 @@
 (script static void open_manifold_n1
 	; Disable the control
 	(device_set_power enc5_1_controln1 0)
-	
+
 	; Sound alarm
 	(sound_impulse_start sound\sfx\ambience\d40\oven_door_alarm enc5_1_controln1 1)
-	
+
 	; Set the signal lights
 	(device_set_power enc5_1_siglight_n11 1)
 	(device_set_power enc5_1_siglight_n12 1)
 	(device_set_position_immediate enc5_1_siglight_n11 1) ; Yellow
 	(device_set_position_immediate enc5_1_siglight_n12 1)	; Yellow
-	
+
 	; Close all other manifolds
 	(close_manifold_n3)
 	(close_manifold_s1)
@@ -1822,16 +1822,16 @@
 (script static void open_manifold_n3
 	; Disable the control
 	(device_set_power enc5_1_controln3 0)
-	
+
 	; Sound alarm
 	(sound_impulse_start sound\sfx\ambience\d40\oven_door_alarm enc5_1_controln3 1)
-	
+
 	; Set the signal lights
 	(device_set_power enc5_1_siglight_n31 1)
 	(device_set_power enc5_1_siglight_n32 1)
 	(device_set_position_immediate enc5_1_siglight_n31 1) ; Yellow
 	(device_set_position_immediate enc5_1_siglight_n32 1)	; Yellow
-	
+
 	; Close all other manifolds
 	(close_manifold_n1)
 	(close_manifold_s1)
@@ -1840,16 +1840,16 @@
 (script static void open_manifold_s1
 	; Disable the control
 	(device_set_power enc5_1_controls1 0)
-	
+
 	; Sound alarm
 	(sound_impulse_start sound\sfx\ambience\d40\oven_door_alarm enc5_1_controls1 1)
-	
+
 	; Set the signal lights
 	(device_set_power enc5_1_siglight_s11 1)
 	(device_set_power enc5_1_siglight_s12 1)
 	(device_set_position_immediate enc5_1_siglight_s11 1) ; Yellow
 	(device_set_position_immediate enc5_1_siglight_s12 1)	; Yellow
-	
+
 	; Close all other manifolds
 	(close_manifold_n3)
 	(close_manifold_n1)
@@ -1858,16 +1858,16 @@
 (script static void open_manifold_s3
 	; Disable the control
 	(device_set_power enc5_1_controls3 0)
-	
+
 	; Sound alarm
 	(sound_impulse_start sound\sfx\ambience\d40\oven_door_alarm enc5_1_controls3 1)
-	
+
 	; Set the signal lights
 	(device_set_power enc5_1_siglight_s31 1)
 	(device_set_power enc5_1_siglight_s32 1)
 	(device_set_position_immediate enc5_1_siglight_s31 1) ; Yellow
 	(device_set_position_immediate enc5_1_siglight_s32 1)	; Yellow
-	
+
 	; Close all other manifolds
 	(close_manifold_n1)
 	(close_manifold_s1)
@@ -1886,9 +1886,9 @@
 	(breadcrumbs_deactivate_team_nav_point_flag player nav_cntrl_n3)
 	(breadcrumbs_deactivate_team_nav_point_flag player nav_cntrl_s1)
 	(breadcrumbs_deactivate_team_nav_point_flag player nav_cntrl_s3)
-	
+
 	; Reveal any valid manifold waypoints
-	(if 
+	(if
 		(and
 			(not manifold_n1_destroyed)
 			(> (device_get_position enc5_1_pistonn1) 0)
@@ -1902,7 +1902,7 @@
 			(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_n1)
 		)
 	)
-	(if 
+	(if
 		(and
 			(not manifold_n3_destroyed)
 			(> (device_get_position enc5_1_pistonn3) 0)
@@ -1916,7 +1916,7 @@
 			(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_n3)
 		)
 	)
-	(if 
+	(if
 		(and
 			(not manifold_s1_destroyed)
 			(> (device_get_position enc5_1_pistons1) 0)
@@ -1930,7 +1930,7 @@
 			(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_s1)
 		)
 	)
-	(if 
+	(if
 		(and
 			(not manifold_s3_destroyed)
 			(> (device_get_position enc5_1_pistons3) 0)
@@ -1958,7 +1958,7 @@
 	(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_n3)
 	(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_s1)
 	(breadcrumbs_deactivate_team_nav_point_flag player enc5_1_manifold_s3)
-	 
+
 	; If the device has power, mark it
 	(if (= (device_get_power enc5_1_controln1) 1)
 		(begin
@@ -2006,7 +2006,7 @@
 (global boolean controls_marked false)
 (script static void enc5_1_waypoint_control
 	; Are any of the manifolds open?
-	(if 
+	(if
 		(or
 			(> (device_get_position enc5_1_pistonn1) 0)
 			(> (device_get_position enc5_1_pistonn3) 0)
@@ -2032,14 +2032,14 @@
 ; Control polling script
 (script static void enc5_1_control_poll
 	; North 1
-	(if 
-		(and 
+	(if
+		(and
 			(not manifold_n1_destroyed)
-			(= (device_get_position enc5_1_pistonn1) 0) 
+			(= (device_get_position enc5_1_pistonn1) 0)
 		)
 		; If the manifold is closed and not destroyed, enable the control, turn off lights
 		(begin
-			(device_set_power enc5_1_controln1 1) 
+			(device_set_power enc5_1_controln1 1)
 
 			; Set the signal lights
 			(device_set_power enc5_1_siglight_n11 0)
@@ -2047,10 +2047,10 @@
 			(device_set_position_immediate enc5_1_siglight_n11 1) ; Yellow
 			(device_set_position_immediate enc5_1_siglight_n12 1)	; Yellow
 		)
-		; Otherwise, if the manifold is not destroyed and not closed, trigger 
+		; Otherwise, if the manifold is not destroyed and not closed, trigger
 		; scripts to correspond with the manifold being open
-		(if 
-			(and 
+		(if
+			(and
 				(not manifold_n1_destroyed)
 				(= (device_get_power enc5_1_controln1) 1)
 			)
@@ -2060,14 +2060,14 @@
 	)
 
 	; North 3
-	(if 
-		(and 
+	(if
+		(and
 			(not manifold_n3_destroyed)
-			(= (device_get_position enc5_1_pistonn3) 0) 
+			(= (device_get_position enc5_1_pistonn3) 0)
 		)
 		; If the manifold is closed and not destroyed, enable the control, turn off lights
 		(begin
-			(device_set_power enc5_1_controln3 1) 
+			(device_set_power enc5_1_controln3 1)
 
 			; Set the signal lights
 			(device_set_power enc5_1_siglight_n31 0)
@@ -2075,10 +2075,10 @@
 			(device_set_position_immediate enc5_1_siglight_n31 1) ; Yellow
 			(device_set_position_immediate enc5_1_siglight_n32 1)	; Yellow
 		)
-		; Otherwise, if the manifold is not destroyed and not closed, trigger 
+		; Otherwise, if the manifold is not destroyed and not closed, trigger
 		; scripts to correspond with the manifold being open
-		(if 
-			(and 
+		(if
+			(and
 				(not manifold_n3_destroyed)
 				(= (device_get_power enc5_1_controln3) 1)
 			)
@@ -2088,14 +2088,14 @@
 	)
 
 	; South 1
-	(if 
-		(and 
+	(if
+		(and
 			(not manifold_s1_destroyed)
-			(= (device_get_position enc5_1_pistons1) 0) 
+			(= (device_get_position enc5_1_pistons1) 0)
 		)
 		; If the manifold is closed and not destroyed, enable the control, turn off lights
 		(begin
-			(device_set_power enc5_1_controls1 1) 
+			(device_set_power enc5_1_controls1 1)
 
 			; Set the signal lights
 			(device_set_power enc5_1_siglight_s11 0)
@@ -2103,10 +2103,10 @@
 			(device_set_position_immediate enc5_1_siglight_s11 1) ; Yellow
 			(device_set_position_immediate enc5_1_siglight_s12 1)	; Yellow
 		)
-		; Otherwise, if the manifold is not destroyed and not closed, trigger 
+		; Otherwise, if the manifold is not destroyed and not closed, trigger
 		; scripts to correspond with the manifold being open
-		(if 
-			(and 
+		(if
+			(and
 				(not manifold_s1_destroyed)
 				(= (device_get_power enc5_1_controls1) 1)
 			)
@@ -2116,14 +2116,14 @@
 	)
 
 	; South 3
-	(if 
-		(and 
+	(if
+		(and
 			(not manifold_s3_destroyed)
-			(= (device_get_position enc5_1_pistons3) 0) 
+			(= (device_get_position enc5_1_pistons3) 0)
 		)
 		; If the manifold is closed and not destroyed, enable the control, turn off lights
 		(begin
-			(device_set_power enc5_1_controls3 1) 
+			(device_set_power enc5_1_controls3 1)
 
 			; Set the signal lights
 			(device_set_power enc5_1_siglight_s31 0)
@@ -2131,10 +2131,10 @@
 			(device_set_position_immediate enc5_1_siglight_s31 1) ; Yellow
 			(device_set_position_immediate enc5_1_siglight_s32 1)	; Yellow
 		)
-		; Otherwise, if the manifold is not destroyed and not closed, trigger 
+		; Otherwise, if the manifold is not destroyed and not closed, trigger
 		; scripts to correspond with the manifold being open
-		(if 
-			(and 
+		(if
+			(and
 				(not manifold_s3_destroyed)
 				(= (device_get_power enc5_1_controls3) 1)
 			)
@@ -2146,7 +2146,7 @@
 
 ; Side saving threads
 (script dormant manifold_n1_save
-	(sleep_until 
+	(sleep_until
 		(and
 			(<= (device_get_position enc5_1_pistonN1) 0)
 			(not (volume_test_objects enc5_1_oven_n1 (players)))
@@ -2155,7 +2155,7 @@
 	(certain_save)
 )
 (script dormant manifold_n3_save
-	(sleep_until 
+	(sleep_until
 		(and
 			(<= (device_get_position enc5_1_pistonN3) 0)
 			(not (volume_test_objects enc5_1_oven_n3 (players)))
@@ -2164,7 +2164,7 @@
 	(certain_save)
 )
 (script dormant manifold_s1_save
-	(sleep_until 
+	(sleep_until
 		(and
 			(<= (device_get_position enc5_1_pistonS1) 0)
 			(not (volume_test_objects enc5_1_oven_s1 (players)))
@@ -2173,7 +2173,7 @@
 	(certain_save)
 )
 (script dormant manifold_s3_save
-	(sleep_until 
+	(sleep_until
 		(and
 			(<= (device_get_position enc5_1_pistonS3) 0)
 			(not (volume_test_objects enc5_1_oven_s3 (players)))
@@ -2270,15 +2270,15 @@
 (script static void all_manifolds_destroyed
 	; Alarm sound
 	(sound_looping_start sound\sfx\ambience\d40\engine_critical invisible_alarm 1)
-	
+
 	; Do dat thang
-	(set manifold_all_destroyed true)	
+	(set manifold_all_destroyed true)
 	(device_set_position enc5_1_pistonN2 .75)
 	(device_set_position enc5_1_pistonS2 .75)
 	(object_create enc5_1_louv_fire_s2)
 	(object_create enc5_1_louv_fire_n2)
 	(object_create enc5_1_damage_flame5)
-	
+
 	; Snap backtracking door shut, clean up anything that can be cleaned
 	(device_set_position_immediate bsp4_cutoff .5)
 )
@@ -2287,7 +2287,7 @@
 ; Damage polling script
 (script static void enc5_1_destroyed_poll
 	; North 1
-	(if 
+	(if
 		(and
 			(not manifold_n1_destroyed)
 			(or
@@ -2300,7 +2300,7 @@
 	)
 
 	; North 3
-	(if 
+	(if
 		(and
 			(not manifold_n3_destroyed)
 			(or
@@ -2313,7 +2313,7 @@
 	)
 
 	; South 1
-	(if 
+	(if
 		(and
 			(not manifold_s1_destroyed)
 			(or
@@ -2326,7 +2326,7 @@
 	)
 
 	; South 3
-	(if 
+	(if
 		(and
 			(not manifold_s3_destroyed)
 			(or
@@ -2337,7 +2337,7 @@
 		; Destroyed
 		(destroy_manifold_s3)
 	)
-	
+
 	; All destroyed?
 	(if
 		(and
@@ -2359,9 +2359,9 @@
   	 Begins:		At fourth BSP transition
   	   Ends:		At fifth BSP transition
 
-  Synopsis:		- 
+  Synopsis:		-
 
-	 Issues:		- Framerates. Big environment + lots of units = BLAM
+	 Issues:		- Framerates. Big environment + lots of units = ass
 	 				- Units getting stuck moving from section to section
 
  Hierarchy:		-> MISSION START
@@ -2371,7 +2371,7 @@
  									-> enc2_4 (trigger volume + unit count)
  									-> enc2_5 (trigger volume)
  										-> enc2_6 (trigger volume)
- 											-> enc2_7 (trigger volume)							
+ 											-> enc2_7 (trigger volume)
 *;
 
 ; Scripty  thingie
@@ -2402,24 +2402,24 @@
 (script dormant enc5_3
 	; Sleep
 	(sleep_until (volume_test_objects_all enc5_3 (players)))
-	
+
 	; Close the door, and sleep until it's fully closed
 	(device_set_position elevator_door 0)
-	
+
 	; Slip the biped blocker in
 	(object_create elevator_blocker)
-	
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_05")
 	(sound_looping_start "levels\d40\music\d40_06" none 1)
 
 	; Begin the ride up
 	(sleep_until (<= (device_get_position elevator_door) 0.45))
-	
+
 	; Trigger some nasty explosions in the room
 	(effect_new explosion_large_no prelift1) 	(sleep 5)
 	(effect_new explosion_medium_no prelift2)	(sleep 5)
-	(effect_new explosion_medium_no prelift3)	
+	(effect_new explosion_medium_no prelift3)
 	(effect_new explosion_large_no prelift4)	(sleep 5)
 	(effect_new explosion_large_no prelift5)	(sleep 5)
 	(effect_new explosion_large_no waypoint_lift)
@@ -2432,17 +2432,17 @@
 	(if (and coop (volume_test_objects enc5_1_oven_n1 (list_get (players) 1)))
 		(damage_object "effects\damage effects\guaranteed explosion of doom" (list_get (players) 1))
 	)
-	
+
 	; Start the elevator moving
 	(sleep 30)
 	(device_set_position elevator 1)
 
 	; Start the timer
 	(wake enc5_3_dialog)
-	
+
 	; Hey, do some object prediction while we're at it
 	(objects_predict trench_jeep1)
-	
+
 	; Sleep for checkpoints
 	(sleep_until (>= (device_get_position elevator) 0.1) testing_lift)
 	(effect_new explosion_large_no enc5_3_000) (sleep 15)
@@ -2484,24 +2484,24 @@
 	(sleep_until manifold_all_destroyed)
 	(sleep_until (volume_test_objects enc5_2 (players)))
 	(certain_save)
-	
+
 	; Wakey!
 	(wake enc5_3)
-	
+
 	; Sleep for a moment, then bang
 	(sleep 30)
 	(effect_new explosion_large enc5_2_door)
 	(object_create enc5_2_fire1)
 	(object_create enc5_2_fire2)
-	
+
 	; Open the door
 	(sleep 10)
 	(device_set_position_immediate enc5_2_door 1)
-	
+
 	; Deactivate the lift waypoint
 	(deactivate_team_nav_point_flag player waypoint_lift)
 	(breadcrumbs_deactivate_team_nav_point_flag player waypoint_lift)
-	
+
 	; Position the lift, place the covies, lower the lift
 	(ai_place enc5_2_cov/elevator_squad)
 	(device_set_position_immediate elevator .1)
@@ -2590,34 +2590,34 @@
 		(!= player_is_on_floor 0)
 		(volume_test_objects enc5_1_floor0 (players))
 	) 	(begin
-			(set player_is_on_floor 0) 
+			(set player_is_on_floor 0)
 		)
 	)
-	
+
 	; Floor 1?
 	(if (and
 		(!= player_is_on_floor 1)
 		(volume_test_objects enc5_1_floor1 (players))
 	) 	(begin
-			(set player_is_on_floor 1) 
+			(set player_is_on_floor 1)
 		)
 	)
-	
+
 	; Floor 2?
 	(if (and
 		(!= player_is_on_floor 2)
 		(volume_test_objects enc5_1_floor2 (players))
 	) 	(begin
-			(set player_is_on_floor 2) 
+			(set player_is_on_floor 2)
 		)
 	)
-	
+
 	; Floor 3?
 	(if (and
 		(!= player_is_on_floor 3)
 		(volume_test_objects enc5_1_floor3 (players))
 	) 	(begin
-			(set player_is_on_floor 3) 
+			(set player_is_on_floor 3)
 		)
 	)
 )
@@ -2636,7 +2636,7 @@
 					(ai_command_list enc5_1_monitor monitor_N1)
 				)
 			)
-	
+
 			; If the monitor is in the South, run an S1, then an S2
 			(if (volume_test_objects enc5_1_south (ai_actors enc5_1_monitor))
 				; Is the player on the top floor?
@@ -2645,7 +2645,7 @@
 					(ai_command_list enc5_1_monitor monitor_S1)
 				)
 			)
-	
+
 			; If the players are in the south and the monitor is in the north, move
 			(if
 				(and
@@ -2661,7 +2661,7 @@
 				)
 				(ai_command_list enc5_1_monitor monitor_NtoS)
 			)
-		)		
+		)
 	)
 )
 
@@ -2673,7 +2673,7 @@
 (global effect current_explosion explosion_small)
 (script static void enc5_1_explosion
 	; Is the damage level above 0?
-	(if 
+	(if
 		(and
 			(> current_damage_level 0)
 			(volume_test_objects enc5_1_main (players))
@@ -2695,7 +2695,7 @@
 						(begin (effect_new current_explosion enc5_1_stub_n4) (sleep current_explosion_seperation))
 					)
 				)
-				
+
 				; Elseif
 				(if (volume_test_objects enc5_1_south (players))
 					(if (>= player_is_on_floor 2)
@@ -2715,9 +2715,9 @@
 			)
 		)
 	)
-	
+
 	; Manifold explosions
-	(if 
+	(if
 		(and
 			(>= current_damage_level 4)
 			(volume_test_objects enc5_1_main (players))
@@ -2727,7 +2727,7 @@
 			; Is the player on the north side? Else, is he's on the south side?
 			(if (volume_test_objects enc5_1_north (players))
 				(effect_new current_explosion enc5_1_manifold_n2)
-				
+
 				; Elseif
 				(if (volume_test_objects enc5_1_south (players))
 					(effect_new current_explosion enc5_1_manifold_s2)
@@ -2748,29 +2748,29 @@
 		(begin
 			(set current_damage_level (+ 1 current_damage_level))
 			; Move to the next most violent explosion
-			(if (= 2 current_damage_level) 
+			(if (= 2 current_damage_level)
 				(begin
 					(set current_explosion explosion_medium_no)
-					(set current_explosion_seperation (- current_explosion_seperation 20))					
+					(set current_explosion_seperation (- current_explosion_seperation 20))
 				)
 			)
-			(if (= 3 current_damage_level) 
+			(if (= 3 current_damage_level)
 				(begin
 					(set current_explosion explosion_large_no)
-					(set current_explosion_seperation (- current_explosion_seperation 20))	
+					(set current_explosion_seperation (- current_explosion_seperation 20))
 					; Turn on the lights now
-					(device_group_set_immediate engine_destroyed_lights 1)				
+					(device_group_set_immediate engine_destroyed_lights 1)
 				)
 			)
-			(if (= 4 current_damage_level) 
+			(if (= 4 current_damage_level)
 				(begin
 					(set current_explosion explosion_large_no)
-					(set current_explosion_seperation (- current_explosion_seperation 20))					
+					(set current_explosion_seperation (- current_explosion_seperation 20))
 				)
 			)
 		)
 	)
-	
+
 	; Cause an explosion
 	(enc5_1_explosion)
 )
@@ -2783,7 +2783,7 @@
 
 	; Debug
 ;	(if debug (print "Encounter 5.1 - South 1 to 2..."))
-	
+
 	; Place the foos
 	(ai_place enc5_1_sents/s12)
 )
@@ -2804,7 +2804,7 @@
 			(set enc5_1_s12_limiter (+ enc5_1_s12_limiter 1))
 		)
 	)
-	
+
 	; Infs
 	(if (<= (ai_living_count enc5_1_infs/s12) min_infection_spawn)
 		(ai_place enc5_1_infs/s12)
@@ -2818,7 +2818,7 @@
 			(set enc5_1_s23_limiter (+ enc5_1_s23_limiter 1))
 		)
 	)
-	
+
 	; Infs
 	(if (<= (ai_living_count enc5_1_infs/s23) min_infection_spawn)
 		(ai_place enc5_1_infs/s23)
@@ -2832,7 +2832,7 @@
 			(set enc5_1_n12_limiter (+ enc5_1_n12_limiter 1))
 		)
 	)
-	
+
 	; Infs
 	(if (<= (ai_living_count enc5_1_infs/n12) min_infection_spawn)
 		(ai_place enc5_1_infs/n12)
@@ -2846,7 +2846,7 @@
 			(set enc5_1_n23_limiter (+ enc5_1_n23_limiter 1))
 		)
 	)
-	
+
 	; Infs
 	(if (<= (ai_living_count enc5_1_infs/n23) min_infection_spawn)
 		(ai_place enc5_1_infs/n23)
@@ -2876,7 +2876,7 @@
 		)
 		(set inside_s12 false)
 	)
-	
+
 	; S23 Corridor spawn
 	(if
 		(and
@@ -2895,7 +2895,7 @@
 		)
 		(set inside_s23 false)
 	)
-	
+
 	; N12 Corridor spawn
 	(if
 		(and
@@ -2914,7 +2914,7 @@
 		)
 		(set inside_n12 false)
 	)
-	
+
 	; N23 Corridor spawn
 	(if
 		(and
@@ -2943,7 +2943,7 @@
 	(if (volume_test_objects enc5_1_north (players))
 		; North, place flood on north floor 2
 		(ai_place enc5_1_infs/n2)
-		
+
 		; South, place flood on south floor 2
 		(if (volume_test_objects enc5_1_south (players)) (ai_place enc5_1_infs/s2))
 	)
@@ -2959,7 +2959,7 @@
 	(if (volume_test_objects enc5_1_north (players))
 		; North, place flood on north floor 0
 		(ai_place enc5_1_infs/n0)
-		
+
 		; South, place flood on south floor 0
 		(if (volume_test_objects enc5_1_south (players))(ai_place enc5_1_infs/s0))
 	)
@@ -2970,7 +2970,7 @@
 	(if (volume_test_objects enc5_1_north (players))
 		; North, place flood on north floor 1
 		(ai_place enc5_1_infs/n1)
-		
+
 		; South, place flood on south floor 1
 		(if (volume_test_objects enc5_1_south (players))(ai_place enc5_1_infs/s1))
 	)
@@ -3018,9 +3018,9 @@
 			)
 		)
 	)
-	
+
 	; Top floor flood
-	(if 
+	(if
 		(and
 			(<= (+ (ai_living_count enc5_1_flood/upper_south) (ai_living_count enc5_1_flood/upper_north)) 1)
 			(volume_test_objects_all enc5_1_main (players))
@@ -3048,21 +3048,21 @@
 		; He's in the north! Great White North!
 		(begin
 			(ai_kill enc5_1_sents/south)
-			(if 		
+			(if
 				(and
 					(<= (ai_living_count enc5_1_sents) 1)
 					(volume_test_objects enc5_1_main (players))
 				)
-				(begin 
-					; Pause 
+				(begin
+					; Pause
 					(sleep 150)
-					
+
 					; Have the monitor speak
 					(if (>= player_is_on_floor 2)
 						(sound_impulse_start "sound\dialog\d40\d40_monitor_player" (list_get (ai_actors enc5_1_monitor) 0) 1)
 						(sound_impulse_start "sound\dialog\d40\d40_monitor_self" (list_get (ai_actors enc5_1_monitor) 0) 1)
 					)
-				
+
 					; Wait a moment, and place the sentinels
 					(sleep 300)
 					(ai_place enc5_1_sents/north)
@@ -3070,32 +3070,32 @@
 			)
 		)
 	)
-		
+
 	(if (volume_test_objects_all enc5_1_south (players))
 		; He's in the south! Great Devil South!
 		(begin
 			(ai_kill enc5_1_sents/north)
-			(if 		
+			(if
 				(and
 					(<= (ai_living_count enc5_1_sents) 1)
 					(volume_test_objects enc5_1_main (players))
 				)
-				(begin 
-					; Pause 
+				(begin
+					; Pause
 					(sleep 150)
-					
+
 					; Have the monitor speak
 					(if (>= player_is_on_floor 2)
 						(sound_impulse_start "sound\dialog\d40\d40_monitor_player" (list_get (ai_actors enc5_1_monitor) 0) 1)
 						(sound_impulse_start "sound\dialog\d40\d40_monitor_self" (list_get (ai_actors enc5_1_monitor) 0) 1)
 					)
-				
+
 					; Wait a moment, and place the sentinels
 					(sleep 300)
 					(ai_place enc5_1_sents/south)
 				)
 			)
-		)		
+		)
 	)
 )
 
@@ -3108,7 +3108,7 @@
 	; Spawnzors
 	(enc5_1_flood_spawn)
 	(enc5_1_infs_spawn)
-	
+
 	; Sleep
 	(sleep 300)
 )
@@ -3175,7 +3175,7 @@
 ; Music hook for Marty
 (script dormant enc5_1_music_hook
 	; Wait till all the manifolds are closed
-	(sleep_until 
+	(sleep_until
 		(and
 			(< (device_get_position enc5_1_pistonn1) .1)
 			(< (device_get_position enc5_1_pistonn3) .1)
@@ -3187,7 +3187,7 @@
 	)
 
 	; Wait till a manifold is open
-	(sleep_until 
+	(sleep_until
 		(or
 			(> (device_get_position enc5_1_pistonn1) .1)
 			(> (device_get_position enc5_1_pistonn3) .1)
@@ -3211,24 +3211,24 @@
 
 	; Debug
 ;	(if debug (print "Encounter 5.1..."))
-	
+
 	; Wake the floor controls, explosions, and ovens
 	(wake enc5_1_manager)
 	(wake enc5_1_explosions)
-	
+
 	; Wake the stair encounters
 	(wake enc5_1_s12)
-	
+
 	; Fire up dem sentinel thangs! Yee haw!
 	(ai_magically_see_players enc5_1_sents)
 	(ai_magically_see_players enc5_1_flood)
-	
+
 	; Fire up dose monitor doohickeys! YEEE HAAW!
 	(ai_place enc5_1_monitor)
 	(object_cannot_take_damage (ai_actors enc5_1_monitor))
 	(ai_magically_see_players enc5_1_monitor)
 	(ai_disregard (ai_actors enc5_1_monitor) true)
-	
+
 	; Set up targetting preferences
 	(ai_try_to_fight enc5_1_cov enc5_1_flood)
 	(ai_try_to_fight enc5_1_cov enc5_1_infs)
@@ -3237,7 +3237,7 @@
 
 	; Wake the spawners
 	(wake enc5_1_spawner)
-	
+
 	; Preferential treatment
 	(ai_magically_see_players enc5_1_flood/n12)
 	(ai_magically_see_players enc5_1_infs/n12)
@@ -3251,11 +3251,11 @@
 	(ai_magically_see_players enc5_1_infs/s12)
 	(ai_try_to_fight_player enc5_1_flood/s12)
 	(ai_try_to_fight_player enc5_1_infs/s12)
-	
+
 	; Dialogue
 	(sleep_until (volume_test_objects enc5_1_main (players)))
    (mcc_mission_segment "10_engine_room")
-   
+
 	(D40_110_Cortana)	; The engine room!
 	(sleep 60)
 	(D40_120_Cortana)	; Monitor has locked terminals
@@ -3267,7 +3267,7 @@
 	(wake enc5_1_spawner_sents)
 
 	; Wait for a manifold to open
-	(sleep_until 
+	(sleep_until
 		(or
 			(> (device_get_position enc5_1_pistonn1) .1)
 			(> (device_get_position enc5_1_pistonn3) .1)
@@ -3288,7 +3288,7 @@
 	(D40_160_Cortana) ; We need a catalyst explosion
 	(D40_170_Cortana) ; Use a rocket... if you need more, they're in the armory
 	(sleep_until (>= current_damage_level 1))
-	
+
    (mcc_mission_segment "11_destroyed1")
 	; MUZAK
 	(sound_looping_set_alternate "levels\d40\music\d40_04" true)
@@ -3301,7 +3301,7 @@
 
 	; Continue
 	(sleep_until (>= current_damage_level 3))
-	
+
    (mcc_mission_segment "13_destroyed3")
 	; Continue
 	(D40_200_Cortana) ; One more to go!
@@ -3310,15 +3310,15 @@
    (mcc_mission_segment "14_destroyed4")
 	; MUZAK!
 	(sound_looping_set_alternate "levels\d40\music\d40_05" true)
-	
+
 	; Continue
 	(D40_210_Cortana) ; It's gone critical!
 	(D40_220_Cortana) ; We need to get outside!
-	
+
 	; Set waypoint
 	(activate_team_nav_point_flag "default_red" player waypoint_lift 0)
 	(breadcrumbs_activate_team_nav_point_flag "default" player waypoint_lift 0)
-   
+
    (mcc_mission_segment "15_elevator")
 	(obj_elevator)		; Objective
 )
@@ -3344,23 +3344,23 @@
 
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects section5 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Section 5..."))
-	
+
 	; Wake next
 	(wake enc5_1)
 	(wake enc5_2)
 
 	; Snap backtracking door shut, clean up anything that can be cleaned
 	(device_set_position_immediate bsp3_cutoff .5)
-	
+
 	; MUZAK!
 	(sound_looping_start "levels\d40\music\d40_03" none 1)
 
 	; Chapter title
 	(chapter_d40_2)
-	
+
 	; Sleep, the clean
 	(sleep_until
 		(and
@@ -3381,7 +3381,7 @@
   	 Begins:		At third BSP transition
   	   Ends:		At fourth BSP transition
 
-  Synopsis:		- 
+  Synopsis:		-
 
 	 Issues:		- Isssssuuuuuueees.... nothing more than issssuueessss....
 
@@ -3392,7 +3392,7 @@
  									-> enc2_4 (trigger volume + unit count)
  									-> enc2_5 (trigger volume)
  										-> enc2_6 (trigger volume)
- 											-> enc2_7 (trigger volume)							
+ 											-> enc2_7 (trigger volume)
 *;
 
 ; Encounter 4_3, triggered by Section 4
@@ -3400,43 +3400,43 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc4_3 (players)))
 	(certain_save)
-	
+
 	; MUZAK!
 	(sound_looping_start "levels\d40\music\d40_02" none 1)
 
 	; Debug
 ;	(if debug (print "Encounter 4.3..."))
-	
+
 	; Sleep for a few seconds, then wait for the player to not look at the doors
 	(sleep 150)
 
 	; Wait for no looky at doorsy
-	(sleep_until 
+	(sleep_until
 		(and
 			(not (objects_can_see_flag (players) enc4_3_door 10))
 			(not (volume_test_objects enc4_3b (players)))
 		)
 	)
 	(sleep 60)
-	
+
 	; Place the Flood stealth elite
 	(ai_place enc4_3_flood/stealth_combats)
-	
+
 	; Sleep until he's finished running his list, then branch accordingly
 	(sleep_until (= 1 (ai_command_list_status (ai_actors enc4_3_flood/stealth_combats))))
 	(if (volume_test_objects enc4_3_left (players))
 		(ai_command_list enc4_3_flood/stealth_combats enc4_3_right)
 		(ai_command_list enc4_3_flood/stealth_combats enc4_3_left)
 	)
-	
+
 	; Wait until he's dead, or the player has run
 	(sleep_until (= 0 (ai_living_count enc4_3_flood)))
-	
+
 	; Place the second batch
 	(ai_place enc4_3_flood/second_wave)
 
 	; Wait until they're at 70% strength or the player has run
-	(sleep_until 
+	(sleep_until
 		(or
 			(< (ai_strength enc4_3_flood/second_wave) .70)
 			(volume_test_objects enc4_3_flight (players))
@@ -3448,7 +3448,7 @@
 	(sound_looping_set_alternate "levels\d40\music\d40_02" true)
 
 	; Wait until he's dead, or the player has run
-	(sleep_until 
+	(sleep_until
 		(or
 			(= 0 (ai_living_count enc4_3_flood))
 			(volume_test_objects enc4_3_flight (players))
@@ -3466,16 +3466,16 @@
 (script continuous enc4_2_manager
 	; Sleep until the conditions are right
 	(sleep_until (<= enc4_2_limiter (* 45 spawn_scale)))
-	(sleep_until 
+	(sleep_until
 		(not
 			(volume_test_objects enc4_2c (players))
 		)
 	)
-	
+
 	; If the count is lower than 7, spawn sentinels
 	(if (<= enc4_2_limiter 7)
 		; Spawn sentinels
-		(if (< (ai_living_count enc4_2_sents/sents) (* 1.5 min_combat_spawn)) (begin 
+		(if (< (ai_living_count enc4_2_sents/sents) (* 1.5 min_combat_spawn)) (begin
 			(ai_spawn_actor enc4_2_sents/sents)
 			(set enc4_2_limiter (+ enc4_2_limiter 1))
 			(sleep 45)
@@ -3484,20 +3484,20 @@
 		; Else, spawn flood
 		(begin
 			; Spawn actors if the counts are too low
-			(if (< (ai_living_count enc4_2_flood/combats) (* 1.5 min_combat_spawn)) (begin 
+			(if (< (ai_living_count enc4_2_flood/combats) (* 1.5 min_combat_spawn)) (begin
 				(ai_spawn_actor enc4_2_flood/combats)
 				(set enc4_2_limiter (+ enc4_2_limiter 1))
 			))
-			(if (< (ai_living_count enc4_2_flood/carriers) min_carrier_spawn) (begin 
+			(if (< (ai_living_count enc4_2_flood/carriers) min_carrier_spawn) (begin
 				(ai_spawn_actor enc4_2_flood/carriers)
 				(set enc4_2_limiter (+ enc4_2_limiter 1))
 			))
-			(if (< (ai_living_count enc4_2_flood/infs) min_infection_spawn) (begin 
+			(if (< (ai_living_count enc4_2_flood/infs) min_infection_spawn) (begin
 				(ai_place enc4_2_flood/infs)
 			))
 		)
 	)
-		
+
 	; Sleep a moment
 	(sleep 15)
 )
@@ -3508,7 +3508,7 @@
 	; Debug
 ;	(if debug (print "Encounter 4.2..."))
 	(certain_save)
-	
+
 	; Wakey wakey
 	(wake enc4_3)
 
@@ -3522,7 +3522,7 @@
 	(ai_link_activation enc4_2_sents enc4_2_cov)
 	(ai_link_activation enc4_2_cov enc4_2_flood)
 	(ai_link_activation enc4_2_flood enc4_2_cov)
-	
+
 	; Magical sight!
 	(ai_magically_see_encounter enc4_2_sents enc4_2_cov)
 	(ai_magically_see_encounter enc4_2_cov enc4_2_sents)
@@ -3544,10 +3544,10 @@
 	(sleep_until (volume_test_objects enc4_1 (players)) testing_fast)
 	(certain_save)
    (mcc_mission_segment "08_enc4_1")
-	
+
 	; Debug
 ;	(if debug (print "Encounter 4.1..."))
-	
+
 	; Force active
 	(ai_link_activation enc4_1_cov enc4_1_flood)
 	(ai_link_activation enc4_1_flood enc4_1_cov)
@@ -3557,7 +3557,7 @@
 	(ai_place enc4_1_cov)
 	(ai_place enc4_1_flood)
 	(ai_try_to_fight enc4_1_flood enc4_1_cov)
-	
+
 	; Wakey wakey
 	(wake enc4_2)
 )
@@ -3570,10 +3570,10 @@
 
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects section4 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Section 4..."))
-	
+
 	; Wake next
 	(wake enc4_1)
 )
@@ -3607,20 +3607,20 @@
 	; Sleep until the conditions are right
 	(sleep_until (<= enc3_6_limiter (* 30 spawn_scale)))
 	(sleep_until (volume_test_objects_all enc3_6 (players)))
-	
+
 	; Spawn actors if the counts are too low
-	(if (< (ai_living_count enc3_6_flood/combats) min_combat_spawn) (begin 
+	(if (< (ai_living_count enc3_6_flood/combats) min_combat_spawn) (begin
 		(ai_spawn_actor enc3_6_flood/combats)
 		(set enc3_6_limiter (+ enc3_6_limiter 1))
 	))
-	(if (< (ai_living_count enc3_6_flood/carriers) min_carrier_spawn) (begin 
+	(if (< (ai_living_count enc3_6_flood/carriers) min_carrier_spawn) (begin
 		(ai_spawn_actor enc3_6_flood/carriers)
 		(set enc3_6_limiter (+ enc3_6_limiter 1))
 	))
-	(if (< (ai_living_count enc3_6_flood/infs) min_infection_spawn) (begin 
+	(if (< (ai_living_count enc3_6_flood/infs) min_infection_spawn) (begin
 		(ai_place enc3_6_flood/infs)
 	))
-		
+
 	; Sleep a moment
 	(sleep 15)
 )
@@ -3632,24 +3632,24 @@
 	(sleep -1 enc3_6_manager)
 	(sleep_until (volume_test_objects enc3_6 (players)))
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.6..."))
-		
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_013")
 
 	; Wakey wakey
 ;	(wake enc3_6)
-		
+
 	; Place the units, make them see
 	(ai_place enc3_6_flood/stalling_infs)
 	(ai_magically_see_players enc3_6_flood)
 	(ai_force_active enc3_6_flood true)
-	
+
 	; Wake the manager and the next script
 	(wake enc3_6_manager)
-	
+
 	; Sleep until it's time to stop it
 	(sleep_until (volume_test_objects section4 (players)) testing_fast)
 	(sleep -1 enc3_6_manager)
@@ -3665,20 +3665,20 @@
 (script continuous enc3_5_manager
 	; Sleep until the conditions are right
 	(sleep_until (<= enc3_5_limiter (* 30 spawn_scale)))
-	
+
 	; Spawn actors if the counts are too low
-	(if (< (ai_living_count enc3_5_flood/combats) min_combat_spawn) (begin 
+	(if (< (ai_living_count enc3_5_flood/combats) min_combat_spawn) (begin
 		(ai_spawn_actor enc3_5_flood/combats)
 		(set enc3_5_limiter (+ enc3_5_limiter 1))
 	))
-	(if (< (ai_living_count enc3_5_flood/carriers) min_carrier_spawn) (begin 
+	(if (< (ai_living_count enc3_5_flood/carriers) min_carrier_spawn) (begin
 		(ai_spawn_actor enc3_5_flood/carriers)
 		(set enc3_5_limiter (+ enc3_5_limiter 1))
 	))
-	(if (< (ai_living_count enc3_5_flood/infs) min_infection_spawn) (begin 
+	(if (< (ai_living_count enc3_5_flood/infs) min_infection_spawn) (begin
 		(ai_place enc3_5_flood/infs)
 	))
-		
+
 	; Sleep a moment
 	(sleep 15)
 )
@@ -3691,21 +3691,21 @@
 	(certain_save)
 
 	(set g_breadcrumb_nav_index 7)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.5..."))
-		
+
 	; Wakey wakey
 	(wake enc3_6)
-		
+
 	; Place the units, make them see
 	(ai_place enc3_5_flood/sacrifices)
 	(ai_magically_see_players enc3_5_flood)
 	(ai_force_active enc3_5_flood true)
-	
+
 	; Wake the manager and the next script
 	(wake enc3_5_manager)
-	
+
 	; Sleep until it's time to stop it
 	(sleep_until (volume_test_objects enc3_5b (players)) testing_fast)
 	(sleep -1 enc3_5_manager)
@@ -3721,13 +3721,13 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc3_4 (players)))
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.4..."))
-		
+
 	; MUZAK!
 	(sound_looping_start "levels\d40\music\d40_013" none 1)
-	
+
 	; Place the units
 	(ai_place enc3_4_monitor/monitor)
 	(sleep 60)
@@ -3743,17 +3743,17 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc3_3 (players)))
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.3..."))
-	
+
 	; Place the units, make them love the player!
 	(ai_place enc3_3_flood/combats)
 	(ai_place enc3_3_flood/infs)
 	(ai_place enc3_3_sents)
 	(ai_try_to_fight enc3_3_sents enc3_3_flood)
 	(ai_try_to_fight enc3_3_flood enc3_3_sents)
-	
+
 	; Sleep until a door opens
 	(sleep_until
 		(or
@@ -3763,7 +3763,7 @@
 		testing_fast
 		300
 	)
-	
+
 	; If a door is open, spawn infs above it
 	(if (>= (device_get_position enc3_3_door1) 0.9)
 		(ai_place enc3_3_flood/door_infs1)
@@ -3774,8 +3774,8 @@
 	)
 
 	; Second wave
-	(sleep_until 
-		(and 
+	(sleep_until
+		(and
 			(volume_test_objects_all enc3_3b (players))
 			(<= (ai_living_count enc3_3_sents) 0)
 		)
@@ -3790,15 +3790,15 @@
 	(sleep_until (volume_test_objects enc3_2 (players)))
 	(certain_save)
    (mcc_mission_segment "07_enc3_2")
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.2..."))
-	
+
 	; Wakey wakey
 	(wake enc3_3)
 	(wake enc3_4)
 	(wake enc3_5)
-	
+
 	; Place the units
 	(ai_place enc3_2_sents)
 
@@ -3814,10 +3814,10 @@
 	(sleep_until (volume_test_objects enc3_1 (players)))
 	(certain_save)
    (mcc_mission_segment "06_enc3_1")
-	
+
 	; Debug
 ;	(if debug (print "Encounter 3.1..."))
-	
+
 	; Place the units, make them love!
 	(ai_place enc3_1_flood)
 	(ai_place enc3_1_sents)
@@ -3825,7 +3825,7 @@
 	(ai_try_to_fight enc3_1_flood enc3_1_sents)
 	(ai_force_active enc3_1_flood true)
 	(ai_force_active enc3_1_sents true)
-	
+
 	; Wait for it...
 	(sleep_until
 		(or
@@ -3844,13 +3844,13 @@
 
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects section3 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Section 3..."))
-	
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_012")
-	
+
 	; Wake next
 	(wake enc3_1)
 	(wake enc3_2)
@@ -3865,9 +3865,9 @@
   	 Begins:		At first BSP transition
   	   Ends:		At second BSP transition
 
-  Synopsis:		- Player is swarmed by infection forms 
+  Synopsis:		- Player is swarmed by infection forms
   					- Player finds himself behind Flood lines, who are fighting Covs
-  					- Player encounters spec ops Cov in cafeteria, proceeds to BLAM
+  					- Player encounters spec ops Cov in cafeteria, proceeds to screw
   					- A second wave of Covs show up if the first wave is sufficiently
   					  depleted and a trigger volume is tripped
   					- Player finds himself behind Cov lines, who are fighing Flood
@@ -3885,7 +3885,7 @@
  									-> enc2_4 (trigger volume + unit count)
  									-> enc2_5 (trigger volume)
  										-> enc2_6 (trigger volume after cinematic)
- 											-> enc2_7 (trigger volume)							
+ 											-> enc2_7 (trigger volume)
 *;
 
 
@@ -3894,10 +3894,10 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc2_7 (players)) testing_fast)
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 2.7..."))
-	
+
 	; Place the units, make them love!
 	(ai_place enc2_7_cov)
 	(ai_place enc2_7_flood)
@@ -3909,16 +3909,16 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc2_6 (players)))
 	(certain_save)
-	
+
 	; Wakey wakey
 	(wake enc2_7)
-	
+
 	; Debug, dialogue
 ;	(if debug (print "Encounter 2.6..."))
-	
+
 	; MUZAK!
 	(sound_looping_start "levels\d40\music\d40_012" none 1)
-	
+
 	; Place the units, make them love the player!
 	(device_set_position_immediate enc2_6_door 1)
 	(sleep_until (volume_test_objects enc2_6b (players)))
@@ -3933,7 +3933,7 @@
 ; Music side thread
 (script dormant enc2_5_music
 	; Sleep till the cafeteria units are dead
-	(sleep_until 
+	(sleep_until
 		(and
 			(<= (ai_living_count enc2_2_cov) 0)
 			(<= (ai_living_count enc2_4_cov) 0)
@@ -3942,10 +3942,10 @@
 
 	; MUZAK!
 	(sound_looping_start "levels\d40\music\d40_011" none 1)
-	
+
 	; Sleep until the elite has noticed you
 ;	(sleep_until (= (ai_status enc2_5_cov/elite) 4))
-	
+
 	; MUZAK!
 ;	(sound_looping_set_alternate "levels\d40\music\d40_011" true)
 )
@@ -3956,7 +3956,7 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc2_6 (players)) testing_fast)
 	(certain_save)
-		
+
 	; Debug
 ;	(if debug (print "Encounter 2.5..."))
 
@@ -3965,14 +3965,14 @@
 	(ai_place enc2_5_flood)
 	(sleep 30)
 	(D40_020_Cortana)
-	
+
 	; SLeep until dewdz iz ded
 	(sleep_until (<= (ai_living_count enc2_5_cov) 0))
 	(sleep 30)
 	(D40_030_Cortana)
-	
+
 	; Cinematic stuffs
-	(sleep_until 
+	(sleep_until
 		(and
 			(volume_test_objects_all cinematic_bridge (players))
 			(game_safe_to_save)
@@ -3985,21 +3985,21 @@
 	(sound_looping_stop "levels\d40\music\d40_011")
 
    (if (mcc_mission_segment "cine2_bridge") (sleep 1))
-   
+
 	; Cinematic
 	(if (cinematic_skip_start) (cinematic_bridge))
 	(cinematic_skip_stop)
-	
+
 	; Slap the door shut
 	(device_set_position_immediate cafeteria_door 0)
-	
+
 	; Wakey wakey
 	(wake enc2_6)
-	
+
 	; Bring in the sents!
 	(ai_place enc2_5_sents)
 	(sleep 30)
-	
+
 	; Dialog
 	(sleep_until (volume_test_objects enc2_5_retreat2 (players)))
 	(D40_100_Cortana)
@@ -4010,17 +4010,17 @@
 ; Encounter 2_4, triggered by Encounter 2_2
 (script dormant enc2_4
 	; Sleep until there's an opportunity to wake 2_4
-	(sleep_until 
+	(sleep_until
 		(and
 			(volume_test_objects enc2_4 (players))
 			(<= (ai_living_count enc2_2_cov) 2)
 		)
 	)
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 2.4..."))
-	
+
 	; Place the units, make them see and love!
 	(ai_place enc2_4_cov)
 	(ai_magically_see_players enc2_2_cov)
@@ -4047,7 +4047,7 @@
 	; Debug
 ;	(if debug (print "Encounter 2.2..."))
 	(certain_save)
-	
+
 	; Wakey wakey
 	(wake enc2_4)
 	(wake enc2_5)
@@ -4055,12 +4055,12 @@
 	; Place the flood, make them see and love!
 	(ai_place enc2_2_flood/sacrifices)
 	(ai_place enc2_2_flood/combats)
-	
+
 	; Sleep, then place the Cov
 	(sleep_until (volume_test_objects enc2_2 (players)))
 	(ai_place enc2_2_cov/squad1)
 	(ai_place enc2_2_cov/squad2)
-	
+
 	; Start the music subscript
 	(wake enc2_5_music)
 
@@ -4068,7 +4068,7 @@
 	(if (= (game_difficulty_get_real) "easy")
 		(begin
 			(device_set_position enc2_1_door2 1)
-			(device_set_position enc2_1_door1 1)			
+			(device_set_position enc2_1_door1 1)
 		)
 		(begin
 			; Place the first hunter, bash the door in
@@ -4080,12 +4080,12 @@
 
 	; Place the infs
 	(ai_place enc2_2_flood/infs)
-	
+
 	; Save when safe
 	(sleep_until (= 0 (+ (ai_living_count enc2_2_cov/hunter1) (ai_living_count enc2_2_cov/hunter2))))
 	(certain_save)
 	(sleep 90)
-	
+
 	; MUZAK!
 	(sound_looping_stop "levels\d40\music\d40_01")
 )
@@ -4096,13 +4096,13 @@
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects enc2_1 (players)) testing_fast)
 	(certain_save)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 2.1..."))
-	
+
 	; Wakey wakey
 	(wake enc2_2)
-	
+
 	; Place the units, make them love the player!
 	(ai_place enc2_1_flood)
 	(ai_magically_see_players enc2_1_flood)
@@ -4124,26 +4124,26 @@
 (script dormant section2
 	; Sleep scripts
 ;	(sleep -1 enc1_4_manager)
-	
+
 	; Sleep until the trigger, then save
 	(sleep_until (volume_test_objects section2 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Section 2..."))
-	
+
 	; MUZAK!
 	(sound_looping_set_alternate "levels\d40\music\d40_01" false)
-	
+
 	; Snap backtracking door shut, clean up anything that can be cleaned
 	(device_set_position_immediate bsp0_cutoff 0)
-	
+
 	; Wake next
 	(wake enc2_1)
-	
+
 	; Certain save
 	(certain_save)
    (mcc_mission_segment "05_enc2_1")
-	
+
 	; Scenery hacks
 	(section2_scenery)
 )
@@ -4159,7 +4159,7 @@
   					- Player heads into narrow service corridor, is surprised by
   					  infection forms leaping from a hole in the ground
   					- Player descends ladder, encounters carrier forms and sentinels
-  					- Player rounds corner, and sees two sentinels being mobbed by 
+  					- Player rounds corner, and sees two sentinels being mobbed by
   					  infection forms, and then by combat forms
   					- Player is caught between spawning combat forms and sentinels
 
@@ -4181,13 +4181,13 @@
 (script continuous enc1_4_manager
 	; Sleep until the conditions are right
 	(sleep_until (<= enc1_4_limiter (* 20 spawn_scale)))
-	
+
 	; Spawn actors if the counts are too low
-	(if (< (ai_living_count enc1_4_flood/combats) min_combat_spawn) (begin 
+	(if (< (ai_living_count enc1_4_flood/combats) min_combat_spawn) (begin
 		(ai_spawn_actor enc1_4_flood/combats)
 		(set enc1_4_limiter (+ enc1_4_limiter 1))
 	))
-	(if (< (ai_living_count enc1_4_flood/infs) min_infection_spawn) (begin 
+	(if (< (ai_living_count enc1_4_flood/infs) min_infection_spawn) (begin
 		(ai_place enc1_4_flood/infs)
 	))
 )
@@ -4202,25 +4202,25 @@
 
 	; Debug
 ;	(if debug (print "Encounter 1.4..."))
-	
+
 	; Place the inits, and open the door
 	(ai_place enc1_4_flood/init_combats)
 	(ai_place enc1_4_flood/init_infs)
 	(device_set_position enc1_4_door 1)
 	(set g_breadcrumb_nav_index 3)
-	
+
 	; Grant divine awareness...
 	(ai_magically_see_players enc1_4_sents)
-	
+
 	; ... And force eternal labor!
 	(ai_force_active enc1_4_flood true)
 	(ai_force_active enc1_4_sents true)
-	
+
 	; Fire up the manager and place some initial fodder
 	(ai_place enc1_4_flood)
 	(ai_magically_see_players enc1_4_flood)
 	(wake enc1_4_manager)
-	
+
 	; Wait until the player has ended it, and end the music
 	(sleep_until (volume_test_objects enc1_5 (players)) testing_fast)
 	(sleep -1 enc1_4_manager)
@@ -4231,13 +4231,13 @@
 (script dormant enc1_3
 	; Sleep until the trigger, then save
 	(sleep_until (volume_test_objects enc1_3 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Encounter 1.3..."))
-	
+
 	; MUZAK!
 	(sound_looping_set_alternate "levels\d40\music\d40_01" true)
-	
+
 	; Place the units, make them love each other!
 ;	(ai_place enc1_3_flood)
 ;	(ai_magically_see_players enc1_3_flood)
@@ -4250,13 +4250,13 @@
 	(sleep_until (volume_test_objects enc1_2 (players)))
 	(certain_save)
    (mcc_mission_segment "03_enc1_2")
-	
+
 	; Debug
 ;	(if debug (print "Encounter 1.2..."))
-	
+
 	; Place the infection forms
 	(ai_place enc1_2_flood)
-	
+
 	; Place the sentinels
 	(ai_place enc1_2_sents)
 )
@@ -4268,10 +4268,10 @@
 	(sleep_until (volume_test_objects enc1_1 (players)) testing_fast)
 	(certain_save)
    (mcc_mission_segment "02_enc1_1")
-	
+
 	; Debug
 ;	(if debug (print "Encounter 1.1..."))
-	
+
 	; Place the units, make them love each other!
 	(ai_place enc1_1_sents)
 	(ai_place enc1_1_flood)
@@ -4293,14 +4293,14 @@
 
 	; Sleep until the trigger
 	(sleep 300)
-	
+
 	; Debug
 ;	(if debug (print "Encounter 1.0..."))
-	
+
 	; Place the units, twice for quantity
 	(ai_place enc1_0_sents)
 	(sleep 60)
-	(ai_place enc1_0_sents)	
+	(ai_place enc1_0_sents)
 )
 
 
@@ -4308,13 +4308,13 @@
 (script dormant section1
 	; Sleep scripts
 	(sleep -1 enc1_4_manager)
-	
+
 	; Sleep until the trigger
 	(sleep_until (volume_test_objects section1 (players)))
-	
+
 	; Debug
 ;	(if debug (print "Section 1..."))
-	
+
 	; Wake next
 	(wake enc1_0)
 	(wake enc1_1)
@@ -4334,26 +4334,26 @@
 (script static void test3
 	(switch_bsp 4)
 	(volume_teleport_players_not_inside null_volume test3)
-	
+
 	(wake enc5_3)
-) 
+)
 
 (script static void test6
 	(switch_bsp 4)
 	(volume_teleport_players_not_inside null_volume test6)
-	
+
 	(set manifold_all_destroyed true)
 	(wake enc5_2)
-) 
+)
 
 (script static void test4
 	(switch_bsp 4)
 	(volume_teleport_players_not_inside null_volume test4)
-	
+
 	(device_set_position_immediate enc5_1_pistonS1 0)
 	(sleep 30)
 	(device_set_position enc5_1_pistonS1 1)
-) 
+)
 
 (script static void s2
 	(switch_bsp 1)
@@ -4394,15 +4394,15 @@
 
 (script static void go
 	(s6)
-	
+
 	; Set up the timer
 	(hud_set_timer_position 0 0 bottom_right)
 	(hud_set_timer_time 10 0)
 	(hud_set_timer_warning_time 1 0)
-	
+
 	; Display the timer
 	(show_hud_timer true)
-	
+
 	; Sleep
 	(sleep_until (volume_test_objects grand_finale (players)))
 	(pause_hud_timer true)
@@ -4442,7 +4442,7 @@
 			(set min_infection_spawn (+ min_infection_spawn 1))
 		)
 	)
-	
+
 	; Is it impossible?
 	(if (= "impossible" (game_difficulty_get))
 		; It's hard
@@ -4479,18 +4479,18 @@
 	(diff_control)
 
    (if (mcc_mission_segment "cine1_intro") (sleep 1))
-   
+
 	; Wake section tests
 	(wake section1)
 	(wake section2)
-	(wake section3)	
-	(wake section4)	
-	(wake section5)	
-	(wake section6)	
-	(wake section7)	
+	(wake section3)
+	(wake section4)
+	(wake section5)
+	(wake section6)
+	(wake section7)
 
 	; Run opening cinematics
-	(if (cinematic_skip_start) 
+	(if (cinematic_skip_start)
 		(begin
 			(set cinematic_ran true)
 			(wake intro_cutscene_aux)
@@ -4498,10 +4498,10 @@
 		)
 	)
 	(cinematic_skip_stop)
-	  
+
 	; Start music
 	(sound_looping_start "levels\d40\music\d40_01" none 1)
-	
+
 	; Fade in
 	(if (not cinematic_ran)
 		(begin
@@ -4509,14 +4509,14 @@
 
 			; Lines for Joe
 			(breakable_surfaces_reset)
-			(breakable_surfaces_enable false)		
+			(breakable_surfaces_enable false)
 		)
 	)
-	
+
 	; Create the asspain objects
 	(object_create_containing "asspain")
 	(object_create_containing "trench_jeep")
-   
+
    (mcc_mission_segment "01_start")
 
 	; Start revised navpoints

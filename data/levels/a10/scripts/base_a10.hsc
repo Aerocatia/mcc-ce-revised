@@ -6,19 +6,19 @@
 	)
 
 (script stub void halo_setup
-	(print "Joe's Cool Cinematic")
+	(print "Joe's Cool Ass Cinematic")
 	)
 
 (script stub void x20
-	(print "Joe's Cool Cinematic")
+	(print "Joe's Cool Ass Cinematic")
 	)
 
 (script stub void x20_post
-	(print "Joe's Cool Cinematic")
+	(print "Joe's Cool Ass Cinematic")
 	)
 
 (script stub void x30
-	(print "Joe's Cool Cinematic")
+	(print "Joe's Cool Ass Cinematic")
 	)
 
 ;========== Global Variables ==========
@@ -214,7 +214,7 @@
 	(wake music_a10_05)
 	(wake music_a10_06)
 	(wake music_a10_07)
-	
+
 	(sleep_until play_music_a10_02 1)
 	(sound_looping_start "levels\a10\music\a10_02" none 1)
 	)
@@ -410,5 +410,5 @@
 
 (script startup cont_thing
 	(if (and (not (game_is_cooperative)) (= (game_difficulty_get) impossible)) (sleep_until (volume_test_objects meg_egg (players)) delay_dawdle))
-	(if (and (not (game_is_cooperative)) (= (game_difficulty_get) impossible)) (set global_meg_egg true)) 
+	(if (and (not (game_is_cooperative)) (= (game_difficulty_get) impossible)) (set global_meg_egg true))
 	)

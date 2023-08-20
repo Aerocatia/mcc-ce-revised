@@ -63,12 +63,12 @@
 	; Switch to letterbox
 	(show_hud false)
 	(cinematic_show_letterbox true)
-	
+
 	; Title break goes here
 	(sleep 30)
 	(cinematic_set_title chapter_c40_1)
 	(sleep 150)
-	
+
 	;Switch back to HUD
 	(cinematic_show_letterbox false)
 	(show_hud true)
@@ -78,47 +78,47 @@
 ; Switch to letterbox
 	(show_hud false)
 	(cinematic_show_letterbox true)
-	
+
 	; Title break goes here
 	(sleep 30)
 	(cinematic_set_title chapter_c40_2)
 	(set g_breadcrumb_nav_index 6)
 	(sleep 150)
-	
+
 	;Switch back to HUD
 	(cinematic_show_letterbox false)
 	(show_hud true)
-)	
+)
 
 (script static void chapter_c40_3
 ; Switch to letterbox
 	(show_hud false)
 	(cinematic_show_letterbox true)
-	
+
 	; Title break goes here
 	(sleep 30)
 	(cinematic_set_title chapter_c40_3)
 	(sleep 150)
-	
+
 	;Switch back to HUD
 	(cinematic_show_letterbox false)
 	(show_hud true)
-)	
+)
 
 (script static void chapter_c40_4
 ; Switch to letterbox
 	(show_hud false)
 	(cinematic_show_letterbox true)
-	
+
 	; Title break goes here
 	(sleep 30)
 	(cinematic_set_title chapter_c40_4)
 	(sleep 150)
-	
+
 	;Switch back to HUD
 	(cinematic_show_letterbox false)
 	(show_hud true)
-)	
+)
 
 
 ;= Global Variables ============================================================
@@ -126,7 +126,7 @@
 
 ;(global boolean plat_1_ban_a false)
 ;(global boolean plat_1_ban_b false)
- 
+
 (global boolean e4_fled false)
 
 (global short one 1)
@@ -217,7 +217,7 @@
 ; Hightlight the second landing pad
 (script static void waypoint4
 	; Deactivate last waypoint
-	
+
 	; Activate nav point for players
 	(activate_team_nav_point_flag "default_red" player waypoint4 0)
 )
@@ -225,7 +225,7 @@
 ; Hightlight the tunnel
 (script static void waypoint5
 	; Deactivate last waypoint
-	
+
 	; Activate nav point for players
 	(activate_team_nav_point_flag "default_red" player waypoint5 0)
 	(breadcrumbs_activate_team_nav_point_flag "default" player waypoint5 0)
@@ -235,10 +235,10 @@
 ; Hightlight the last landing pad
 (script static void waypoint6
 	; Deactivate last waypoint
-	
+
 	; Activate nav point for players
 	(activate_team_nav_point_flag "default_red" player waypoint6 0)
-	
+
 )
 
 ;=========== breadcrumbs improved navpoint triggers ===========
@@ -283,7 +283,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 6))
 		)
 	)
-	
+
 	; In tunnel leading down
 	(if (= g_breadcrumb_nav_index 7)
 		(begin
@@ -293,7 +293,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 8))
 		)
 	)
-	
+
 	; In open outside area
 	(if (= g_breadcrumb_nav_index 9)
 		(begin
@@ -308,7 +308,7 @@
 			(set g_breadcrumb_nav_index 10)
 		)
 	)
-	
+
 	; In tunnel leading down
 	(if (= g_breadcrumb_nav_index 10)
 		(begin
@@ -323,7 +323,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 10))
 		)
 	)
-	
+
 	; In narrow corridors which eventually lead to console
 	(if (= g_breadcrumb_nav_index 11)
 		(begin
@@ -338,7 +338,7 @@
 			(set g_breadcrumb_nav_index 12)
 		)
 	)
-	
+
 	; On console where player has to interact with button
 	(if (= g_breadcrumb_nav_index 12)
 		(begin
@@ -352,11 +352,11 @@
 
 			(sleep_until (> g_breadcrumb_nav_index 12))
 			(breadcrumbs_deactivate_team_nav_point_object player lift_c_control_b)
-			
+
 			(set g_breadcrumb_nav_index 14)
 		)
 	)
-	
+
 	; Guiding player back outside to open combat area
 	(if (= g_breadcrumb_nav_index 14)
 		(begin
@@ -374,7 +374,7 @@
 				)
 			)
 			(breadcrumbs_deactivate_team_nav_point player "navpoint_6")
-			
+
 			(set g_breadcrumb_nav_index 15)
 		)
 	)
@@ -385,7 +385,7 @@
 			(breadcrumbs_activate_team_nav_point_position "default" player 206.37 -548.53 12.80 "navpoint_banshee1" 0.55)
 			(sleep_until (> g_breadcrumb_nav_index 15))
 			(breadcrumbs_deactivate_team_nav_point player "navpoint_banshee1")
-			
+
 			(set g_breadcrumb_nav_index 17)
 		)
 	)
@@ -396,7 +396,7 @@
 			(breadcrumbs_activate_team_nav_point_position "default" player 159.92 -499.38 22.39 "navpoint_banshee2" 0.55)
 			(sleep_until (> g_breadcrumb_nav_index 17))
 			(breadcrumbs_deactivate_team_nav_point player "navpoint_banshee2")
-			
+
 			(set g_breadcrumb_nav_index 19)
 		)
 	)
@@ -416,7 +416,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 20))
 		)
 	)
-	
+
 	; On elevator
 	(if (= g_breadcrumb_nav_index 21)
 		(begin
@@ -459,7 +459,7 @@
 			(set g_breadcrumb_nav_index 24)
 		)
 	)
-	
+
 	; Guiding player to fly with banshee to next area
 	(if (= g_breadcrumb_nav_index 24)
 		(begin
@@ -474,7 +474,7 @@
 			(set g_breadcrumb_nav_index 25)
 		)
 	)
-	
+
 	; Towards end of the level
 	(if (= g_breadcrumb_nav_index 25)
 		(begin
@@ -530,7 +530,7 @@
 ;	(sleep_until (volume_test_objects save_checkpoint4 (players)) 10)
 ;	(game_save_no_timeout)
 ;	(if debug (print "Saved at Checkpoint 1.4"))
-;	(game_save) 
+;	(game_save)
 ;)
 
 ; Save checkpoint 1_5
@@ -704,7 +704,7 @@
 	; Debug text
 	(if debug (print "Save Checkpoints Running..."))
 
-	; Checkpoints order. 
+	; Checkpoints order.
 	(save_checkpoint1_1)
 	(save_checkpoint1_2)
 	(save_checkpoint1_2a)
@@ -722,7 +722,7 @@
 	(save_checkpoint2_3)
 	(save_checkpoint2_4)
 	(save_checkpoint2_5)
-	(save_checkpoint2_6)	
+	(save_checkpoint2_6)
 	(save_checkpoint2_7)
 ;	(save_checkpoint2_8)
 	(save_checkpoint2_9)
@@ -731,7 +731,7 @@
 	(save_checkpoint3_2)
 	(save_checkpoint3_3)
 	(save_checkpoint3_3a)
-;	(save_checkpoint3_3b)	
+;	(save_checkpoint3_3b)
 	(save_checkpoint3_4)
 )
 
@@ -746,29 +746,29 @@
 ;	(if debug (print "Banshee's Plat #1 Spawning"))
 ;
 ;Respawns Banshee #1
-;	(if 
+;	(if
 ;		(and
 ;			(volume_test_objects plat_1_check (player0))
 ;			(not (volume_test_objects plat_1_check ban_plat1_a))
 ;		)
 ;		(begin
 ;			(object_destroy ban_plat1_a)
-;			(sleep 1)			
-;			(object_create ban_plat1_a)			
+;			(sleep 1)
+;			(object_create ban_plat1_a)
 ;			(sleep 1)
 ;		)
 ;	)
 
 ;Respawns Banshee #2
-;	(if 
+;	(if
 ;		(and
 ;			(volume_test_objects plat_1_check (player1))
 ;			(not (volume_test_objects plat_1_check ban_plat1_a))
 ;		)
 ;		(begin
 ;			(object_destroy ban_plat1_b)
-;			(sleep 1)			
-;			(object_create ban_plat1_b)			
+;			(sleep 1)
+;			(object_create ban_plat1_b)
 ;			(sleep 1)
 ;		)
 ;	)
@@ -777,7 +777,7 @@
 (script continuous ban_spawn_2
 	(sleep 30)
 	(if debug (print "Banshee Bottom #2 Spawner"))
-	
+
 ; Respawn
 	(if (<= (unit_get_health e50_a_ban_1) 0)
 		(begin
@@ -788,20 +788,20 @@
 			(object_create e50_a_ban_1)
 			(if debug (print "create ban_1"))
 		)
-	)		
+	)
 
-	(if 
+	(if
 		(<= (unit_get_health e50_a_ban_2) 0)
 		(begin
 			(sleep 120)
 			(object_destroy e50_a_ban_2)
 			(if debug (print "ban_2_destroyed"))
-			(sleep 30)	
+			(sleep 30)
 			(object_create e50_a_ban_2)
 			(if debug (print "ban_2_created"))
 		)
-	)		
-)		
+	)
+)
 
 ; Encounter e66, Spawner
 (script continuous e66_a_spawner
@@ -809,7 +809,7 @@
 	(sleep 30)
 	(if debug (print "major sentinel spawner"))
 
-	(if 
+	(if
 		(and
 			(< (ai_living_count e66_a/sentinel) 5)
 			(< e66_a_limiter e66_a_total)
@@ -817,13 +817,13 @@
 		; Spawn
 		(begin
 			(if debug (print "+1 Sentinel"))
-			(ai_spawn_actor e66_a/sentinel) 
+			(ai_spawn_actor e66_a/sentinel)
 			(sleep 3)
 
 			(ai_magically_see_players e66_a)
 			(set e66_a_limiter (+ e66_a_limiter 1))
 		)
-	)	
+	)
 )
 
 
@@ -833,7 +833,7 @@
 	(sleep 30)
 	(if debug (print "sentinel spawner"))
 
-	(if 
+	(if
 		(and
 			(< (ai_living_count e65_a/sentinel) 5)
 			(< e65_a_limiter e65_a_total)
@@ -841,13 +841,13 @@
 		; Spawn
 		(begin
 			(if debug (print "+1 Sentinel"))
-			(ai_spawn_actor e65_a/sentinel) 
+			(ai_spawn_actor e65_a/sentinel)
 			(sleep 3)
 
 			(ai_magically_see_players e65_a)
 			(set e65_a_limiter (+ e65_a_limiter 1))
 		)
-	)	
+	)
 )
 
 ; Encounter 5, Flood on the Bridge Spawner
@@ -857,12 +857,12 @@
 ;	(sleep 30)
 ;	(if debug (print "bridge spawner"))
 ;
-;	(if 
+;	(if
 ;		(and
-;			(< e5_landbridge_limiter e5_landbridge_total) 
-;			(< (ai_living_count c3_flood_landbridge/flood_carrier) 2) 		
+;			(< e5_landbridge_limiter e5_landbridge_total)
+;			(< (ai_living_count c3_flood_landbridge/flood_carrier) 2)
 ;		)
-;		(begin 
+;		(begin
 ;			(if debug (print "+1 Flood Carrier"))
 ;			(ai_spawn_actor c3_flood_landbridge/flood_carrier)
 ;			(set e5_landbridge_limiter (+ e5_landbridge_limiter 1))
@@ -873,7 +873,7 @@
 ; Check for Speech
 (script continuous speech_check
 	(sleep 60)
-	(if 
+	(if
 		(and
 			(volume_test_objects speech_210_trigger (players))
 			play_speech
@@ -882,7 +882,7 @@
 			(sound_impulse_start sound\dialog\c40\c40_210_Cortana none 1)
 			(set play_speech false)
 		)
-	)	
+	)
 )
 
 ;= TURN OFF CONTINUOUS SCRIPTS =================================================
@@ -890,7 +890,7 @@
 (script static void kill_all_cont
 	; Debug
 	(if debug (print "Killing off continuous scripts..."))
-	
+
 	; Sleep all continuous
 	(sleep -1 e66_a_spawner)
 	(sleep -1 ban_spawn_2)
@@ -912,7 +912,7 @@
 	(device_set_position_immediate pulse_gen3 0)
  	(sound_impulse_start sound\sfx\impulse\impacts\c40_generator_overload pulse_gen3 1)
 	(sleep 60)
-	
+
 	(if debug (print "Cortana says, 'Good job, You've overloaded Generator #3'"))
 	(sound_impulse_start sound\dialog\c40\c40_270_Cortana none 1)
 
@@ -928,9 +928,9 @@
 	(ai_kill e66_a)
 	(sleep 60)
 	(sleep_until (> (list_count (players)) 0) 1)	; TG - Sleep until a player is alive
-   
-   (if (mcc_mission_segment "cine2_final") (sleep 1))              
-   
+
+   (if (mcc_mission_segment "cine2_final") (sleep 1))
+
 	(if (cinematic_skip_start) (cutscene_extraction))
 	    (cinematic_skip_stop)
 	(game_won)
@@ -939,10 +939,10 @@
 ;Final Battle in 3rd Pulse Gen.
 (script dormant e66_a
 	(sleep_until (volume_test_objects e66_a_trigger (players)))
-	
+
 	;debug
 	(if debug (print "e66_a active- Need to get Big Sentinels from Jason"))
-	
+
 	;Place
 	(wake e66_a_spawner)
 	(sleep -1 e65_a_spawner)
@@ -952,10 +952,10 @@
 ;Turn off the last Waypoint
 (script dormant last_waypoint_off
 	(sleep_until (volume_test_objects third_lp_trigger (players)))
-	
+
 	;debug
 	(if debug (print "bye bye waypoint"))
-	
+
 	;Place, etc..
 	(object_create pulse_gen3)
 	(deactivate_team_nav_point_flag player waypoint6)
@@ -975,7 +975,7 @@
 ;			(vehicle_test_seat_list e62_a_ban_2 b-driver (players))
 ;		)
 ;	)
-	
+
 	(set play_music_c40_11 false)
 	(set play_music_c40_11_alt false)
 )
@@ -984,10 +984,10 @@
 ;Sentinels fighting you outside of last platform
 (script dormant e65_a
 	(sleep_until (volume_test_objects e65_a_trigger (players)))
-	
+
 	;debug
 	(if debug (print "e65_a active"))
-	
+
 	;Place, activate, blah, blah...
 	(wake e65_a_spawner)
 	(sleep 1)
@@ -999,14 +999,14 @@
 (script dormant e62_e
 	(sleep_until (< (ai_living_count e62_d) 6))
 	(if debug (print "3rd wave!!!"))
-	
+
 	(ai_place e62_e)
 	(sleep 2)
-	(set play_music_c40_11_alt true)		
+	(set play_music_c40_11_alt true)
 	(wake e65_a)
 )
 
-(script dormant e62_d	
+(script dormant e62_d
 	(sleep_until (< (ai_living_count e62_a) 6))
 	(if debug (print "2nd Wave!!!"))
 
@@ -1032,9 +1032,9 @@
 
 	;Debug
 	(if debug (print "Flood attacking!!!"))
-	
+
 	;Place
-	(set play_music_c40_11 true)	
+	(set play_music_c40_11 true)
 
 	(ai_place e62_b)
 	(wake e65_a)
@@ -1042,42 +1042,42 @@
 
 ;Force Save
 (script dormant banshee_save3
-	(sleep_until 
-		(or	
+	(sleep_until
+		(or
 			(vehicle_test_seat_list e62_a_ban_1 b-driver (players))
 			(vehicle_test_seat_list e62_a_ban_2 b-driver (players))))
-		
+
 			(game_save_no_timeout)
 )
 
 (script dormant e62_a
 	(sleep_until (volume_test_objects e62_a_trigger (players)))
 	(if debug (print "Main Base placed!!!"))
-	
-	;deleting stuff now
+
+	;deleting shit now
 	(ai_erase e60_e)
-	(ai_erase e60_d)	
+	(ai_erase e60_d)
 	(ai_erase e60_a)
 	(ai_erase e60_c)
-	
+
 	;creating mission now
 	(object_create e62_a_wra_1)
 	(object_create e62_a_wra_2)
 	(object_create	e62_a_tur_1)
-	(object_create	e62_a_ban_1)	
+	(object_create	e62_a_ban_1)
 	(object_create	e62_a_ban_2)
 	(ai_place e62_a)
 
 	(ai_vehicle_enterable_distance e62_a_tur_1 7)
 	(ai_vehicle_enterable_actor_type e62_a_tur_1 grunt)
-	
+
 	(ai_vehicle_encounter e62_a_wra_1 e62_a/wra_pilot_a)
 	(vehicle_load_magic e62_a_wra_1 "driver" (ai_actors e62_a/wra_pilot_a))
-	
+
 	(ai_vehicle_encounter e62_a_wra_2 e62_a/wra_pilot_b)
 	(vehicle_load_magic e62_a_wra_2 "driver" (ai_actors e62_a/wra_pilot_b))
-	
-	(sleep 30)			
+
+	(sleep 30)
 	(wake banshee_save3)
 	(sleep 2)
 	(wake e62_b)
@@ -1100,11 +1100,11 @@
 
 (script dormant e60_e
 	(sleep_until (<= (ai_nonswarm_count e60_d) 5))
-	
+
 	;Debug
 	(if debug (print "e60_e- Here comes more!!!"))
-	
-	;Do stuff 
+
+	;Do stuff
 	(ai_place e60_e)
 	(sleep 10)
 	(ai_magically_see_players e60_e)
@@ -1112,10 +1112,10 @@
 
 (script dormant e60_d
 	(sleep_until (<= (ai_nonswarm_count e60_c) 5))
-	
+
 	;Debug
 	(if debug (print "e60_d- Here comes the army!"))
-	
+
 	;Do stuff
 	(ai_place e60_d)
 	(sleep 10)
@@ -1130,7 +1130,7 @@
 ;Outside Canyon A
 (script dormant e60_a
 	(sleep_until (volume_test_objects e60_a_trigger (players)))
-	
+
 	;debug
 	(if debug (print "e60_a active"))
 
@@ -1141,30 +1141,30 @@
 	(waypoint6)
 	(ai_place e60_a)
 	(ai_place e60_banshee)
-	
+
 	(sleep 1)
-	
+
 	(object_create c_banshee_1)
 	(object_create c60_a_1)
 	(object_create c60_a_2)
-	(object_create c60_a_gho_1)			
+	(object_create c60_a_gho_1)
 	(object_create c60_a_gho_2)
 
 	(sleep 1)
 
 	(ai_vehicle_enterable_distance c60_a_1 7)
 	(ai_vehicle_enterable_actor_type c60_a_1 grunt)
-	
+
 	(ai_vehicle_enterable_distance c60_a_2 7)
 	(ai_vehicle_enterable_actor_type c60_a_2 grunt)
 
 	(ai_vehicle_encounter c_banshee_1 e60_banshee/eli_maj_pilot_a)
 	(vehicle_load_magic c_banshee_1 "driver" (ai_actors e60_banshee/eli_maj_pilot_a))
 	(unit_set_enterable_by_player c_banshee_1 0)
-			
+
 	(sleep 5)
 	(ai_place e60_c)
-	
+
 	(wake e60_d)
 
 	(object_create_containing object_x)
@@ -1175,9 +1175,9 @@
 	(sleep_until (volume_test_objects e59_c_trigger (players)))
 	(ai_place e59_c)
 	(wake e60_a)
-	
+
 	(sleep 300)
-	(set play_music_c40_10 false)	
+	(set play_music_c40_10 false)
 )
 
 ;Flood Canyon 1st Part of Bridge
@@ -1193,12 +1193,12 @@
  	(sleep_until (volume_test_objects e59_a_trigger (players)))
  	(ai_place e59_a)
  	(wake e59_b)
- 	
-	(set play_music_c40_10 true)	 	
-	
-; Deleting stuff now
+
+	(set play_music_c40_10 true)
+
+; Deleting shit now
 	(ai_erase e58_a)
-		
+
 	(object_destroy e57_tur_a)
 	(object_destroy e51_tur_1)
 	(object_destroy e51_tur_2)
@@ -1215,37 +1215,37 @@
 	(object_destroy e50_b_ban_2)
 	(object_destroy e50_b_ban_3)
 	(object_destroy pulse_gen2)
-	
+
 	(device_set_power door_gen2 0)
 
 )
 
 (script dormant e57_a
 	(sleep_until (volume_test_objects tunnel_trigger (players)))
-	
+
 	;debug
 	(if debug (print "e57_a active"))
 
-	;Delete stuff here
+	;Delete shit here
 	(ai_erase e51_a)
-	
+
 	;Place
 	(ai_conversation_stop cortana_230_250)
 	(ai_conversation cortana_260)
-	
+
 	(wake e59_a)
-		
+
 	(object_create e57_tur_a)
 	(ai_vehicle_enterable_distance e57_tur_a 7)
-	
+
 	(ai_place e57_a)
 	(sleep 30)
-	
-	(ai_place e58_a/guard1)	
+
+	(ai_place e58_a/guard1)
 	(ai_place e58_a/wave1)
-	
+
 	(ai_prefer_target (players) true)
-	
+
 	(sleep_until (<= (ai_nonswarm_count e58_a/wave1) 1))
 	(ai_place e58_a/wave2a)
 	(ai_place e58_a/wave2b)
@@ -1255,21 +1255,21 @@
 	(ai_place e58_a/wave3a)
 	(ai_place e58_a/wave3b)
 	(ai_prefer_target (players) true)
-	
+
 	(sleep_until (<= (ai_nonswarm_count e58_a/wave3b) 3))
 	(ai_place e58_a/wave4a)
 	(ai_place e58_a/wave4b)
 	(ai_place e58_a/wave4c)
 	(ai_place e58_a/wave4d)
-	(ai_prefer_target (players) true)		
+	(ai_prefer_target (players) true)
 )
 
 (script dormant waypoint_off
 	(sleep_until (volume_test_objects waypoint5_trigger (players)))
-	
+
 	;debug
 	(if debug (print "TURN IT OFF"))
-	
+
 	(deactivate_team_nav_point_flag player waypoint5)
 	(breadcrumbs_deactivate_team_nav_point_flag player waypoint5)
 	(set g_breadcrumb_nav_index 21)
@@ -1277,36 +1277,36 @@
 
 (script dormant c40_230_240_250
 	(sleep_until (volume_test_objects c40_230_240_250_trigger (players)))
-	
+
 	;debug
 	(if debug (print "update...."))
-		
+
 	(wake waypoint_off)
 	(sleep 1)
-	
+
 	(wake e57_a)
 	(sleep 1)
-	
+
 	(chapter_c40_3)
 	(waypoint5)
-	(ai_conversation cortana_230_250)	
+	(ai_conversation cortana_230_250)
 )
 
 ; Pulse Gen #2
 (script dormant e53_a
 	(sleep_until (volume_test_objects pulse_2_trigger (players)))
-	
+
 	(sleep -1 speech_check)
 	(sleep -1 ban_spawn_2)
 	(ai_place e53_a)
-	
+
 	;Debug
 	(damage_object "effects\damage effects\pulsegenerator" (player0))
 	(damage_object "effects\damage effects\pulsegenerator" (player1))
 
 	(device_set_position_immediate pulse_gen2 0)
  	(sound_impulse_start sound\sfx\impulse\impacts\c40_generator_overload pulse_gen2 1)
-	
+
 	(device_set_power tun_garage_1_con_a 1)
 	(wake c40_230_240_250)
 
@@ -1315,7 +1315,7 @@
 
 	(sleep 60)
 	(if debug (print "Cortana says, 'Good job, You've overloaded Generator #2'"))
-	(sound_impulse_start sound\dialog\c40\c40_220_Cortana none 1)		
+	(sound_impulse_start sound\dialog\c40\c40_220_Cortana none 1)
 
 	(wake objective_4)
 
@@ -1324,10 +1324,10 @@
 
 (script dormant e52_c
 	(sleep_until (volume_test_objects e52_c_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "lalalalal" ))
-	
+
 	;Place
 	(ai_place e52_c)
 	(wake e53_a)
@@ -1340,31 +1340,31 @@
 
 (script dormant e52_a
 	(sleep_until (volume_test_objects e52_a_trigger (players)) 15)
-	
+
 	(if debug (print "e52_a active"))
 
 	;Place
 	(ai_place e52_a)
 	(sleep 1)
 	(ai_place e52_b)
-	
+
 	(sleep 2)
 	(wake force_save_3)
 	(wake e52_c)
-	
+
 )
 
 (script dormant second_lp
 	(sleep_until (volume_test_objects second_lp_trigger (players)))
 
 	(object_create pulse_gen2)
-	(deactivate_team_nav_point_flag player waypoint4)	
+	(deactivate_team_nav_point_flag player waypoint4)
 	(breadcrumbs_deactivate_team_nav_point player "waypoint4")
-	(set play_music_c40_09 false)	
+	(set play_music_c40_09 false)
 	;Debug
 )
 
-;Fraking top base
+;Fucking top base
 (script dormant e51_a
 	(sleep_until (volume_test_objects e51_a_trigger (players)) 15)
 
@@ -1373,7 +1373,7 @@
 	;Do stuff
 	(wake second_lp)
 	(wake e52_a)
-	
+
 	(object_create	e51_tur_1)
 	(object_create e51_tur_2)
 	(object_create e51_tur_3)
@@ -1381,7 +1381,7 @@
 	(object_create e51_ban_1)
 	(object_create e51_ban_2)
 	(object_create ban_mid_a)
-	
+
 	(ai_vehicle_enterable_distance e51_tur_1 7)
 	(ai_vehicle_enterable_distance e51_tur_2 7)
 	(ai_vehicle_enterable_distance e51_tur_3 7)
@@ -1399,7 +1399,7 @@
 	(ai_vehicle_encounter e51_ban_1 e51_b/eli_maj_pilot_a)
 	(ai_go_to_vehicle e51_b/eli_maj_pilot_a e51_ban_1 driver)
 	(ai_magically_see_players e51_b)
-	
+
 	(sleep 900)
 	(if debug (print "backup #1 launched"))
 	(ai_vehicle_encounter e51_ban_2 e51_b/eli_maj_pilot_b)
@@ -1409,24 +1409,24 @@
 
 ;Base Music
 (script dormant banshee_music
-	(sleep_until 
+	(sleep_until
 		(or
 			(vehicle_test_seat_list e50_a_ban_1 b-driver (players))
 			(vehicle_test_seat_list e50_a_ban_2 b-driver (players))
 		)
 	)
-	
+
 	(set play_music_c40_09 true)
 	(set g_breadcrumb_nav_index 20)
 )
 
 ;Force Save
 (script dormant banshee_save2
-	(sleep_until 
-		(or	
+	(sleep_until
+		(or
 			(vehicle_test_seat_list e50_a_ban_1 b-driver (players))
 			(vehicle_test_seat_list e50_a_ban_2 b-driver (players))))
-		
+
 			(game_save_no_timeout)
 )
 
@@ -1437,7 +1437,7 @@
 	;Debug
 	(if debug (print "e50_a active- BOTTOM BASE"))
 
-	;Deleting stuff
+	;Deleting shit
 	(object_destroy c2_wra_a)
 	(object_destroy c2_ban_a)
 	(object_destroy c2_tur_a)
@@ -1445,7 +1445,7 @@
 
 	;Place units/wake/etc...
 	(device_set_power tun_garage_1_con_a 0)
-	
+
 	(object_create e50_a_tur_1)
 
 	(object_create e50_a_ban_1)
@@ -1454,28 +1454,28 @@
 	(object_create e50_b_wra_1)
 	(object_create e50_b_ban_2)
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (object_create e50_b_ban_3))
-	
+
 	(ai_place e50_a)
 	(ai_place e50_b/eli_maj_pilot_b)
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (ai_place e50_b/eli_maj_pilot_c))
 	(sleep 2)
 
 	(ai_vehicle_enterable_distance e50_a_tur_1 7)
-	
+
 	(ai_vehicle_encounter e50_b_wra_1 e50_a/eli_maj_pilot_a)
 	(vehicle_load_magic e50_b_wra_1 "driver" (ai_actors e50_a/eli_maj_pilot_a))
-	
+
 	(ai_vehicle_encounter e50_b_ban_2 e50_b/eli_maj_pilot_b)
 	(vehicle_load_magic e50_b_ban_2 "driver" (ai_actors e50_b/eli_maj_pilot_b))
 
 	(ai_vehicle_encounter e50_b_ban_3 e50_b/eli_maj_pilot_c)
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (vehicle_load_magic e50_b_ban_3 "driver" (ai_actors e50_b/eli_maj_pilot_c)))
-	
+
 	(unit_set_enterable_by_player e50_b_ban_2 0)
-	(unit_set_enterable_by_player e50_b_ban_3 0)	
+	(unit_set_enterable_by_player e50_b_ban_3 0)
 
 	(wake ban_spawn_2)
-	
+
 	(wake speech_check)
 	(sleep 1)
 	(wake banshee_save2)
@@ -1488,10 +1488,10 @@
 (script dormant e48_a
 	(sleep_until (volume_test_objects e48_a_trigger (players)) 15)
 	(set g_breadcrumb_nav_index 16)
-	
+
 	;Debug
 	(if debug (print "e48_a active"))
-	
+
 	;Place units/wake/etc...
 
 	(sleep 1)
@@ -1499,14 +1499,14 @@
 	(ai_place e48_a)
 
 	(object_create e48_warthog)
-		
+
 	(wake e50_a)
 )
 
-;Big first encounter on B(1) coming into canyon B 
+;Big first encounter on B(1) coming into canyon B
 (script dormant e46_a
 	(sleep_until (volume_test_objects e46_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e46_canyonb active"))
 	;Place units/wake/etc..
@@ -1523,11 +1523,11 @@
 
 	(object_create_containing object_b)
 
-	(sleep 10) 
+	(sleep 10)
 
-	(ai_vehicle_enterable_distance c2_tur_a 7)	
+	(ai_vehicle_enterable_distance c2_tur_a 7)
 	(ai_vehicle_enterable_distance c2_tur_b 7)
-	
+
 	(ai_vehicle_enterable_actor_type c2_tur_a grunt)
 	(ai_vehicle_enterable_actor_type c2_tur_b grunt)
 
@@ -1547,7 +1547,7 @@
 
 	(sleep 150)
 ;	(ai_place e46_c
-		
+
 	(wake e48_a)
 
 ;	CLEANUP
@@ -1580,33 +1580,33 @@
 	(ai_erase e21_b)
 	(ai_erase e21_a)
 	(ai_erase e20_a)
-	
+
 )
 
 ;Cortana
 (script dormant e46_speech
 	(sleep_until (volume_test_objects e46_speech_trigger (players)))
 	(if debug (print "Speaking!"))
-	(set play_music_c40_08 false)	
-	(set play_music_c40_08_alt false)	
+	(set play_music_c40_08 false)
+	(set play_music_c40_08_alt false)
 
-	(sound_impulse_start sound\dialog\c40\c40_200_Cortana none 1)	
+	(sound_impulse_start sound\dialog\c40\c40_200_Cortana none 1)
 	(waypoint4)
 	(wake objective_3)
 	(ai_place e46_C)
 	;Debug
-)	
+)
 
-;Bottom of BSP B3(8) 
+;Bottom of BSP B3(8)
 (script dormant e44_a
 	(sleep_until (volume_test_objects e44_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e44_a active"))
 
 	;Place units/wake/etc...
 	(set play_music_c40_08_alt true)
-	
+
 	(ai_place e44_a)
 	(sleep 1)
 	(ai_magically_see_players e44_a/ambush)
@@ -1617,14 +1617,14 @@
 ;BSP B3(8) In Elevator Shaft
 (script dormant e43_c
 	(sleep_until (volume_test_objects e43_c_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e43_c_triggered"))
 
 	(set g_breadcrumb_nav_index 13)
-	
+
 	;Place units
-	(set play_music_c40_08 true)	
+	(set play_music_c40_08 true)
 
 	(ai_place e43_c)
 	(sleep 3)
@@ -1636,10 +1636,10 @@
 ;BSP B3(8) Flood they are everywhere man!
 (script dormant e43_b
 	(sleep_until (volume_test_objects e43_b_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e43_b active"))
-	
+
 	;Place units
 	(effect_new "effects\explosions\medium explosion" glass_b_flag)
 	(sleep 2)
@@ -1649,15 +1649,15 @@
 	(wake e43_c)
 )
 
-;BSP B3(8) Top level triggers flavor chomp 
+;BSP B3(8) Top level triggers flavor chomp
 (script dormant e43_a
 	(sleep_until (volume_test_objects e43_a_trigger (players)))
 	(set play_music_c40_07 false)
 	(set play_music_c40_07_alt false)
-	
+
 	;Debug
 	(if debug (print "e43_a active"))
-	
+
 	;Place units/wake/etc..
 	(ai_place e43_a)
 	(wake e43_b)
@@ -1674,17 +1674,17 @@
 ;Second bridge of the Double B heading towards BSP(8)
 (script dormant e40_a
 	(sleep_until (volume_test_objects e40_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e40_a active"))
-	
+
 	;Place the units and give them sight
 	(wake banshee_alt)
 	(set play_music_c40_07 true)
-	
+
 	(device_set_power door_b2 1)
 	(device_set_power door_b3 1)
-	
+
 	(ai_place e40_a/pilot_a)
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (ai_place e40_a/pilot_b))
 	(sleep 1)
@@ -1692,42 +1692,42 @@
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (object_create e40_a_ban_2))
 
 	(sleep 1)
-	
+
 ;	(ai_vehicle_encounter e40_a_ban_1 e40_a/pilots)
 ;	(ai_vehicle_encounter e40_a_ban_2 e40_a/pilots)
-	
+
 	(vehicle_load_magic e40_a_ban_1 "driver" (ai_actors e40_a/pilot_a))
 	(if (or (= (game_difficulty_get) hard) (= (game_difficulty_get) impossible) (game_is_cooperative)) (vehicle_load_magic e40_a_ban_2 "driver" (ai_actors e40_a/pilot_b)))
 
 	(unit_set_enterable_by_player e40_a_ban_1 0)
 	(unit_set_enterable_by_player e40_a_ban_2 0)
-	
+
 	(ai_place e41_a)
-	
+
 	(sleep 2)
 	(ai_magically_see_encounter e40_a e41_a)
-	
+
 ;Place flavor encounter
 	(sleep_until (volume_test_objects e41_jump_1_trigger (players)))
 	(ai_place e41_b)
 
-;place flavor encounter	
+;place flavor encounter
 	(sleep_until (volume_test_objects e41_c_trigger (players)))
-	
+
 	(ai_place e41_c)
 	(sleep 5)
 	(ai_magically_see_players e41_c)
-	
+
 	(wake e43_a)
 )
 
 ;flood flavor script
 (script dormant e39_a
 	(sleep_until (volume_test_objects e39_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e39_a active"))
-	
+
 	;Place the units and give them sight
 	(ai_place e39_a)
 	(wake e40_a)
@@ -1735,18 +1735,18 @@
 
 (script dormant e38_a
 	(sleep_until (volume_test_objects e38_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e38_a active"))
-	
+
 	;Place units, blah
 	(ai_place e38_a)
 	(effect_new "effects\explosions\medium explosion" glass_a_flag)
-)	
+)
 
 (script dormant e37_a
 	(sleep_until (volume_test_objects e37_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e37_a active"))
 
@@ -1761,10 +1761,10 @@
 ;Encounter 34, U Connector to 2nd Bridge
 (script dormant e34_a
 	(sleep_until (volume_test_objects e34_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e34_a active"))
-	
+
 	;Place the units and give them sight
 	(ai_place e34_a)
 	(ai_place e35_a)
@@ -1773,10 +1773,10 @@
 
 (script dormant e33_b
 	(sleep_until (volume_test_objects e33_b_trigger (players)))
-	
-	;Debug 
+
+	;Debug
 	(if debug (print "look down"))
-	
+
 	;Place
 	(ai_place e33_b)
 	(sleep 5)
@@ -1785,10 +1785,10 @@
 
 (script dormant e33_a
 	(sleep_until (volume_test_objects e33_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "e33_a active"))
-	
+
 	;Place the units and give them sight
 	(ai_place e33_a)
 	(wake e33_b)
@@ -1797,21 +1797,21 @@
 
 (script dormant e31_d
 	(sleep_until (volume_test_objects jump_3_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "jumpers #3 active"))
 
 	;Place and blah
 	(ai_place e31_d)
 	(wake e33_a)
-	
+
 	(sleep 210)
 	(set play_music_c40_06 false)
 )
 
 (script dormant e31_c
 	(sleep_until (volume_test_objects jump_2_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "jumpers #2 active"))
 
@@ -1822,7 +1822,7 @@
 
 (script dormant e31_b
 	(sleep_until (volume_test_objects jump_1_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "jumpers #1 active"))
 
@@ -1835,10 +1835,10 @@
 (script dormant e30_a
 	(sleep_until (volume_test_objects e30_a_trigger (players)))
 	(set play_music_c40_051 false)
-	(sleep 1)	
+	(sleep 1)
 	;Debug
 	(if debug (print "E30_a active"))
-	
+
 	;Place the units and give them sight
 	(ai_place e30_a)
 	(ai_place e31_a)
@@ -1853,7 +1853,7 @@
 ;	CLEANUP
 	(ai_erase e8_a)
 	(ai_erase e7_a)
-	(ai_erase e6_a)		
+	(ai_erase e6_a)
 )
 
 ;Encounter 23_b; Here Flood, Flood, Flood...
@@ -1874,12 +1874,12 @@
 ;Encounter 22, Covenant vs. Flood
 (script dormant e22_a
 	(sleep_until (volume_test_objects e22_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "E22_a active"))
 
 	(set g_breadcrumb_nav_index 9)
-	
+
 	;Place the units and give them sight
 	(set play_music_c40_051 true)
 
@@ -1896,10 +1896,10 @@
 ;Encounter 21_b, Grunt vs Grenade
 (script dormant e21_b
 	(sleep_until (volume_test_objects e21_b_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "E21_b active"))
-	
+
 	;Place/do/blah
 	(ai_place e21_b)
 	(wake e22_a)
@@ -1908,28 +1908,28 @@
 ;Encounter 21, Interior Connecting Tunnels B5
 (script dormant e21_a
 	(sleep_until (volume_test_objects e21_a_trigger (players)))
-	
+
 	;Debug
 	(if debug (print "E21_a active"))
 
 	(set g_breadcrumb_nav_index 8)
-	
+
 	;Place the units and give them sight
 	(ai_place e21_a)
 	(wake e21_b)
-	
-	;Deleting a bunch o stuff from C
+
+	;Deleting a bunch o shit from C
 	(object_destroy control_door_d)
 	(object_destroy control_door_c)
 	(object_destroy control_door_b)
 	(object_destroy control_door_a)
-	
+
 	(object_destroy fly_away_1)
 	(object_destroy fly_away_2)
 	(object_destroy c3_wra_a)
 	(object_destroy ban_plat1_a)
 	(object_destroy ban_plat2_b)
-	
+
 	(object_destroy pulse_gen1)
 )
 
@@ -1939,10 +1939,10 @@
 
 	;Close Door to C Canyon for good
 	(device_set_power door_c1 0)
-	
+
 	;Debug
 	(if debug (print "E20_a active"))
-	
+
 	;Place the units and give them sight
 	(ai_place e20_a)
 	(wake e21_a)
@@ -1959,7 +1959,7 @@
 	(set g_breadcrumb_nav_index 7)
 	(wake e20_a)
 )
-	
+
 ;Encounter 8, Target Practice on the Bridge
 (script dormant e8_a
 	(sleep_until (volume_test_objects e8_trigger (players)))
@@ -1970,7 +1970,7 @@
 
 	;Place the units and give them sight
 	(chapter_c40_2)
-	
+
 	(sound_impulse_start sound\dialog\c40\c40_180_Cortana none 1)
 		(sleep (sound_impulse_time sound\dialog\c40\c40_180_Cortana))
 	(waypoint_3)
@@ -2005,21 +2005,21 @@
 
 	(sleep 150)
 	(wake objective_2)
-	
+
 	(object_create ban_plat1_a)
 	(if (game_is_cooperative) (object_create ban_plat1_b))
-	
+
 )
 
 (script dormant e7_b
 	(sleep_until (volume_test_objects e7_trigger_b (players)))
-	
+
 	(set play_music_c40_05 true)
 
 	;Debug
 	(deactivate_team_nav_point_flag player waypoint2)
 	(breadcrumbs_deactivate_team_nav_point_flag player waypoint2)
-	
+
 ;	(if debug (print "Sentinels Active!"))
 ;	(ai_place e7_b)
 
@@ -2036,9 +2036,9 @@
 
 (script dormant e7_a
 	(sleep_until (= (device_get_position pulse_gen1) 0))
-	
+
 	;Debug
-	
+
 	;Place the units and give them sight
 	(sleep 90)
 	(ai_place e7_a)
@@ -2068,11 +2068,11 @@
 )
 
 (script dormant banshee1_save
-	(sleep_until 
-		(or	
+	(sleep_until
+		(or
 			(vehicle_test_seat_list fly_away_1 b-driver (players))
 			(vehicle_test_seat_list fly_away_2 b-driver (players))))
-		
+
 			(game_save_no_timeout)
 )
 
@@ -2080,9 +2080,9 @@
 	(sleep_until (vehicle_test_seat_list fly_away_1 b-driver (players)))
 
 	(set play_music_c40_04 true)
-		
+
 	(sound_impulse_start sound\dialog\c40\c40_110_Cortana none 1)
-	
+
 	(if (and (not (game_is_cooperative))
 		    (= normal (game_difficulty_get)))
 	    (if (player0_joystick_set_is_normal) (display_scenario_help 4) (display_scenario_help 5)))
@@ -2106,25 +2106,25 @@
 	(ai_erase c3_base_tier_2/eli_maj_pla_top_tier)
 	(ai_erase c3_base_tier_2/jac_maj_pla_top_tier)
 	(ai_erase c3_base_tier_2/gru_maj_nee_top_tier)
-	(ai_erase c3_base_tier_2/3_gru_maj_pla_c)	
+	(ai_erase c3_base_tier_2/3_gru_maj_pla_c)
 	(ai_erase c3_base_tier_2/3_jac_maj_pla_c)
-	(ai_erase c3_base_tier_2/3_eli_maj_pla_d)	
+	(ai_erase c3_base_tier_2/3_eli_maj_pla_d)
 	(ai_erase c3_base_tier_2/3_jac_maj_pla_c)
-				
+
 	(sleep 10)
-	
+
 	(ai_migrate c3_base_tier_2/2_eli_maj_pla_g c3_cov_base/cleaners_i)
 	(ai_migrate c3_base_tier_2/1_gru_maj_nee_i c3_cov_base/cleaners_i)
 	(ai_migrate c3_base_tier_2/1_jac_maj_pla_j c3_cov_base/cleaners_i)
 	(ai_migrate c3_base_tier_2/1_eli_maj_pla_k c3_cov_base/cleaners_i)
 	(ai_migrate c3_base_tier_2/2_eli_maj_pla_g c3_cov_base/cleaners_i)
 	(sleep 1)
-	
+
 	(ai_follow_target_players c3_cov_base/cleaners_i)
 	(sleep 1)
 
 	(ai_place c3_cov_base)
-	
+
 	(set play_music_c40_03 true)
 
 	(vehicle_load_magic c3_wra_a "driver" (ai_actors c3_cov_base/eli_maj_pla_pilot_a))
@@ -2133,7 +2133,7 @@
 
 ;	(ai_erase c3_cov_landbridge)
 	(wake mortar_dead)
-	(sleep 1)	
+	(sleep 1)
 	(wake banshee_help)
 	(sleep 1)
 	(wake banshee1_save)
@@ -2165,27 +2165,27 @@
 	(ai_conversation cortana_block_2)
 
 	(ai_place c3_base_tier_2)
-	
+
 	(ai_erase e2_c)
-	(ai_erase e2_b)	
+	(ai_erase e2_b)
 	(ai_erase e2_a)
-	
+
 	(wake e5_a)
-		
+
 	(waypoint_1)
 	(wake objective_1)
-	
-	(if (game_is_cooperative) (object_create fly_away_2))	
-)	
+
+	(if (game_is_cooperative) (object_create fly_away_2))
+)
 ; Force Save
 (script dormant force_save_1
 	(sleep_until (= (ai_living_count e2_b) 0))
 	(game_save_no_timeout)
 )
 
-; Encounter 3, OPEN THE DOOR AND TAKE IT BLAM!!!
+; Encounter 3, OPEN THE DOOR AND TAKE IT BITCH!!!
 (script dormant e3_a
-	; Sleep until the trigger 
+	; Sleep until the trigger
 	(sleep_until (volume_test_objects e3_trigger (players)))
 	;debug
 	(if debug (print "Encounter e3_a"))
@@ -2194,16 +2194,16 @@
 
 	(sleep_until (= (device_get_position control_door_a_cont_b) 1))
 	(ai_place e3_a/gru_maj_pla_a)
-	
+
 	(sleep 1)
 	(wake force_save_1)
 	(sleep 1)
 	(wake c3_base_tier_2)
-)	
+)
 (script dormant door_cover
 	(sleep_until (= (device_get_position control_door_a_cont_b) 1) 1)
 	(device_set_position control_door_a .8)
-	(if debug (print "Door shouldn't open all the way!"))	
+	(if debug (print "Door shouldn't open all the way!"))
 )
 
 (script dormant door_green4
@@ -2224,7 +2224,7 @@
 (script dormant e2_c
 	(sleep_until (<= (ai_living_count e2_b) 1))
 	(if debug (print "Backup hatched"))
-	(ai_place e2_c) 
+	(ai_place e2_c)
 	(ai_prefer_target (players) true)
 )
 
@@ -2232,11 +2232,11 @@
 	; Sleep until the trigger
 	(sleep_until (> (device_get_position control_door_d_cont_b) 0) 5)
 	(if debug (print "Door should open"))
-	
+
 	(device_set_position control_door_c 1)
-	(device_set_never_appears_locked control_door_c 1)	
+	(device_set_never_appears_locked control_door_c 1)
 	(set play_music_c40_01 false)
-	
+
 	(if debug (print "Cortana says, 'The Covenant are trying to use Halo,'"))
 	(if debug (print "we must not let them have the Key!'"))
 	; Place the units and give them sight
@@ -2271,7 +2271,7 @@
 	(ai_conversation cortana_block_1)
 	(set g_breadcrumb_nav_index 1)
 )
-	
+
 ; Encounter 1, WILD ON SENTINELS!!!
 (script dormant e1_a
 	; Sleep until player enters trigger volume
@@ -2288,9 +2288,9 @@
 	(ai_place e1_a)
 	(ai_follow_target_players e1_a)
 	(ai_magically_see_players e1_a)
-	
-;	(if (>= (ai_living_count c3_base_tier_2) 6) (set e4_fled true)) 
-	
+
+;	(if (>= (ai_living_count c3_base_tier_2) 6) (set e4_fled true))
+
 	; begin next encounter sequence
 	(wake c40_20_30_40)
 	(sleep 1)
@@ -2304,7 +2304,7 @@
 	(device_set_never_appears_locked control_door_d 1)
 	(set g_breadcrumb_nav_index 2)
 )
-	
+
 (script dormant kill_box_1
 	(sleep_until (volume_test_objects kill_box_1 (players)))
 	(damage_object "effects\damage effects\guaranteed plummet to untimely death" (player0))
@@ -2312,7 +2312,7 @@
 )
 
 ; Section 1, Begin
-(script dormant section1 
+(script dormant section1
 	; Debug
 	(if debug (print "Section 1..."))
 	(wake kill_box_1)
@@ -2339,7 +2339,7 @@
 	(switch_bsp 2)
 	(volume_teleport_players_not_inside null_volume s3)
 	(wake banshee_help)
-	(wake e6_a) 
+	(wake e6_a)
 )
 
 (script static void s4
@@ -2353,49 +2353,49 @@
 	(wake e8_a)
 	(ai_erase e8_a)
 	(wake e8_b)
-)	
+)
 
 (script static void s5a
 	(switch_bsp 10)
 	(volume_teleport_players_not_inside null_volume s5a)
 	(wake e30_a)
-)	
+)
 
 (script static void s6
 	(switch_bsp 9)
 	(volume_teleport_players_not_inside null_volume s6)
 	(wake e33_a)
-)	
+)
 
 (script static void s7
 	(switch_bsp 9)
 	(volume_teleport_players_not_inside null_volume s7)
 	(wake e34_a)
-)	
+)
 
 (script static void s8
 	(switch_bsp 1)
 	(volume_teleport_players_not_inside null_volume s8)
 	(wake e40_a)
-)	
+)
 
 (script static void s8a
 	(switch_bsp 1)
 	(volume_teleport_players_not_inside null_volume s8a)
 	(wake e46_speech)
 	(wake e46_a)
-)	
+)
 
 (script static void s8b
 	(switch_bsp 1)
 	(volume_teleport_players_not_inside null_volume s8b)
 	(wake e48_a)
-)	
+)
 
 (script static void s9
 	(switch_bsp 1)
 	(volume_teleport_players_not_inside null_volume s9)
-	
+
 	(wake e51_a)
 	(object_create e50_a_ban_1)
 )
@@ -2403,7 +2403,7 @@
 (script static void s10
 	(switch_bsp 0)
 	(volume_teleport_players_not_inside null_volume s10)
-	
+
 	(wake e57_a)
 	(wake e59_a)
 	(wake e59_b)
@@ -2596,16 +2596,16 @@
 
 	(sleep_until play_music_c40_01 1)
 	(music_c40_01)
-	
+
 	(sleep_until play_music_c40_02 1)
 	(music_c40_02)
-	
+
 	(sleep_until play_music_c40_03 1)
 	(music_c40_03)
-	
+
 	(sleep_until play_music_c40_04 1)
 	(music_c40_04)
-	
+
 	(sleep_until play_music_c40_05 1)
 	(music_c40_05)
 
@@ -2640,12 +2640,12 @@
 ;	(volume_teleport_players_not_inside null_volume s0)
 	(fade_out 0 0 0 0)
 	(kill_all_cont)
-	
-   (if (mcc_mission_segment "cine1_intro") (sleep 1))              
-   
+
+   (if (mcc_mission_segment "cine1_intro") (sleep 1))
+
 	(if (cinematic_skip_start) (cutscene_insertion))
 	(cinematic_skip_stop)
-	
+
 	(switch_bsp 2)
 	(set play_music_c40_01 true)
 	(wake save_checkpoints)
@@ -2655,6 +2655,6 @@
 	(wake section1)
 	(wake music_c40)
 	(fade_in 0 0 0 0)
-   
+
    (mcc_mission_segment "01_start")
-)	
+)

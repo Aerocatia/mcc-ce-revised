@@ -391,7 +391,7 @@
 	(game_save)
    (mcc_mission_segment "10_shaftA_beam_enter")
 	)
-	
+
 (script dormant save_shaftA_beam
 	(sleep_until (= 0 (ai_living_count shaftA_beam)) 10)
 	(game_save_no_timeout)

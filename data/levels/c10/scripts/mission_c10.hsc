@@ -18,7 +18,7 @@
 ;	Level 2
 ;		flood everywhere
 ;		player must find proper lift to exit
-;		
+;
 
 ;	Exterior 2
 ;		dropship pilot tells player to go to the tower
@@ -32,63 +32,63 @@
 (script stub void all_kill
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void all_create
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void emotions
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void setup
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void intro
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void pelican
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void door_setup
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void door
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void check_setup
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void check
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void lab_setup_1
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void lab_setup_2
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void lab_setup_3
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void lab
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void flood
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void mendoza_unlock
 	(print "merging cinema script failed")
 	)
@@ -100,15 +100,15 @@
 (script stub void final
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void x50
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void destroy_door_a
 	(print "merging cinema script failed")
 	)
-	
+
 (script stub void cutscene_extraction
 	(print "merging cinema script failed")
 	)
@@ -406,7 +406,7 @@
 	(object_destroy int_a_bay_a_ar_1)
 	(object_destroy int_a_bay_a_ar_2)
 	)
-	
+
 (script static void guns
 	(object_create insertion_ar_1)
 	(object_create insertion_ar_2)
@@ -431,7 +431,7 @@
 	(cinematic_start)
 	(show_hud 0)
 	(camera_control on)
-	
+
 	(object_destroy insertion_pelican)
 	(object_create insertion_pelican)
 	(object_teleport insertion_pelican insertion_flag)
@@ -443,14 +443,14 @@
 
 ;	(object_set_facing (player0) initial_facing)
 ;	(object_set_facing (player1) initial_facing)
-	
+
 	(objects_predict insertion_pelican)
 ;	(objects_predict (ai_actors swamp_a_marines))
 
 	(ai_place swamp_a_covenant/grunts_insertion)
 	(ai_place swamp_a_covenant/jackals_insertion)
 	(objects_predict (ai_actors swamp_a_covenant))
-	
+
 ;	(ai_place swamp_a_marines/insertion)
 ;	(ai_disregard (ai_actors swamp_a_marines/insertion) true)
 	(ai_disregard (players) true)
@@ -460,16 +460,16 @@
 	(sleep 5)
 
 	(recording_play_and_hover insertion_pelican insertion_pelican_in)
-	
+
 	(sound_looping_start sound\sinomatixx_music\c10_insertion_music none 1)
-	
+
 	(fade_in 0 0 0 60)
 	(camera_set insertion_2 400)
 	(sleep 200)
 ;	(ai_follow_target_ai swamp_a_marines/insertion swamp_a_covenant/grunts_insertion)
 	(camera_set insertion_3 400)
 	(sleep 200)
-	
+
 	(cinematic_set_title chapter_lost)
 ;	(object_create insertion_ar_1)
 ;	(object_create insertion_ar_2)
@@ -515,7 +515,7 @@
 (script continuous swamp_b_save
 	(sleep_until (volume_test_objects swamp_b_trigger_b (players)))
 	(game_save))
-	
+
 ;- tyson's shiznat -------------------------------------------------------------
 
 ; Incidents (bigfoot sightings!)
@@ -568,18 +568,18 @@
 	(set play_music_c10_01 false)
 	; Place the ai
 	(ai_place enc_swamp2/squadA)
-	
+
 	; Wait a moment, then place the rifles
 	(sleep 15)
 	(object_create entrance_asr_2) (sleep 15)
 	(object_create entrance_asr_4) (sleep 20)
 	(object_create entrance_asr_5)
-	
+
 	; Wait another moment, blow up the turret
 	(sleep 45)
 	(effect_new "weapons\frag grenade\effects\explosion" enc_swamp2_turret)
 	(effect_new "effects\explosions\large explosion no objects" enc_swamp2_turret)
-	
+
 	; Place the second group of AI
 	(ai_place enc_swamp2/squadC)
 	(ai_place enc_swamp2/lift_jackal)
@@ -602,15 +602,15 @@
 	(objects_predict (ai_actors enc_swamp1))
 	(ai_magically_see_players enc_swamp1)
 
-;	(sleep_until 
+;	(sleep_until
 ;		(or
 ;			(< (ai_strength enc_swamp1) 0.97)
 ;			(volume_test_objects enc_swamp1b (players))
 ;		) 1)
-	
+
 	; Override their command list
 ;	(ai_command_list enc_swamp1 general_null)
-	
+
 	; Blow up the hapless rocketeers
 	(effect_new "weapons\frag grenade\effects\explosion" enc_swamp1_rocket_booster) (sleep 15)
 	(ai_place enc_swamp1/rocketeers)
@@ -629,7 +629,7 @@
 ;	(object_create enc_swamp1_ar2) (sleep 20)
 ;	(object_create enc_swamp1_ar3)
 ;	(sleep 110)
-	
+
 	; Remove rifles
 ;	(object_destroy enc_swamp1_ar2) (sleep 35)
 ;	(object_destroy enc_swamp1_ar1) (sleep 20)
@@ -672,7 +672,7 @@
 			(set g_breadcrumb_nav_index 1)
 		)
 	)
-	
+
 	; Navpoint that leads to elevator which goes deeper inside structure
 	(if (= g_breadcrumb_nav_index 1)
 		(begin
@@ -699,9 +699,9 @@
 					(> g_breadcrumb_nav_index 2)
 				) 1
 			)
-			
+
 			(breadcrumbs_activate_team_nav_point_object "default" player lift_a_cont_a .1)
-			
+
 			(sleep_until
 				(or
 					(> (device_get_position lift_a) 0)
@@ -712,7 +712,7 @@
 			(set g_breadcrumb_nav_index 3)
 		)
 	)
-	
+
 	; In corridor
 	(if (= g_breadcrumb_nav_index 3)
 		(begin
@@ -733,7 +733,7 @@
 			(set g_breadcrumb_nav_index 4)
 		)
 	)
-	
+
 	; In corridor leading deeper into the structure
 	(if (= g_breadcrumb_nav_index 4)
 		(begin
@@ -748,7 +748,7 @@
 			(set g_breadcrumb_nav_index 5)
 		)
 	)
-	
+
 	; On area where player encounters panicking marine
 	(if (= g_breadcrumb_nav_index 5)
 		(begin
@@ -763,7 +763,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 5))
 		)
 	)
-	
+
 	; After encounter with panicking marine
 	(if (= g_breadcrumb_nav_index 6)
 		(begin
@@ -793,7 +793,7 @@
 			(set g_breadcrumb_nav_index 8)
 		)
 	)
-	
+
 	; On higher level doorway leading to flood encounter
 	(if (= g_breadcrumb_nav_index 8)
 		(begin
@@ -809,7 +809,7 @@
 			(set g_breadcrumb_nav_index 9)
 		)
 	)
-	
+
 	; On door where player encounters Flood in cutscene
 	(if (= g_breadcrumb_nav_index 9)
 		(begin
@@ -856,12 +856,12 @@
 			;)
 			;(breadcrumbs_deactivate_team_nav_point player "navpoint_6")
 			;(breadcrumbs_deactivate_team_nav_point player "navpoint_6_1")
-			
+
 			(sleep_until (> g_breadcrumb_nav_index 12))
 			;(set g_breadcrumb_nav_index 13)
 		)
 	)
-	
+
 	; On dooways and landing that leads to next flood combat encounter
 	; (if (= g_breadcrumb_nav_index 13)
 	; 	(begin
@@ -875,7 +875,7 @@
 	; 		)
 	; 		(breadcrumbs_deactivate_team_nav_point player "navpoint_7")
 	; 		(breadcrumbs_deactivate_team_nav_point player "navpoint_7_1")
-	; 
+	;
 	; 		(set g_breadcrumb_nav_index 14)
 	; 	)
 	; )
@@ -889,17 +889,17 @@
 			(set g_breadcrumb_nav_index 16)
 		)
 	)
-	
+
 	; On doorway leading to next flood combat encounter
 	(if (= g_breadcrumb_nav_index 16)
-		(begin 
+		(begin
 			(sleep_until
 				(or
 					(volume_test_objects int_b_trigger (players))
 					(> g_breadcrumb_nav_index 16)
 				)
 			)
-			
+
 			(sleep_until
 				(or
 					(= (device_get_position lift_b) 1)
@@ -918,7 +918,7 @@
 			(set g_breadcrumb_nav_index 17)
 		)
 	)
-	
+
 	; On doorway leading to next flood combat encounter
 	(if (= g_breadcrumb_nav_index 17)
 		(begin
@@ -993,7 +993,7 @@
 			(sleep_until (> g_breadcrumb_nav_index 21))
 		)
 	)
-	
+
 	; On last area before level is completed
 	(if (= g_breadcrumb_nav_index 22)
 		(begin
@@ -1109,7 +1109,7 @@
 
 ;(script static void enc_fleeing_grunts_a
 ;	(ai_place swamp_a_covenant/fleeing_front_a))
-	
+
 ;========== Swamp A Initialization Scripts ==========
 
 ;(script dormant ini_dropship_check
@@ -1149,7 +1149,7 @@
 
 ;========== Interior A Encounter Scripts ==========
 
-	
+
 (script dormant enc_int_a_lift_a_cov
 	(ai_place int_a_covenant/grunts_lift_left)
 	(ai_place int_a_covenant/grunts_lift_right)
@@ -1179,7 +1179,7 @@
 	(ai_place int_a_flood/bay_a_bottom_1)
 	(ai_place int_a_flood/bay_a_bottom_2)
 	(ai_place int_a_infection/bay_a))
-	
+
 (script dormant enc_int_a_lab_a_flood
 ;	(ai_place int_a_flood/lab_a_top)
 	(ai_place int_a_flood/lab_a_bottom)
@@ -1192,7 +1192,7 @@
 (script dormant enc_int_a_lift_a_flood
 	(ai_place int_a_flood/lift_a)
 	(ai_place int_a_infection/lift_a))
-	
+
 (script dormant enc_int_a_tinylab_c_flood
 	(ai_place int_a_flood/tinylab_c)
 	(ai_place int_a_infection/tinylab_c))
@@ -1265,7 +1265,7 @@
 (script dormant enc_control_a
 	(device_set_position control_door_bashed_a 1)
 	)
-	
+
 (script dormant enc_int_b_bay_b_flood
 ;	(ai_place int_b_flood/bay_b_top_1)
 ;	(ai_place int_b_flood/bay_b_top_2)
@@ -1362,7 +1362,7 @@
 ;	(object_destroy control_door_b)
 	(object_create control_door_bashed_b)
 ;	(object_destroy control_door_c)
-	(object_create control_door_bashed_c)				  
+	(object_create control_door_bashed_c)
 ;	(object_destroy control_door_d)
 	(object_create control_door_bashed_d)
 ;	(object_destroy control_door_d1)
@@ -1485,7 +1485,7 @@
 	(sleep_until (volume_test_objects hall_d_bash_trigger (players)))
 	(ai_place int_b_flood/hall_d)
 	)
-	
+
 (script dormant ini_int_b_lab_b
 	(sleep_until (or (volume_test_objects hall_d_top_trigger (players))
 				  (volume_test_objects hall_d_bottom_trigger (players))))
@@ -1507,11 +1507,11 @@
 	(wake enc_int_b_tinylab_h_flood))
 
 (script dormant crazy_marine_nav_point
-	(sleep_until (or (= (ai_living_count int_b_crazy_marine/crazy_marine) 0) 
+	(sleep_until (or (= (ai_living_count int_b_crazy_marine/crazy_marine) 0)
 		(> (sound_impulse_time "sound\dialog\c10\c10_150_crazymarine") 0)))
 	(sleep_until (= (ai_living_count int_b_crazy_marine/crazy_marine) 0) 1
 		(sound_impulse_time "sound\dialog\c10\c10_150_crazymarine"))
-		
+
 	(set g_breadcrumb_nav_index 6)
 	)
 
@@ -1678,7 +1678,7 @@
 				  (volume_test_objects int_b_hall_a_trigger_b (players))))
 	(game_save_no_timeout)
 	(wake enc_int_c_lab_a_flood))
-	
+
 (script dormant ini_int_c_hall_a_labs
 	(sleep_until (volume_test_objects int_b_hall_a_trigger (players)) 10)
 	(game_save_no_timeout)
@@ -1689,7 +1689,7 @@
 	(ai_magically_see_players int_c_flood/tinylab_a)
 	(ai_magically_see_players int_c_flood/tinylab_b))
 
-	
+
 (script dormant ini_int_c_hall_b_labs
 	(sleep_until (volume_test_objects int_b_hall_b_trigger (players)) 10)
 	(game_save_no_timeout)
@@ -1790,7 +1790,7 @@
 
 (script dormant enc_int_d_hall_g_flood
 	(ai_place int_d_infection/hall_g))
-	
+
 (script dormant enc_int_d_lift_d_rush
 	(ai_place int_d_flood/lift_d_rush))
 
@@ -1800,7 +1800,7 @@
 ;	(sleep_until (or (volume_test_objects int_b_hall_d_trigger (players))
 ;				  (volume_test_objects int_b_hall_d_trigger_b (players))))
 ;	(wake enc_int_d_lab_c_flood))
-	
+
 (script dormant ini_int_d_hall_d_labs
 	(sleep_until (volume_test_objects int_b_hall_d_trigger (players)) 10)
 	(game_save_no_timeout)
@@ -1879,7 +1879,7 @@
 	(if (<= (ai_status int_d_infection/tinylab_k) 2) (ai_kill int_d_infection/tinylab_k))
 	(sleep (* 30 5))
 	)
-*;		   	   
+*;
 ;========== Swamp b Encounter Scripts ==========
 
 (script dormant enc_swamp_b_flood_gauntlet
@@ -1925,7 +1925,7 @@
 		  (begin (ai_place swamp_b_infection/infection_a1)
 		  	    (if debug (print "placing a1 infection"))))
 	(set swamp_b_player_locator 1))
-	
+
 (script static void enc_swamp_b_volume_a2
 	(if (<= (ai_living_count swamp_b_flood) swamp_b_limiter)
 		  (begin (ai_place swamp_b_flood/flood_b)
@@ -1964,17 +1964,17 @@
 ;			    (if debug (print "placing flood f"))
 ;			    (ai_place swamp_b_flood/flood_k)
 ;			    (if debug (print "placing flood k"))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_d (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_d (players)))
 			    (ai_place swamp_b_flood/flood_p_c)
-			    (if debug (print "placing flood p_c"))))			    
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_f (players)))  
+			    (if debug (print "placing flood p_c"))))
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_f (players)))
 			    (ai_place swamp_b_flood/flood_r_c)
 			    (if debug (print "placing flood r_c"))))))
 	(if (<= (ai_living_count swamp_b_infection) swamp_b_infection_limiter)
 		  (begin (ai_place swamp_b_infection/infection_c)
 		  	    (if debug (print "placing c infection"))))
 	(set swamp_b_player_locator 4))
-	
+
 (script static void enc_swamp_b_volume_d
 	(if (<= (ai_living_count swamp_b_flood) swamp_b_limiter)
 		  (begin (ai_place swamp_b_flood/flood_f)
@@ -1985,10 +1985,10 @@
 ;			    (if debug (print "placing flood e"))
 ;			    (ai_place swamp_b_flood/flood_h)
 ;			    (if debug (print "placing flood h"))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_c (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_c (players)))
 			    (ai_place swamp_b_flood/flood_o_d)
 			    (if debug (print "placing flood o_d"))))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_e (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_e (players)))
 			    (ai_place swamp_b_flood/flood_q_d)
 			    (if debug (print "placing flood q_d"))))))
 	(if (<= (ai_living_count swamp_b_infection) swamp_b_infection_limiter)
@@ -2006,10 +2006,10 @@
 ;			    (if debug (print "placing flood g"))
 ;			    (ai_place swamp_b_flood/flood_j)
 ;			    (if debug (print "placing flood j"))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_d (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_d (players)))
 			    (ai_place swamp_b_flood/flood_p_e)
 			    (if debug (print "placing flood p_e"))))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_f (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_f (players)))
 			    (ai_place swamp_b_flood/flood_r_e)
 			    (if debug (print "placing flood r_e"))))))
 	(if (<= (ai_living_count swamp_b_infection) swamp_b_infection_limiter)
@@ -2027,10 +2027,10 @@
 ;			    (if debug (print "placing flood d"))
 ;			    (ai_place swamp_b_flood/flood_i)
 ;			    (if debug (print "placing flood i"))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_c (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_c (players)))
 			    (ai_place swamp_b_flood/flood_o_f)
 			    (if debug (print "placing flood o_f"))))
-			  (cond ((= 0 (volume_test_objects swamp_b_trigger_e (players)))  
+			  (cond ((= 0 (volume_test_objects swamp_b_trigger_e (players)))
 			    (ai_place swamp_b_flood/flood_q_f)
 			    (if debug (print "placing flood q_f"))))))
 	(if (<= (ai_living_count swamp_b_infection) swamp_b_infection_limiter)
@@ -2058,7 +2058,7 @@
 
 	(sleep_until (volume_test_objects swamp_b_trigger_a1 (players)) 1 120)
 	(ai_migrate swamp_b_marines swamp_b_marines/c)
-	
+
 	(sleep_until (volume_test_objects swamp_b_trigger_a1 (players)) 1)
 	(ai_migrate swamp_b_marines swamp_b_marines/d)
 
@@ -2139,7 +2139,7 @@
 ;	(ai_magically_see_players swamp_b_flood)
 ;	(ai_magically_see_players swamp_b_infection)
 	(sleep swamp_b_emitter_delay))
-	
+
 (script continuous ini_flood_prefer_sentinels
 	(ai_try_to_fight swamp_b_flood swamp_b_sentinels)
 	(ai_try_to_fight_player swamp_b_infection)
@@ -2150,7 +2150,7 @@
 (script static void ini_swamp_a_cleanup
 	(ai_erase_all)
 	(garbage_collect_now)
-	
+
 	(sleep -1 ini_see_flood_a)
 	(sleep -1 ini_see_flood_b)
 	(sleep -1 ini_see_flood_c)
@@ -2257,7 +2257,7 @@
 ;	(wake ini_int_a_bay_a_cov)
 ;	(ai_maneuver int_a_covenant/grunts_lift_left)
 ;	(ai_maneuver int_a_covenant/grunts_lift_right)
-	
+
 	(sleep_until (or (volume_test_objects hall_b_top_trigger (players))
 				  (volume_test_objects hall_b_bottom_trigger (players))))
 	(ai_place laba_bottom)
@@ -2265,7 +2265,7 @@
 ;	(wake ini_int_b_lab_b_cov)
 	(game_save_no_timeout)
    (mcc_mission_segment "06_hall_b")
-	
+
 	(sleep_until (or (volume_test_objects hall_d_top_trigger (players))
 				  (volume_test_objects hall_d_bottom_trigger (players))))
 	(ai_place laba_infection)
@@ -2294,8 +2294,8 @@
 	(sleep_until (volume_test_objects control_lab_trigger (players)) 1)
 	(set play_music_c10_02 false)
 	(player_enable_input false)
-   
-   (if (mcc_mission_segment "cine2_jenkins") (sleep 1))              
+
+   (if (mcc_mission_segment "cine2_jenkins") (sleep 1))
 
 	(ini_x50_preclean)
 	(ai_erase int_b_infection/control_ini)
@@ -2409,7 +2409,7 @@
 				  (volume_test_objects hall_c_bottom_trigger (players))))
 	(wake enc_int_a_lab_a_flood)
 	(wake ini_int_a_hall_b)
-				  
+
 	(sleep_until (or (volume_test_objects hall_b_top_trigger (players))
 				  (volume_test_objects hall_b_bottom_trigger (players))))
 	(wake enc_int_a_bay_a_flood)
@@ -2420,7 +2420,7 @@
 
 	(sleep_until (volume_test_objects int_a_ante_a_trigger (players)))
 	(wake enc_int_a_ante_a_cov)
-	
+
 	(sleep_until (volume_test_objects lift_b_flood_trigger (players)))
 	(game_save_no_timeout)
 	(wake ini_int_a_lift_b)
@@ -2431,7 +2431,7 @@
 	(sleep_until (volume_test_objects int_b_hall_a_trigger_b (players)) 1)
 	(set play_music_c10_05 false)
 	)
-	
+
 (script dormant mission_int_b
 ;	(ini_interior_a_cleanup)
 	(game_save_no_timeout)
@@ -2496,7 +2496,7 @@
 	(set play_music_c10_06 true)
 	(sleep 30)
 ;	(wake ini_interior_d_cleanup)
-	
+
 	(sleep_until (= (device_get_position bridge_e) 1))
 	(game_save_no_timeout)
    (mcc_mission_segment "16_bridge_e")
@@ -2514,8 +2514,8 @@
    (mcc_mission_segment "17_lift_d_use")
 	(set play_music_c10_06 false)
 	)
-	
-	
+
+
 (script dormant mission_swamp_b
 ;	(ini_interior_b_cleanup)
 	(wake enc_swamp_b_flood_ini)
@@ -2525,28 +2525,28 @@
    (mcc_mission_segment "18_swamp_b")
 
 	(ai_conversation swamp_b_pilot)
-	
+
 	(sleep_until (volume_test_objects swamp_b_trigger_a1 (players)))
 	(game_save_no_timeout)
 	(wake ini_swamp_b_flood_emitter)
 	(set swamp_b_player_locator 1)
-	
+
 	(cond
 		((= (game_difficulty_get) normal) (set swamp_b_limiter 1) (set swamp_b_infection_limiter 6))
 		((= (game_difficulty_get) hard) (set swamp_b_limiter 1) (set swamp_b_infection_limiter 3))
 		((= (game_difficulty_get) impossible) (set swamp_b_limiter 2) (set swamp_b_infection_limiter 0)))
-	
+
 	(sleep_until (volume_test_objects swamp_b_trigger_a2 (players)))
 	(ai_magically_see_players swamp_b_flood)
 	(ai_magically_see_players swamp_b_infection)
-				  
+
 	(sleep_until (volume_test_objects swamp_b_trigger_b (players)))
 	(wake enc_swamp_b_flood_gauntlet)
 	(ai_attack swamp_b_flood/flood_initial)
-	
+
 	(sleep_until (volume_test_objects swamp_b_trigger_c (players)))
 	(wake enc_swamp_b_flood_tower)
-	
+
 	(sleep_until (volume_test_objects monitor_trigger (players)))
 	(wake enc_swamp_b_sentinels)
 ;	(set play_music_c10_07 false)
@@ -2570,16 +2570,16 @@
 	(sleep (* 8 30))
 	(ai_disregard (players) true)
 	(wake chapter_friends)
-   
+
    (if (mcc_mission_segment "cine3_final") (sleep 1))
-   
+
 	(set g_breadcrumb_nav_index 23)
-   
+
 	(if (cinematic_skip_start) (cutscene_extraction))
 	(cinematic_skip_stop)
 	(game_won)
 	)
-	
+
 ;========== Kill All Continuous Scripts ==========
 
 (script dormant kill_all_continuous
@@ -2596,11 +2596,11 @@
 (script static void int_a
 	(fade_out 0 0 0 0)
 	(sleep 1)
-	
+
 	(deactivate_team_nav_point_object player crashed_dropship)
 	(ai_allegiance_remove player flood)
 	(ai_allegiance_remove flood player)
-	
+
 	(player_enable_input false)
 	(print "switching bsp...")
 	(sleep 30)
@@ -2613,7 +2613,7 @@
 	(wake mission_int_a)
 	(sleep 15)
 	(player_enable_input true)
-	
+
 	(sleep_until (volume_test_objects int_b_trigger (players)))
 	(wake mission_int_b)
 
@@ -2623,7 +2623,7 @@
 (script static void int_b
 	(fade_out 0 0 0 0)
 	(sleep 1)
-	
+
 	(deactivate_team_nav_point_object player crashed_dropship)
 
 	(ai_allegiance_remove player flood)
@@ -2650,10 +2650,10 @@
 	(sleep 1)
 
 	(deactivate_team_nav_point_object player crashed_dropship)
-	
+
 	(ai_allegiance_remove player flood)
 	(ai_allegiance_remove flood player)
-	
+
 	(player_enable_input false)
 	(print "switching bsp...")
 	(sleep 30)
@@ -2679,16 +2679,16 @@
 	(ai_allegiance player flood)
 	(if (or (game_is_cooperative) (= (game_difficulty_get) impossible)) (begin (object_destroy_containing shotgun) (object_create_containing arc10)))
 	(if (and (not (game_is_cooperative)) (= (game_difficulty_get_real) easy)) (object_create_containing easy))
-   
-   (if (mcc_mission_segment "cine1_intro") (sleep 1))              
-   
+
+   (if (mcc_mission_segment "cine1_intro") (sleep 1))
+
 	(wake insertion)
 	(wake mission_swamp_a)
 
 	(if (breadcrumbs_nav_points_active)
 		(wake breadcrumbs_nav_points_c10)
 	)
-	
+
 	(sleep_until (volume_test_objects int_a_trigger (players)) 5)
 	(ai_allegiance_remove player flood)
 	(wake mission_int_a)

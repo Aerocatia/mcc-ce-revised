@@ -1,13 +1,13 @@
-;   Script:		Halo D40 Cinematics Script 
-; Synopsis:		
+;   Script:		Halo D40 Cinematics Script
+; Synopsis:
 
 ;- History ---------------------------------------------------------------------
- 
+
 ; 07/01/01 - Initial version (Tyson)
 
 
 ;- Vehicles --------------------------------------------------------------------
-					 
+
 ; Print useful debugging text
 (global boolean cinematics_debug false)
 
@@ -209,7 +209,7 @@
 	(sound_impulse_start sound\dialog\d40\D40_380_Cortana "none" cortana_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d40\D40_380_Cortana) 30)))
 )
- 
+
 (script static void D40_390_Pilot
 	(sound_impulse_start sound\dialog\d40\D40_390_Pilot "none" pilot_dialogue_scale)
 	(sleep (max 0 (- (sound_impulse_time sound\dialog\d40\D40_390_Pilot) 30)))
