@@ -11,6 +11,7 @@
 *.zip
 
 data/**/*.blend
+data/**/*.hmt
 data/**/*.jma
 data/**/*.jmo
 data/**/*.jms
