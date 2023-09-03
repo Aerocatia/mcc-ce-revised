@@ -22,4 +22,6 @@ data/**/*.sh
 data/**/*.tif
 data/**/*.tiff
 
+maps/*.map
+
 shaders/*.bin
