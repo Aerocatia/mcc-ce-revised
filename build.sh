@@ -137,7 +137,7 @@ fi
 mkdir -p "${MAPS_DIR}"
 
 # Set common build args
-BUILD_ARGS=("--data" "${DATA_DIR}" --maps "${MAPS_DIR}" "--game-engine" "$ENGINE_TARGET")
+BUILD_ARGS=("--maps" "${MAPS_DIR}" "--game-engine" "$ENGINE_TARGET")
 
 # Add tags directory arguments
 for ET_PATH in "${EXTRA_TAGS_DIRS[@]}"; do
@@ -168,6 +168,7 @@ run_build() {
     # Campaign
     for s in "${CAMPAIGN[@]}"; do
         $CACHE_BUILDER levels/$s/$s \
+            --data "${DATA_DIR}" \
             "${BUILD_ARGS[@]}" \
             "${RESOURCE_ARGS[@]}"
     done
@@ -176,12 +177,14 @@ run_build() {
     for m in "${MULTIPLAYER[@]}"; do
         $CACHE_BUILDER levels/test/$m/$m \
             --auto-forge \
+            --data "${DATA_DIR}" \
             "${BUILD_ARGS[@]}" \
             "${RESOURCE_ARGS[@]}"
     done
 
     # UI
     $CACHE_BUILDER levels/ui/ui \
+        --data "${DATA_DIR}" \
         "${BUILD_ARGS[@]}" \
         "${RESOURCE_ARGS[@]}"
 }
