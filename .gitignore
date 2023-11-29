@@ -1,10 +1,14 @@
 *.7z
 *.bat
+*.bik
 *.cfg
 *.config
 *.dll
+*.dxvk-cache
 *.exe
+*.ini
 *.lnk
+*.log
 *.py
 *.sh
 *.txt
@@ -25,3 +29,5 @@ data/**/*.tiff
 maps/*.map
 
 shaders/*.bin
+
+!build.sh
