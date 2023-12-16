@@ -113,28 +113,50 @@ done
 # Find Invader
 if command -v invader-build &> /dev/null; then
     CACHE_BUILDER=invader-build
+    W32_CB=0
 elif command -v invader-build.exe &> /dev/null; then
     CACHE_BUILDER=invader-build.exe
+    W32_CB=1
 elif command -v ./invader-build.exe &> /dev/null; then
     CACHE_BUILDER=./invader-build.exe
+    W32_CB=1
 else
-    echoerr "Could not find invader-build in \$PATH or next to this script"
+    echoerr "Error: Could not find invader-build in \$PATH or next to this script"
     exit 1
 fi
 
 if command -v invader-resource &> /dev/null; then
     RESOURCE_BUILDER=invader-resource
+    W32_RB=0
 elif command -v invader-resource.exe &> /dev/null; then
     RESOURCE_BUILDER=invader-resource.exe
+    W32_RB=1
 elif command -v ./invader-resource.exe &> /dev/null; then
     RESOURCE_BUILDER=./invader-resource.exe
+    W32_RB=1
 else
-    echoerr "Could not find invader-resource in \$PATH or next to this script"
+    echoerr "Error: Could not find invader-resource in \$PATH or next to this script"
     exit 1
 fi
 
+if [[ $W32_CB != $W32_RB ]]; then
+    echoerr "Error: Mixed Windows and non-Windows invader tools are not supported by this script"
+    exit 1
+fi
+
+if [[ $W32_CB == 1 ]]; then
+    if command -v wslpath &> /dev/null; then
+        MAPS_DIR_NIX=$(wslpath "${MAPS_DIR}")
+    else
+        echoerr "Error: Usage of the windows tools are only supported on WSL"
+        exit 1
+    fi
+else
+    MAPS_DIR_NIX="${MAPS_DIR}"
+fi
+
 # Make sure this exists
-mkdir -p "${MAPS_DIR}"
+mkdir -p "${MAPS_DIR_NIX}"
 
 # Set common build args
 BUILD_ARGS=("--maps" "${MAPS_DIR}" "--game-engine" "$ENGINE_TARGET")
@@ -158,7 +180,7 @@ if [[ $INVADER_QUIET == 1 ]]; then
 fi
 
 # Use existing resource maps if enabled.
-if [[ $USE_EXISTING_RESOURCE_MAPS == 1 ]]; then
+if [[ $USE_EXISTING_RESOURCE_MAPS == 1 && $BUILD_NEW_RESOURCE_MAPS != 1 ]]; then
         RESOURCE_ARGS=("--resource-usage" "check")
     else
         RESOURCE_ARGS=("--resource-usage" "none")
