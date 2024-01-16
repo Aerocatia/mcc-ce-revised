@@ -3,13 +3,14 @@
 dir="$(cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 
 # Defaults
-TAGS_DIRS=('tags')
+BASE_TAGS_DIR="tags"
 EXTRA_TAGS_DIRS=()
 DATA_DIR="data"
 MAPS_DIR="maps"
 BUILD_NEW_RESOURCE_MAPS=0
 USE_EXISTING_RESOURCE_MAPS=0
-ENGINE_TARGET="mcc-cea"
+TARGET_ENGINE="mcc-cea"
+TARGET_LANGUAGE="en"
 USE_HD_BITMAPS=0
 
 echoerr() { printf "%s\n" "$*" >&2; }
@@ -29,7 +30,7 @@ Options:
   -t            Prefix an extra tags directory (can be used more than once).
 "
 
-# Scenario basenames
+# Scenario basenames.
 CAMPAIGN=('a10' 'a30' 'a50' 'b30' 'b40' 'c10' 'c20' 'c40' 'd20' 'd40')
 
 MULTIPLAYER_XBOX=('beavercreek' 'bloodgulch' 'boardingaction' 'carousel' 'chillout'
@@ -41,7 +42,7 @@ MULTIPLAYER_PC=('dangercanyon' 'deathisland' 'gephyrophobia' 'icefields'
 
 MULTIPLAYER=("${MULTIPLAYER_XBOX[@]}" "${MULTIPLAYER_PC[@]}")
 
-# Options
+# Options.
 lang_set=0
 while getopts ":bd:hl:m:nqrt:" arg; do
     case "${arg}" in
@@ -57,24 +58,8 @@ while getopts ":bd:hl:m:nqrt:" arg; do
         ;;
         l)
             if [[ $lang_set != 1 ]]; then
-                case "${OPTARG}" in
-                    de)
-                    ;&
-                    es)
-                    ;&
-                    fr)
-                    ;&
-                    it)
-                    ;&
-                    jp)
-                    ;&
-                    kr)
-                    ;&
-                    tw)
-                        TAGS_DIRS=("loc/tags_${OPTARG}" "${TAGS_DIRS[@]}")
-                    ;;
-                    en)
-                        true
+                case "${OPTARG}" in de) ;& en) ;& es) ;& fr) ;& it) ;& jp) ;& kr) ;& tw)
+                        TARGET_LANGUAGE="${OPTARG}"
                     ;;
                     *)
                         echoerr "Error: Unknown Language \"$OPTARG\""
@@ -110,7 +95,7 @@ while getopts ":bd:hl:m:nqrt:" arg; do
     esac
 done
 
-# Find Invader
+# Find Invader.
 if command -v invader-build &> /dev/null; then
     CACHE_BUILDER=invader-build
     W32_CB=0
@@ -155,24 +140,36 @@ else
     MAPS_DIR_NIX="${MAPS_DIR}"
 fi
 
-# Make sure this exists
+# Make sure this exists.
 mkdir -p "${MAPS_DIR_NIX}"
 
-# Set common build args
-BUILD_ARGS=("--maps" "${MAPS_DIR}" "--game-engine" "$ENGINE_TARGET")
+# Set common build args.
+BUILD_ARGS=("--maps" "${MAPS_DIR}" "--game-engine" "$TARGET_ENGINE")
 
-# Add tags directory arguments
+#
+# Build tags directory arguments.
+#
+
+# User provided tags directories.
 for ET_PATH in "${EXTRA_TAGS_DIRS[@]}"; do
     BUILD_ARGS+=("--tags" "${ET_PATH}")
 done
 
+# Simple HD bitmaps.
 if [[ $USE_HD_BITMAPS == 1 ]]; then
     BUILD_ARGS+=("--tags" "extra/tags_highres_bitmaps")
 fi
 
-for MT_PATH in "${TAGS_DIRS[@]}"; do
-    BUILD_ARGS+=("--tags" "${MT_PATH}")
-done
+# Base localization tags.
+if [[ "$TARGET_LANGUAGE" != "en" ]]; then
+    BUILD_ARGS+=("--tags" "loc/tags_${TARGET_LANGUAGE}")
+fi
+
+# Base tags directory, usually just "tags".
+BUILD_ARGS+=("--tags" "${BASE_TAGS_DIR}")
+
+# Split these off here because "--quiet" is not a valid argument for invader-resource.
+RESOURCE_BUILD_ARGS=("${BUILD_ARGS[@]}")
 
 # Quiet?
 if [[ $INVADER_QUIET == 1 ]]; then
@@ -213,16 +210,15 @@ run_build() {
 
 run_build
 
-# If making new resource maps, make them based on the first build and do a second pass
+# If making new resource maps, make them based on the first build and do a second pass.
 if [[ $BUILD_NEW_RESOURCE_MAPS == 1 ]]; then
-    # Make resource maps based on existing maps
     MAP_ARGS=()
     for MAPNAME in "${CAMPAIGN[@]}" "${MULTIPLAYER[@]}" ui; do
         MAP_ARGS+=("--with-map" "${MAPS_DIR}/${MAPNAME}.map")
     done
 
     for RESOURCE_TYPE in bitmaps sounds; do
-        $RESOURCE_BUILDER --type "$RESOURCE_TYPE" "${BUILD_ARGS[@]}" "${MAP_ARGS[@]}"
+        $RESOURCE_BUILDER --type "$RESOURCE_TYPE" "${RESOURCE_BUILD_ARGS[@]}" "${MAP_ARGS[@]}"
     done
 
     RESOURCE_ARGS=("--resource-usage" "check")
