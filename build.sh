@@ -157,12 +157,12 @@ done
 
 # Simple HD bitmaps.
 if [[ $USE_HD_BITMAPS == 1 ]]; then
-    BUILD_ARGS+=("--tags" "extra/tags_highres_bitmaps")
+    BUILD_ARGS+=("--tags" "extra/highres_bitmaps/tags")
 fi
 
 # Base localization tags.
 if [[ "$TARGET_LANGUAGE" != "en" ]]; then
-    BUILD_ARGS+=("--tags" "loc/tags_${TARGET_LANGUAGE}")
+    BUILD_ARGS+=("--tags" "loc/${TARGET_LANGUAGE}/tags")
 fi
 
 # Base tags directory, usually just "tags".
